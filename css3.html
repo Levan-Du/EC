@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>css3 media queries</title>
+</head>
+
+<body>
+    <div class="entry-content">
+
+        <h2><a name="toc-1"></a>什么是 CSS3 Media Queries</h2>
+        <p>CSS3 中的 Media Queries 可以让我们设置不同类型的媒体条件，并根据对应的条件，给相应符合条件的媒体调用相对应的样式表。现在最常见的一个例子，就是可以同时给 PC 的大屏幕和移动设备设置不同的样式表。这功能是非常强大的，它可以让我们定制不同的分辨率和设备，并在不改变内容的情况下，制作的网页在不同的分辨率和设备下都能显示正常，并且不会因此而丢失样式。</p>
+        <p><img srcset="http://77flz7.com1.z0.glb.clouddn.com/2013/css3_media_queries.png?watermark/1/image/aHR0cDovL3dwamFtLnFpbml1ZG4uY29tL3dwamFtL3dhdGVybWFyay5wbmc=/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim%7CimageView2/2/w/1200/interlace/1/q/70 2x" src="http://77flz7.com1.z0.glb.clouddn.com/2013/css3_media_queries.png?watermark/1/image/aHR0cDovL3dwamFtLnFpbml1ZG4uY29tL3dwamFtL3dhdGVybWFyay5wbmc=/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim%7CimageView2/2/w/600/interlace/1/q/70" alt="CSS Media Queries"></p>
+        <h2><a name="toc-2"></a>常用设备的 CSS3 Media Queries</h2>
+        <h3><a name="toc-3"></a>所有 iPad Media Queries</h3>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPad 横屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPad 竖屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span> 
+<span class="token punctuation">}</span></code></pre>
+        <h3><a name="toc-4"></a>高清屏 iPad Media Queries</h3>
+        <p>即 iPad 3 &amp; 4 的 Media Queries：</p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)
+and (-webkit-min-device-pixel-ratio: 2) </span><span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>高清屏 iPad 横屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape)
+and (-webkit-min-device-pixel-ratio: 2) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>高清屏 iPad 竖屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait)
+and (-webkit-min-device-pixel-ratio: 2) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES GO HERE */</span> 
+<span class="token punctuation">}</span></code></pre>
+        <h3><a name="toc-5"></a>iPad 1 &amp; 2 Media Queries</h3>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (-webkit-min-device-pixel-ratio: 1)</span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPad 1 &amp; 2 横屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape)
+and (-webkit-min-device-pixel-ratio: 1)  </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPad 1 &amp; 2 竖屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) 
+and (-webkit-min-device-pixel-ratio: 1) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p>iPad mini 也是和 iPad 1 和 2 一样。</p>
+        <h3><a name="toc-6"></a>iPhone 5 Media Queries</h3>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPhone 5 横屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : landscape) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPhone 5 竖屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : portrait) </span><span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">/* STYLES */</span> 
+<span class="token punctuation">}</span></code></pre>
+        <h3><a name="toc-7"></a>iPhone 2G, 3G, 4, 4S Media Queries</h3>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) </span><span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+        <p><strong>iPhone 2G-4S 横屏</strong></p>
+        <pre class=" language-css"><code class=" language-css"><span class="token selector">@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) 
+and (orientation : landscape) </span><span class="token punctuation">{</span> 
+<span class="token comment" spellcheck="true">/* STYLES */</span>
+<span class="token punctuation">}</span></code></pre>
+    </div>
+</body>
+
+</html>

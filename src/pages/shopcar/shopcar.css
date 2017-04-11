@@ -1,20 +1,20 @@
-.menubar .action-wrap .action.left {
+.menubar .action-wrap .action-left.left {
     flex: none;
-    width: 4rem;
-    padding-left: .6rem;
+    width: 4.5rem;
+    padding-left: .5rem;
 }
 
-.menubar .action-wrap .action.left a .iconfont {
+.menubar .action-wrap .action-left.left a .iconfont {
     font-size: 1.4rem;
 }
 
-.menubar .action-wrap .action.left a span {
+.menubar .action-wrap .action-left.left a span {
     vertical-align: middle;
 }
 
 .menubar .action-wrap .action.mid {
     flex-direction: column;
-    text-align: left;
+    justify-content: center;
     align-items: flex-start;
 }
 
@@ -30,4 +30,23 @@
     width: 6rem;
     background: #e33;
     color: #fff;
+    flex: none;
+}
+
+@media(max-width: 320px) {
+    .menubar .action-wrap .action.right {
+        width: 5rem;
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .menubar .action-wrap .action.right {
+        width: 10rem;
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    .menubar .action-wrap .action.right {
+        width: 10rem;
+    }
 }

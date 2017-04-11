@@ -6137,7 +6137,10 @@ var createGoods = (data) => {
     ${data.rows.map(o=>`
         <li class="grid-item">
             <dl>
-                <dt class="order-item-title"><span>订单编号：${o.OrderCode}</span><span>订单状体：完成</span></dt>
+                <dt class="order-item-title">
+                    <a><span class="iconfont icon-dingdan"><span><span style="padding-left:.2rem;">兑换单号：${o.OrderCode}</span></a>
+                    <span>状态：完成</span>
+                </dt>
                 <dd class="order-item-goods">
                     ${o.goods.map(g=>`
                     <a data-oid="${o.OrderID}">
@@ -6236,62 +6239,62 @@ var data = {
     rows: [{
         OrderID: '001',
         Num: 1,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
-        goods: [{ GoodID: 1, Price: 6888.00, ImgUrl: '2003.png' }]
+        goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '2003.png' }]
     }, {
         OrderID: '001',
         Num: 2,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
         goods: [
-            { GoodID: 1, Price: 6888.00, ImgUrl: '1002.png' },
-            { GoodID: 1, Price: 6888.00, ImgUrl: '1007.png' }
+            { GoodID: 1, Price: '6888.00', ImgUrl: '1002.png' },
+            { GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }
         ]
 
     }, {
         OrderID: '001',
         Num: 3,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
         goods: [
-            { GoodID: 1, Price: 6888.00, ImgUrl: '1002.png' },
-            { GoodID: 1, Price: 6888.00, ImgUrl: '1007.png' },
-            { GoodID: 1, Price: 6888.00, ImgUrl: '1003.png' }
+            { GoodID: 1, Price: '6888.00', ImgUrl: '1002.png' },
+            { GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' },
+            { GoodID: 1, Price: '6888.00', ImgUrl: '1003.png' }
         ]
     }, {
         OrderID: '001',
         Num: 1,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
-        goods: [{ GoodID: 1, Price: 6888.00, ImgUrl: '1007.png' }]
+        goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }]
     }, {
         OrderID: '001',
         Num: 2,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
         goods: [
-            { GoodID: 1, Price: 6888.00, ImgUrl: '1007.png' },
-            { GoodID: 1, Price: 6888.00, ImgUrl: '4003.png' }
+            { GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' },
+            { GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }
         ]
     }, {
         OrderID: '001',
         Num: 2,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
-        goods: [{ GoodID: 1, Price: 6888.00, ImgUrl: '4003.png' }]
+        goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
         Num: 2,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
-        goods: [{ GoodID: 1, Price: 6888.00, ImgUrl: '4003.png' }]
+        goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
         Num: 2,
-        Amount: 6888.00,
+        Amount: '6888.00',
         payType: 1,
-        goods: [{ GoodID: 1, Price: 6888.00, ImgUrl: '4003.png' }]
+        goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }]
 };
 

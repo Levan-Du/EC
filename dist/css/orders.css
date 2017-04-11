@@ -41,6 +41,13 @@
     height: 1.8rem;
 }
 
+.grid .grid-item dd.order-item-sum .btn {
+    padding: 0 .2rem;
+    font-size: .8rem;
+    background: #e33;
+    color: #fff;
+}
+
 .grid .grid-item dt {
     background: #fff;
     padding: .5rem;
@@ -48,4 +55,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.grid .grid-item dt a span {
+    font-size: 1rem;
 }
