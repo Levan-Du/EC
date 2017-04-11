@@ -1,0 +1,24 @@
+.main {}
+
+.main .tab-content {
+    display: flex;
+    flex-direction: row;
+    width: 300%;
+}
+
+.main .tab-content .tab-page {
+    width: 33.33%;
+}
+
+.menubar .action-wrap .action.left {
+    flex: none;
+    width: 44%;
+}
+
+.menubar .action-wrap .action.right .action-item-noicon#btn_addto_shopcar {
+    background: #ec3;
+}
+
+.menubar .action-wrap .action.right .action-item-noicon#btn_buynow {
+    background: #e33;
+}

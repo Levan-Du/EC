@@ -1,0 +1,78 @@
+.topbar {
+    padding: 0 .5rem;
+}
+
+.topbar input {
+    height: 1.8rem;
+    flex: 1;
+}
+
+.topbar button {
+    width: 2rem;
+    border: none;
+    background: transparent;
+}
+
+.menubar .action-wrap .action {
+    flex: 1;
+}
+
+.main {
+    background: #eee;
+}
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.grid .grid-item {
+    width: 32.5%;
+    background: #fff;
+    margin-top: .4rem;
+    font-size: .8rem;
+}
+
+@media(max-width: 640px) {
+    .grid .grid-item {
+        width: 49.5%;
+        margin-top: .2rem;
+    }
+}
+
+.grid .grid-item .good-img-link {
+    width: 100%;
+}
+
+.grid .grid-item .good-img-link img {
+    width: 100%;
+}
+
+.grid .grid-item .good-info {
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid .grid-item .good-info .good-info-item {
+    width: 100%;
+}
+
+.grid .grid-item .good-info .price {
+    font-size: .9rem;
+    color: #e33;
+}
+
+.grid .grid-item .good-info .action {
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-end;
+}
+
+.grid .grid-item .good-info .action .btn {
+    padding: .2rem;
+    background: #e33;
+    color: #fff;
+    font-size: .8rem;
+}
