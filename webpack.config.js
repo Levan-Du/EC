@@ -3,7 +3,6 @@ var webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var plugins = require('./config/webpack.plugins.config')(__dirname);
-console.log(plugins);
 
 module.exports = {
     entry: {
