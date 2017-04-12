@@ -8,19 +8,19 @@ var createGoods = (data) => {
         <li class="grid-item">
             <dl>
                 <dt class="order-item-title">
-                    <a><span class="iconfont icon-dingdan"><span><span style="padding-left:.2rem;">兑换单号：${o.OrderCode}</span></a>
+                    <a><span class="iconfont icon-dingdan"><span>兑换单号：<span class="ordercode">${o.OrderCode}</span></a>
                     <span>状态：完成</span>
                 </dt>
                 <dd class="order-item-goods">
                     ${o.goods.map(g=>`
-                    <a data-oid="${o.OrderID}">
-                        <img data-gid="${g.GoodID}" src="/images/${g.ImgUrl}">
+                    <a data-oid="${o.OrderID}" data-gid="${g.GoodID}">
+                        <img src="/images/${g.ImgUrl}">
                     </a>
                     `)}
                 </dd>
                 <dd class="order-item-sum">
                     <p>共${o.Num}件商品,兑换${formatPayTypeToString(o.payType)}：${o.Amount}</p>
-                    <a class="btn">再次兑换</a>
+                    <a class="btn" data-oid="${o.OrderID}">再次兑换</a>
                 </dd>
             </dl>
         </li>`

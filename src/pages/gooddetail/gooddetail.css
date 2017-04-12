@@ -3,11 +3,25 @@
 .main .tab-content {
     display: flex;
     flex-direction: row;
-    width: 300%;
 }
 
-.main .tab-content .tab-page {
-    width: 33.33%;
+.topbar .mid .tab-swiper {
+    display: flex;
+    justify-content: center;
+}
+
+.topbar .mid .tab-swiper .tab-label {
+    margin: 1rem;
+}
+
+.topbar .mid .tab-swiper .tab-label.active {
+    font-weight: bold;
+}
+
+.topbar .mid .tab-swiper .tab-label.active a {
+    color: #555;
+    font-size: 1.1rem;
+    border-bottom: solid 2px;
 }
 
 .menubar .action-wrap .action.left {

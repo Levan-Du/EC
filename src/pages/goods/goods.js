@@ -17,8 +17,8 @@ var createGoods = (data) => {
                         <i>￥${r.Price}</i>
                     </dt>
                     <dt class="good-info-item action">
-                        <a class="btn" data-gid="${r.GoodID}"><span class="iconfont icon-gouwuche"></span>加入购物车</a>
-                        <a class="btn" data-gid="${r.GoodID}" href="pay.html?id=${r.GoodID}"><span class="iconfont icon-danpin"></span>立即兑换</a>                        
+                        <a class="btn" data-gid="${r.GoodID}"><span class="iconfont icon-gouwuche"></span><span>加入购物车</span></a>
+                        <a class="btn" data-gid="${r.GoodID}" href="pay.html?id=${r.GoodID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
                     </dt>
                 </dl>
             </li>`

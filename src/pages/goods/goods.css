@@ -74,5 +74,7 @@
     padding: .2rem;
     background: #e33;
     color: #fff;
+}
+.grid .grid-item .good-info .action .btn span{
     font-size: .7rem;
 }

@@ -59,5 +59,10 @@
 }
 
 .grid .grid-item dt a span {
-    font-size: 1rem;
+    font-size: .8rem;
+}
+
+.grid .grid-item dt a span.ordercode {
+    padding-left: .2rem;
+    color: #33e;
 }
