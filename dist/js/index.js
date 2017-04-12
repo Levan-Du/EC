@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1726,28 +1726,9 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = fit;
-function fit() {
-    var winWidth = $(window).width();
-    if (winWidth < 412) {
-        $('html').css('fontSize', 12);
-    } else if (winWidth < 640) {
-        $('html').css('fontSize', 16);
-    } else if (winWidth < 1000) {
-        $('html').css('fontSize', 20);
-    } else {
-        $('html').css('fontSize', 30);
-    }
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 2 */
@@ -1757,12 +1738,6 @@ function fit() {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7384,10 +7359,10 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(6), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -7573,7 +7548,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 var g;
@@ -7600,6 +7575,7 @@ module.exports = g;
 
 
 /***/ }),
+/* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7612,7 +7588,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(4);
+var _bluebird = __webpack_require__(3);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7832,7 +7808,7 @@ function postData(url, data) {
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
 /* 9 */
@@ -7908,11 +7884,11 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(7);
 
-var _goods = __webpack_require__(23);
+var _goods = __webpack_require__(22);
 
 var _goods2 = _interopRequireDefault(_goods);
 
-var _bluebird = __webpack_require__(4);
+var _bluebird = __webpack_require__(3);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7970,20 +7946,19 @@ var init = exports.init = function init() {
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */,
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
+/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */,
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8000,28 +7975,21 @@ var data = {
 exports.default = data;
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
+__webpack_require__(1);
+
 __webpack_require__(2);
 
-__webpack_require__(3);
-
-__webpack_require__(16);
-
-var _fit = __webpack_require__(1);
-
-var _fit2 = _interopRequireDefault(_fit);
+__webpack_require__(15);
 
 var _goods = __webpack_require__(11);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 $(function (e) {
-    (0, _fit2.default)();
     (0, _goods.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))

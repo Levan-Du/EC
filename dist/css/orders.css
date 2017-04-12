@@ -259,8 +259,8 @@ a {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    line-height: 1.1rem;
-    font-size: .8rem;
+    line-height: 1.4rem;
+    font-size: .7rem;
 }
 
 .menubar .action-wrap .action .action-item span {
@@ -319,7 +319,7 @@ a {
 }
 
 .grid .grid-item dd.order-item-goods {
-    background: #f7f7f7;
+    background: #f2f2f2;
 }
 
 .grid .grid-item dd.order-item-goods a {
@@ -362,5 +362,10 @@ a {
 }
 
 .grid .grid-item dt a span {
-    font-size: 1rem;
+    font-size: .8rem;
+}
+
+.grid .grid-item dt a span.ordercode {
+    padding-left: .2rem;
+    color: #33e;
 }

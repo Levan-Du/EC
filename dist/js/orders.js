@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1726,28 +1726,9 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = fit;
-function fit() {
-    var winWidth = $(window).width();
-    if (winWidth < 412) {
-        $('html').css('fontSize', 12);
-    } else if (winWidth < 640) {
-        $('html').css('fontSize', 16);
-    } else if (winWidth < 1000) {
-        $('html').css('fontSize', 20);
-    } else {
-        $('html').css('fontSize', 30);
-    }
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 2 */
@@ -1757,12 +1738,6 @@ function fit() {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7384,10 +7359,10 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(6), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -7573,7 +7548,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 var g;
@@ -7600,6 +7575,7 @@ module.exports = g;
 
 
 /***/ }),
+/* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7612,7 +7588,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(4);
+var _bluebird = __webpack_require__(3);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7832,7 +7808,7 @@ function postData(url, data) {
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }),
 /* 9 */
@@ -7909,11 +7885,11 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(7);
 
-var _orders = __webpack_require__(26);
+var _orders = __webpack_require__(25);
 
 var _orders2 = _interopRequireDefault(_orders);
 
-var _bluebird = __webpack_require__(4);
+var _bluebird = __webpack_require__(3);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7921,7 +7897,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var createGoods = function createGoods(data) {
     var tmpl = '\n    ' + data.rows.map(function (o) {
-        return '\n        <li class="grid-item">\n            <dl>\n                <dt class="order-item-title">\n                    <a><span class="iconfont icon-dingdan"><span><span style="padding-left:.2rem;">\u5151\u6362\u5355\u53F7\uFF1A' + o.OrderCode + '</span></a>\n                    <span>\u72B6\u6001\uFF1A\u5B8C\u6210</span>\n                </dt>\n                <dd class="order-item-goods">\n                    ' + o.goods.map(function (g) {
+        return '\n        <li class="grid-item">\n            <dl>\n                <dt class="order-item-title">\n                    <a><span class="iconfont icon-dingdan"><span>\u5151\u6362\u5355\u53F7\uFF1A<span class="ordercode">' + o.OrderCode + '</span></a>\n                    <span>\u72B6\u6001\uFF1A\u5B8C\u6210</span>\n                </dt>\n                <dd class="order-item-goods">\n                    ' + o.goods.map(function (g) {
             return '\n                    <a data-oid="' + o.OrderID + '" data-gid="' + g.GoodID + '">\n                        <img src="/images/' + g.ImgUrl + '">\n                    </a>\n                    ';
         }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + formatPayTypeToString(o.payType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
     }).join('') + '\n    ';
@@ -7967,48 +7943,40 @@ var init = exports.init = function init() {
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */,
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
+/* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */,
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
+__webpack_require__(1);
+
 __webpack_require__(2);
 
-__webpack_require__(3);
-
-__webpack_require__(17);
-
-var _fit = __webpack_require__(1);
-
-var _fit2 = _interopRequireDefault(_fit);
+__webpack_require__(16);
 
 var _orders = __webpack_require__(12);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 $(function (e) {
-    (0, _fit2.default)();
     (0, _orders.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8021,12 +7989,14 @@ var data = {
     title: 'orders',
     rows: [{
         OrderID: '001',
+        OrderCode: '001',
         Num: 1,
         Amount: '6888.00',
         payType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '2003.png' }]
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
         payType: 1,
@@ -8034,36 +8004,42 @@ var data = {
 
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 3,
         Amount: '6888.00',
         payType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1002.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '1003.png' }]
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 1,
         Amount: '6888.00',
         payType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }]
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
         payType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
         payType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
         payType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
+        OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
         payType: 1,

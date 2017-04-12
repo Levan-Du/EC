@@ -22,7 +22,8 @@ module.exports = {
         gooddetail: path.join(__dirname, 'src/pages/gooddetail/index.js'),
         pay: path.join(__dirname, 'src/pages/pay/index.js'),
         shopcar: path.join(__dirname, 'src/pages/shopcar/index.js'),
-        orders: path.join(__dirname, 'src/pages/orders/index.js')
+        orders: path.join(__dirname, 'src/pages/orders/index.js'),
+        fit: path.join(__dirname, 'src/commons/basic/fit')
     },
     output: {
         path: path.join(__dirname, 'dist'),

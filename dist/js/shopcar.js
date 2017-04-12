@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1728,32 +1728,13 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 /***/ }),
 
 /***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = fit;
-function fit() {
-    var winWidth = $(window).width();
-    if (winWidth < 412) {
-        $('html').css('fontSize', 12);
-    } else if (winWidth < 640) {
-        $('html').css('fontSize', 16);
-    } else if (winWidth < 1000) {
-        $('html').css('fontSize', 20);
-    } else {
-        $('html').css('fontSize', 30);
-    }
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 14:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1764,7 +1745,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _shopcar = __webpack_require__(30);
+var _shopcar = __webpack_require__(28);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
 
@@ -1781,7 +1762,7 @@ var init = exports.init = function init() {
 
 /***/ }),
 
-/***/ 19:
+/***/ 18:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -1795,42 +1776,28 @@ var init = exports.init = function init() {
 
 /***/ }),
 
-/***/ 29:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
+__webpack_require__(1);
+
 __webpack_require__(2);
 
-__webpack_require__(3);
+__webpack_require__(18);
 
-__webpack_require__(19);
-
-var _fit = __webpack_require__(1);
-
-var _fit2 = _interopRequireDefault(_fit);
-
-var _shopcar = __webpack_require__(14);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _shopcar = __webpack_require__(13);
 
 $(function (e) {
-    (0, _fit2.default)();
     (0, _shopcar.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 30:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
