@@ -216,6 +216,13 @@ a {
     flex: 1;
 }
 
+
+.menubar .action-wrap .action-left {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
 .menubar .action-wrap .action .action-item.active {
     color: red;
 }
@@ -223,6 +230,7 @@ a {
 .menubar .action-wrap .action .action-item {
     flex: 1;
     line-height: 1.1rem;
+    font-size: .8rem;
 }
 
 .menubar .action-wrap .action .action-item span {

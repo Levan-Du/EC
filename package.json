@@ -26,6 +26,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "fastclick": "^1.0.6",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "n-zepto": "^1.2.0"
   }
 }
