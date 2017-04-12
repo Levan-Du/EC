@@ -4,6 +4,6 @@ const app = new Koa();
 
 app.use(serve('./dist'));
 
-app.listen(3000, () => {
-    console.log('listening o port 3000...');
+app.listen(80, () => {
+    console.log('listening o port 80...');
 });
