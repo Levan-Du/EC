@@ -87,7 +87,7 @@ module.exports = {
             inject: 'body',
             chunks: ['orders']
         })
-    ],
+    ].concat(plugins),
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         port: 8080,
