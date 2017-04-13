@@ -4,10 +4,10 @@ import Promise from 'bluebird';
 
 var createGoods = (data) => {
         var tmpl = `
-        ${data.rows.map(r=>`
+        ${data.map(r=>`
             <li class="grid-item">
                 <a class="good-img-link" href="./gooddetail.html?id=${r.GoodID}">
-                    <img src="${r.ImgUrl}"></img>
+                    <img src="${r.IntroImg}"></img>
                 </a>
                 <dl class="good-info">
                     <dt class="good-info-item title">
@@ -28,27 +28,34 @@ var createGoods = (data) => {
 
 
 var getGoods = () => {
-    // fetchData('/goods')
-
     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
 }
 
 var initData = () => {
-    getGoods()
-        .then((data) => {
-            createGoods(data);
+    // getGoods()
+    fetchData('/GoodsList')
+        .then((res) => {
+            console.log(res);
+            createGoods(res.message);
         })
         .catch((err)=>{
             alert(err);
         });
+
+        // fetchData('/GoodsList')
+        // .then((res)=>{
+        //     console.log(res);
+        // })
+        // .catch((err)=>{
+        //     console.log(err);
+        // });
 }
 
 var selectMunuItem='#btn_home';
 
-var addClick=(item)=>{
+var addClick= (item) =>{
     var el=$(item);
     el.click((e)=>{
-        console.log(e);
         if(selectMunuItem===item) return;
         $(selectMunuItem).removeClass('active');
         el.addClass('active');

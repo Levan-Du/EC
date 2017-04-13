@@ -343,3 +343,7 @@ a {
         width: 10rem;
     }
 }
+
+.main .grid img {
+    width: 6rem;
+}

@@ -50,3 +50,84 @@
         width: 10rem;
     }
 }
+
+.main {
+    background: #eee;
+}
+
+.main .grid img {
+    width: 6rem;
+}
+
+.main .grid .grid-item {
+    margin: .3rem 0;
+    padding: .3rem;
+    background: #fff;
+}
+
+.main .grid .grid-item ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main .grid .grid-item ul li.checked {
+    width: 2rem;
+    text-align: center;
+}
+
+.main .grid .grid-item ul li.checked span.iconfont {
+    font-size: 1.3rem;
+}
+
+.main .grid .grid-item ul li.img-box {
+    margin: 0 .5rem;
+}
+
+.main .grid .grid-item ul li.info {
+    flex: 1;
+}
+
+.main .grid .grid-item ul li.info p.title {
+    height: 3rem;
+    overflow: hidden;
+}
+
+.main .grid .grid-item ul li.info ul {
+    display: flex;
+}
+
+.main .grid .grid-item ul li.info ul li.left {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main .grid .grid-item ul li.info ul li.left p {
+    margin-right: .5rem;
+}
+
+.main .grid .grid-item ul li.info ul li.left .price {
+    color: #e33;
+}
+
+.main .grid .grid-item ul li.info ul li.right {
+    display: flex;
+    align-self: flex-end;
+}
+
+.main .grid .grid-item ul li.info ul li.right input.num {
+    border-radius: 0;
+    width: 2rem;
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+}
+
+.main .grid .grid-item ul li.info ul li.right .btn {
+    font-size: 1.3rem;
+    padding: 0 .5rem;
+    border-radius: 0;
+}
+
+.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce {
+    padding: 0 .7rem;
+}

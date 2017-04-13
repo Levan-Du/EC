@@ -17,8 +17,7 @@ var windowWidth = () => {
 
 var setHtmlEleFontSize = (fontSize) => {
     var htmlEle = document.getElementsByTagName('html')[0];
-    var r = htmlEle.style['fontSize'] = fontSize + 'px';
-    console.log(r);
+    htmlEle.style['fontSize'] = fontSize + 'px';
 }
 
 window.onload = (e) => {
