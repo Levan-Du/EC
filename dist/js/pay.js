@@ -1777,25 +1777,33 @@ $(function (e) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {
+
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = fit;
 function fit() {
-    var winWidth = $(window).width();
-    if (winWidth < 412) {
-        $('html').css('fontSize', 12);
-    } else if (winWidth < 640) {
-        $('html').css('fontSize', 16);
-    } else if (winWidth < 1000) {
-        $('html').css('fontSize', 20);
+    var win_width = windowWidth();
+    if (win_width < 412) {
+        setHtmlEleFontSize(12);
+    } else if (win_width < 640) {
+        setHtmlEleFontSize(16);
+    } else if (win_width < 1000) {
+        setHtmlEleFontSize(20);
     } else {
-        $('html').css('fontSize', 30);
+        setHtmlEleFontSize(24);
     }
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+var windowWidth = function windowWidth() {
+    return win_width = document.body.clientWidth || document.documentElement.clientWidth;
+};
+
+var setHtmlEleFontSize = function setHtmlEleFontSize(fontSize) {
+    htmlEle = document.getElementsByTagName('html')[0];
+    htmlEle.style.fontSize = fontSize;
+};
 
 /***/ })
 
