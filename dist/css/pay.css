@@ -292,7 +292,7 @@ a {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     border-bottom: solid 1px #eee;
-    padding: .8rem .5rem;
+    padding: .8rem .5rem;    
 }
 
 .main section.form-valid p {
