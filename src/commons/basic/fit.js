@@ -1,4 +1,4 @@
-export default function fit() {
+var fit = () => {
     var win_width = windowWidth();
     if (win_width < 412) {
         setHtmlEleFontSize(12);
@@ -12,10 +12,15 @@ export default function fit() {
 }
 
 var windowWidth = () => {
-    return win_width = document.body.clientWidth || document.documentElement.clientWidth;
+    return document.body.clientWidth || document.documentElement.clientWidth;
 }
 
 var setHtmlEleFontSize = (fontSize) => {
-    htmlEle = document.getElementsByTagName('html')[0];
-    htmlEle.style.fontSize = fontSize;
+    var htmlEle = document.getElementsByTagName('html')[0];
+    var r = htmlEle.style['fontSize'] = fontSize + 'px';
+    console.log(r);
+}
+
+window.onload = (e) => {
+    fit();
 }
