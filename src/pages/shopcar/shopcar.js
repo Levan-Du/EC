@@ -4,37 +4,37 @@ import mockData from './shopcar.mock';
 var createPage = (data) => {
     var html = data.map(el => `
 <li class="grid-item">
-	<ul>
-		<li class="checked">
-			<a data-sid="${el.ID}" data-gid="${el.GoodID}"><span class="iconfont icon-fangxingweixuanzhong"></span></a>
-		</li>
-		<li class="img-box">
-			<a data-sid="${el.ID}" data-gid="${el.GoodID}"><img src="${el.IntroImg}"></img></a>
-		</li>
-		<li class="info">
-			<p class="title">${el.GoodName}2017款 16G内存256G SSD硬盘</p>
-			<ul class="content">
-				<li class="left">
-					<p><span>积分</span><span class="price price-point" data-sid="${el.ID}">￥${el.PointPrice}</span></p>
-					<p><span>金币</span><span class="price price-score" data-sid="${el.ID}">￥${el.ScorePrice}</span></p>
-					<p><span>钻石</span><span class="price price-diamond" data-sid="${el.ID}">￥${el.DiamondPrice}</span></p>
-				</li>
-				<li class="right">
-					<a class="btn btn-reduce" data-sid="${el.ID}" data-gid="${el.GoodID}">-</a>
-					<input type="number" class="num" value=1 data-sid="${el.ID}" data-gid="${el.GoodID}" />
-					<a class="btn btn-add" data-sid="${el.ID}" data-gid="${el.GoodID}">+</a>
-				</li>
-			</ul>
-		</li>
-	</ul>
+    <ul>
+        <li class="checked">
+            <a data-sid="${el.ID}" data-gid="${el.GoodID}"><span class="iconfont icon-fangxingweixuanzhong"></span></a>
+        </li>
+        <li class="img-box">
+            <a data-sid="${el.ID}" data-gid="${el.GoodID}"><img src="${el.IntroImg}"></img></a>
+        </li>
+        <li class="info">
+            <p class="title">${el.GoodName}2017款 16G内存256G SSD硬盘</p>
+            <ul class="content">
+                <li class="left">
+                    <p><span>积分</span><span class="price price-point" data-sid="${el.ID}">￥${el.PointPrice}</span></p>
+                    <p><span>金币</span><span class="price price-score" data-sid="${el.ID}">￥${el.ScorePrice}</span></p>
+                    <p><span>钻石</span><span class="price price-diamond" data-sid="${el.ID}">￥${el.DiamondPrice}</span></p>
+                </li>
+                <li class="right">
+                    <a class="btn btn-reduce" data-sid="${el.ID}" data-gid="${el.GoodID}">-</a>
+                    <input type="number" class="num" value=1 data-sid="${el.ID}" data-gid="${el.GoodID}" data-pprice="${el.PointPrice}" data-sprice="${el.ScorePrice}" data-dprice="${el.DiamondPrice}" />
+                    <a class="btn btn-add" data-sid="${el.ID}" data-gid="${el.GoodID}">+</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </li>
-	`).join('');
+    `).join('');
     $('#grid-shopCard').append(html);
 
     var reducBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce');
     var addBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-add');
     var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
-    var priceSpan = $('.main .grid .grid-item ul li.info ul li.left span.price');
+    var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
 
     reducBtns.click((e) => {
         var target = $(e.currentTarget);
@@ -49,7 +49,7 @@ var createPage = (data) => {
             var icon = target.closest('.grid-item').find('li.checked span.iconfont');
             var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
             if (isSelected) {
-                sumAmount(sid, gid, inum, liinfo, true, true);
+                sumAmount(sid, gid, inum, liinfo, true);
             }
         }
     });
@@ -65,7 +65,7 @@ var createPage = (data) => {
         var icon = target.closest('.grid-item').find('li.checked span.iconfont');
         var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
         if (isSelected) {
-            sumAmount(sid, gid, inum, liinfo, false, true);
+            sumAmount(sid, gid, inum, liinfo, true);
         }
     });
 
@@ -82,14 +82,61 @@ var createPage = (data) => {
         icon = aa.find('span.iconfont');
         var liinfo = aa.parent().siblings('li.info');
 
-        var isSelect = icon.prop('class').indexOf('icon-fangxingweixuanzhong') === -1;
+        var isSelect = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') === -1;
         var inum = liinfo.find('ul.content li.right input.num').val();
-        toggleSelect(icon, isSelect);
-        sumAmount(sid, gid, inum, liinfo, isadd, isSelect);
+        toggleSelect(icon, !isSelect);
+        sumAmount(sid, gid, inum, liinfo, isSelect);
+    });
+
+    var selectAllEle = $('#selectAll');
+    selectAllEle.click((e) => {
+        var target = $(e.currentTarget);
+        var iconAll = target.find('span.iconfont');
+        var isSelect = iconAll.prop('class').indexOf('icon-fangxingxuanzhongfill') === -1;
+        if (isSelect) {
+            iconAll.removeClass('icon-fangxingweixuanzhong');
+            iconAll.addClass('icon-fangxingxuanzhongfill');
+            acheck.find('span.iconfont').removeClass('icon-fangxingweixuanzhong');
+            acheck.find('span.iconfont').addClass('icon-fangxingxuanzhongfill');
+            numInputs.forEach((el) => {
+                var ele = $(el),
+                    sid = ele.attr('data-sid'),
+                    gid = ele.attr('data-gid'),
+                    inum = parseInt(ele.val()),
+                    pprice = parseInt(ele.attr('data-pprice')),
+                    sprice = parseInt(ele.attr('data-sprice')),
+                    dprice = parseInt(ele.attr('data-dprice')),
+                    p_am = inum * pprice,
+                    s_am = inum * sprice,
+                    d_am = inum * dprice;
+                selectedGoods.push({ ID: sid, GoodID: gid, Num: inum, PAmount: p_am, SAmount: s_am, DAmount: d_am });
+            });
+        } else {
+            iconAll.addClass('icon-fangxingweixuanzhong');
+            iconAll.removeClass('icon-fangxingxuanzhongfill');
+            acheck.find('span.iconfont').addClass('icon-fangxingweixuanzhong');
+            acheck.find('span.iconfont').removeClass('icon-fangxingxuanzhongfill');
+            selectedGoods.splice(0, selectedGoods.length);
+        }
+        var PAmount = 0,
+            SAmount = 0,
+            DAmount = 0,
+            num_all = 0;
+        selectedGoods.forEach((el, i) => {
+            PAmount += el.PAmount;
+            SAmount += el.SAmount;
+            DAmount += el.DAmount;
+            num_all += el.Num;
+        });
+
+        $('#p_amount').text('￥' + PAmount);
+        $('#s_amount').text('￥' + SAmount);
+        $('#d_amount').text('￥' + DAmount);
+        $('#allnum').text(num_all);
     });
 }
 
-var sumAmount = (sid, gid, inum, liinfo, isadd, isSelect) => {
+var sumAmount = (sid, gid, inum, liinfo, isSelect) => {
     var ipprice = liinfo.find('ul.content li.left span.price.price-point').text().replace('￥', '');
     var isprice = liinfo.find('ul.content li.left span.price.price-score').text().replace('￥', '');
     var idprice = liinfo.find('ul.content li.left span.price.price-diamond').text().replace('￥', '');
@@ -105,7 +152,7 @@ var sumAmount = (sid, gid, inum, liinfo, isadd, isSelect) => {
         return el.ID === sid;
     });
     if (!isSelect) {
-        selectedGoods.splice(i, 1);
+        selectedGoods.splice(index, 1);
     } else {
         if (el) {
             el.Num = inum;
@@ -145,8 +192,13 @@ var toggleSelect = (icon, isSelect) => {
 
 var selectedGoods = [];
 
+var getMockData = () => {
+    return Promise.resolve(mockData);
+}
+
 var initData = () => {
-    fetchData('/ShopCarList')
+    // fetchData('/ShopCarList')
+    getMockData()
         .then((res) => {
             createPage(res.message);
         })

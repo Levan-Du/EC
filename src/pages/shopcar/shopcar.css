@@ -47,7 +47,7 @@ span.iconfont.icon-fangxingxuanzhongfill {
 
 @media(max-width: 320px) {
     .menubar .action-wrap .action.right {
-        width: 5rem;
+        width: 6rem;
     }
 }
 
@@ -115,6 +115,7 @@ span.iconfont.icon-fangxingxuanzhongfill {
 .main .grid .grid-item ul li.info ul li.left {
     display: flex;
     flex-wrap: wrap;
+    font-size: .8rem;
 }
 
 .main .grid .grid-item ul li.info ul li.left p {

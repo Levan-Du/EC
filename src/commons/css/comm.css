@@ -81,6 +81,7 @@ a {
     line-height: 3.2rem;
     border-top: solid 1px #eee;
     text-align: center;
+    background: #f8f8f8;
 }
 
 .topbar {
@@ -119,7 +120,6 @@ a {
     align-items: center;
     flex: 1;
 }
-
 
 .menubar .action-wrap .action-left {
     display: flex;
