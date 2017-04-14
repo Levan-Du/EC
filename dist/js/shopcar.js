@@ -7899,7 +7899,7 @@ exports.clearImmediate = clearImmediate;
 /* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 exports.init = undefined;
 
@@ -7912,26 +7912,138 @@ var _shopcar2 = _interopRequireDefault(_shopcar);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var createPage = function createPage(data) {
-	var html = data.map(function (el) {
-		return '\n<li>\n\t<ul>\n\t\t<li class="checked">\n\t\t\t<a><span class="iconfont icon-fangxingweixuanzhong"></span></a>\n\t\t</li>\n\t\t<li class="img-box">\n\t\t\t<img src="' + el.IntroImg + '"></img>\n\t\t</li>\n\t\t<li class="info">\n\t\t\t<p>' + el.GoodName + '</p>\n\t\t\t<ul>\n\t\t\t\t<li class="left">\n\t\t\t\t\t<p><span>\u79EF\u5206\uFFE5' + el.PointPrice + '</span></p>\n\t\t\t\t\t<p><span>\u91D1\u5E01\uFFE5' + el.ScorePrice + '</span></p>\n\t\t\t\t\t<p><span>\u94BB\u77F3\uFFE5' + el.DiamondPrice + '</span></p>\n\t\t\t\t</li>\n\t\t\t\t<li class="right">\n\t\t\t\t\t<a>-</a><input type="number" /><a>+</a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</li>\n\t</ul>\n</li>\n\t';
-	}).join('');
-	console.log(html);
-	$('#grid-shopCard').append(html);
+    var html = data.map(function (el) {
+        return '\n<li class="grid-item">\n\t<ul>\n\t\t<li class="checked">\n\t\t\t<a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><span class="iconfont icon-fangxingweixuanzhong"></span></a>\n\t\t</li>\n\t\t<li class="img-box">\n\t\t\t<a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><img src="' + el.IntroImg + '"></img></a>\n\t\t</li>\n\t\t<li class="info">\n\t\t\t<p class="title">' + el.GoodName + '2017\u6B3E 16G\u5185\u5B58256G SSD\u786C\u76D8</p>\n\t\t\t<ul class="content">\n\t\t\t\t<li class="left">\n\t\t\t\t\t<p><span>\u79EF\u5206</span><span class="price price-point" data-sid="' + el.ID + '">\uFFE5' + el.PointPrice + '</span></p>\n\t\t\t\t\t<p><span>\u91D1\u5E01</span><span class="price price-score" data-sid="' + el.ID + '">\uFFE5' + el.ScorePrice + '</span></p>\n\t\t\t\t\t<p><span>\u94BB\u77F3</span><span class="price price-diamond" data-sid="' + el.ID + '">\uFFE5' + el.DiamondPrice + '</span></p>\n\t\t\t\t</li>\n\t\t\t\t<li class="right">\n\t\t\t\t\t<a class="btn btn-reduce" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">-</a>\n\t\t\t\t\t<input type="number" class="num" value=1 data-sid="' + el.ID + '" data-gid="' + el.GoodID + '" />\n\t\t\t\t\t<a class="btn btn-add" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">+</a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</li>\n\t</ul>\n</li>\n\t';
+    }).join('');
+    $('#grid-shopCard').append(html);
+
+    var reducBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce');
+    var addBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-add');
+    var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
+    var priceSpan = $('.main .grid .grid-item ul li.info ul li.left span.price');
+
+    reducBtns.click(function (e) {
+        var target = $(e.currentTarget);
+        var sid = target.attr('data-sid');
+        var gid = target.attr('data-gid');
+        var num = target.siblings('input.num'); //reducBtns.parent().find('input.num[data-sid="' + sid + '"]');
+        var inum = parseInt(num.val());
+        if (inum > 1) {
+            inum = inum - 1;
+            num.val(inum);
+            var liinfo = target.closest('li.info');
+            var icon = target.closest('.grid-item').find('li.checked span.iconfont');
+            var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
+            if (isSelected) {
+                sumAmount(sid, gid, inum, liinfo, true, true);
+            }
+        }
+    });
+
+    addBtns.click(function (e) {
+        var target = $(e.currentTarget);
+        var sid = target.attr('data-sid');
+        var gid = target.attr('data-gid');
+        var num = target.siblings('input.num'); //addBtns.parent().find('input.num[data-sid="' + sid + '"]');
+        var inum = parseInt(num.val()) + 1;
+        num.val(inum);
+        var liinfo = target.closest('li.info');
+        var icon = target.closest('.grid-item').find('li.checked span.iconfont');
+        var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
+        if (isSelected) {
+            sumAmount(sid, gid, inum, liinfo, false, true);
+        }
+    });
+
+    // fangxingxuanzhongfill
+    var acheck = $('.main .grid .grid-item ul li.checked a');
+    acheck.click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var sid, gid, icon, aa;
+
+        sid = $(e.currentTarget).attr('data-sid');
+        gid = $(e.currentTarget).attr('data-gid');
+        aa = $(e.currentTarget); //acheck.filter('[data-sid="' + sid + '"]');
+        icon = aa.find('span.iconfont');
+        var liinfo = aa.parent().siblings('li.info');
+
+        var isSelect = icon.prop('class').indexOf('icon-fangxingweixuanzhong') === -1;
+        var inum = liinfo.find('ul.content li.right input.num').val();
+        toggleSelect(icon, isSelect);
+        sumAmount(sid, gid, inum, liinfo, isadd, isSelect);
+    });
 };
 
+var sumAmount = function sumAmount(sid, gid, inum, liinfo, isadd, isSelect) {
+    var ipprice = liinfo.find('ul.content li.left span.price.price-point').text().replace('￥', '');
+    var isprice = liinfo.find('ul.content li.left span.price.price-score').text().replace('￥', '');
+    var idprice = liinfo.find('ul.content li.left span.price.price-diamond').text().replace('￥', '');
+
+    inum = parseInt(inum);
+    var p_am = inum * parseFloat(ipprice);
+    var s_am = inum * parseFloat(isprice);
+    var d_am = inum * parseFloat(idprice);
+
+    var index = 0;
+    var el = selectedGoods.find(function (el, i) {
+        index = i;
+        return el.ID === sid;
+    });
+    if (!isSelect) {
+        selectedGoods.splice(i, 1);
+    } else {
+        if (el) {
+            el.Num = inum;
+            el.PAmount = p_am;
+            el.SAmount = s_am;
+            el.DAmount = d_am;
+        } else {
+            selectedGoods.push({ ID: sid, GoodID: gid, Num: inum, PAmount: p_am, SAmount: s_am, DAmount: d_am });
+        }
+    }
+    var PAmount = 0,
+        SAmount = 0,
+        DAmount = 0,
+        num_all = 0;
+    selectedGoods.forEach(function (el, i) {
+        PAmount += el.PAmount;
+        SAmount += el.SAmount;
+        DAmount += el.DAmount;
+        num_all += el.Num;
+    });
+
+    $('#p_amount').text('￥' + PAmount);
+    $('#s_amount').text('￥' + SAmount);
+    $('#d_amount').text('￥' + DAmount);
+    $('#allnum').text(num_all);
+};
+
+var toggleSelect = function toggleSelect(icon, isSelect) {
+    if (isSelect) {
+        icon.removeClass('icon-fangxingxuanzhongfill');
+        icon.addClass('icon-fangxingweixuanzhong');
+    } else {
+        icon.removeClass('icon-fangxingweixuanzhong');
+        icon.addClass('icon-fangxingxuanzhongfill');
+    }
+};
+
+var selectedGoods = [];
+
 var initData = function initData() {
-	(0, _ajax.fetchData)('/ShopCarList').then(function (res) {
-		createPage(res.message);
-	}).catch(function (err) {
-		console.log(err);
-	});
+    (0, _ajax.fetchData)('/ShopCarList').then(function (res) {
+        createPage(res.message);
+    }).catch(function (err) {
+        console.log(err);
+    });
 };
 
 var initAction = function initAction() {};
 
 var init = exports.init = function init() {
-	initData();
-	initAction();
+    initData();
+    initAction();
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7981,6 +8093,11 @@ $(function (e) {
 
 "use strict";
 
+
+var data = {
+    "status": "success",
+    "message": [{ "checked": false, "selected": false, "ID": "14", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/13 15:46:18", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "1" }, { "checked": false, "selected": false, "ID": "12", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "2" }, { "checked": false, "selected": false, "ID": "11", "GameID": "10020", "GoodID": "9", "Num": "7", "Created": "2017/4/13 9:59:37", "Modified": "2017/4/13 10:00:05", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "3" }, { "checked": false, "selected": false, "ID": "9", "GameID": "1001", "GoodID": "9", "Num": "1", "Created": "2017/4/13 9:26:54", "Modified": "2017/4/13 9:26:54", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "4" }, { "checked": false, "selected": false, "ID": "8", "GameID": "10012", "GoodID": "12", "Num": "6", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/12 18:54:00", "GoodName": "商品BBB", "PointPrice": "12.00", "ScorePrice": "12.00", "DiamondPrice": "12.00", "IntroImg": "/images/1003.png", "RowNo": "5" }, { "checked": false, "selected": false, "ID": "2", "GameID": "100104", "GoodID": "9", "Num": "14", "Created": "1990/1/1 0:00:00", "Modified": "1990/1/1 0:00:00", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "6" }]
+};
 
 /***/ })
 /******/ ]);

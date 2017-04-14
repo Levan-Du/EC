@@ -34,11 +34,18 @@
                     </a>
                 </li>
                 <li class="action mid">
-                    <p>合计：￥<span>6888.00</span></p>
-                        <p>总额￥6888.00 立减￥0.00</p>
+                    <!-- <p>合计：￥<span>6888.00</span></p> -->
+                        <p>总额：
+                            <select>
+                                <option value=1>积分</option>
+                                <option value=2>金币</option>
+                                <option value=3>钻石</option>
+                            </select>
+                            <span id="p_amount" class="amount active">￥0.00</span><span id="s_amount" class="amount">￥0.00</span><span id="d_amount" class="amount">￥0.00</span> 立减<span id="discount" class="amount active">￥0.00</span>
+                        </p>
                 </li>
                 <li class="action right">
-                    <a class="action-item-noicon" id="btn_topay" href="pay.html?id=1">去结算(1)</a>
+                    <a class="action-item-noicon" id="btn_topay" href="pay.html?id=1">去结算(<span id="allnum">0</span>)</a>
                 </li>
             </ul>
         </footer>

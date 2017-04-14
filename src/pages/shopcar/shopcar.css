@@ -26,11 +26,23 @@
     flex: 1;
 }
 
+.menubar .action-wrap .action.mid p {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .menubar .action-wrap .action.right {
     width: 6rem;
     background: #e33;
     color: #fff;
     flex: none;
+}
+
+span.iconfont.icon-fangxingxuanzhongfill {
+    color: red;
 }
 
 @media(max-width: 320px) {
@@ -66,18 +78,21 @@
 }
 
 .main .grid .grid-item ul {
+    width: 100%;
+    height: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
 .main .grid .grid-item ul li.checked {
-    width: 2rem;
+    width: 1.5rem;
     text-align: center;
 }
 
 .main .grid .grid-item ul li.checked span.iconfont {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
 }
 
 .main .grid .grid-item ul li.img-box {
@@ -93,7 +108,7 @@
     overflow: hidden;
 }
 
-.main .grid .grid-item ul li.info ul {
+.main .grid .grid-item ul li.info ul.content {
     display: flex;
 }
 
@@ -104,6 +119,7 @@
 
 .main .grid .grid-item ul li.info ul li.left p {
     margin-right: .5rem;
+    color: #666;
 }
 
 .main .grid .grid-item ul li.info ul li.left .price {
@@ -120,6 +136,7 @@
     width: 2rem;
     border-top: solid 1px #ccc;
     border-bottom: solid 1px #ccc;
+    text-align: center;
 }
 
 .main .grid .grid-item ul li.info ul li.right .btn {
@@ -130,4 +147,13 @@
 
 .main .grid .grid-item ul li.info ul li.right .btn.btn-reduce {
     padding: 0 .7rem;
+}
+
+.menubar .action-wrap .action p span.amount {
+    display: none;
+    padding-right: .5rem;
+}
+
+.menubar .action-wrap .action p span.amount.active {
+    display: block;
 }

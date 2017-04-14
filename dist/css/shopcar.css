@@ -317,6 +317,24 @@ a {
             flex: 1;
 }
 
+.menubar .action-wrap .action.mid p {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
 .menubar .action-wrap .action.right {
     width: 6rem;
     background: #e33;
@@ -324,6 +342,10 @@ a {
     -webkit-box-flex: 0;
         -ms-flex: none;
             flex: none;
+}
+
+span.iconfont.icon-fangxingxuanzhongfill {
+    color: red;
 }
 
 @media(max-width: 320px) {
@@ -344,6 +366,116 @@ a {
     }
 }
 
+.main {
+    background: #eee;
+}
+
 .main .grid img {
     width: 6rem;
+}
+
+.main .grid .grid-item {
+    margin: .3rem 0;
+    padding: .3rem;
+    background: #fff;
+}
+
+.main .grid .grid-item ul {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.main .grid .grid-item ul li.checked {
+    width: 1.5rem;
+    text-align: center;
+}
+
+.main .grid .grid-item ul li.checked span.iconfont {
+    font-size: 1.5rem;
+}
+
+.main .grid .grid-item ul li.img-box {
+    margin: 0 .5rem;
+}
+
+.main .grid .grid-item ul li.info {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.main .grid .grid-item ul li.info p.title {
+    height: 3rem;
+    overflow: hidden;
+}
+
+.main .grid .grid-item ul li.info ul.content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.main .grid .grid-item ul li.info ul li.left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.main .grid .grid-item ul li.info ul li.left p {
+    margin-right: .5rem;
+    color: #666;
+}
+
+.main .grid .grid-item ul li.info ul li.left .price {
+    color: #e33;
+}
+
+.main .grid .grid-item ul li.info ul li.right {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+}
+
+.main .grid .grid-item ul li.info ul li.right input.num {
+    border-radius: 0;
+    width: 2rem;
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    text-align: center;
+}
+
+.main .grid .grid-item ul li.info ul li.right .btn {
+    font-size: 1.3rem;
+    padding: 0 .5rem;
+    border-radius: 0;
+}
+
+.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce {
+    padding: 0 .7rem;
+}
+
+.menubar .action-wrap .action p span.amount {
+    display: none;
+    padding-right: .5rem;
+}
+
+.menubar .action-wrap .action p span.amount.active {
+    display: block;
 }
