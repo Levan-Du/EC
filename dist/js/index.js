@@ -7928,19 +7928,10 @@ var getGoods = function getGoods() {
 var initData = function initData() {
     // getGoods()
     (0, _ajax.fetchData)('/GoodsList').then(function (res) {
-        console.log(res);
         createGoods(res.message);
     }).catch(function (err) {
         alert(err);
     });
-
-    // fetchData('/GoodsList')
-    // .then((res)=>{
-    //     console.log(res);
-    // })
-    // .catch((err)=>{
-    //     console.log(err);
-    // });
 };
 
 var selectMunuItem = '#btn_home';

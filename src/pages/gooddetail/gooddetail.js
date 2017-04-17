@@ -4,7 +4,7 @@ import mockData from './gooddetail.mock';
 
 var mySwiper;
 var slide = () => {
-    mySwiper = new Swiper('.swiper-container', {
+    mySwiper = new Swiper('.swiper-page', {
         loop: false,
         onSlideChangeStart: (e) => {
             selectTab(e);
@@ -38,7 +38,14 @@ var selectTab = (e) => {
     selectTabIndex = index;
 }
 
-
+var renderImgBox = () => {
+    var html = mockData.images.map(el => `
+        <li class="swiper-slide">
+            <img src="${el}"
+        <li>
+`);
+    $('.main #good-img-box').append(html);
+}
 
 var initData = () => {
 
@@ -48,6 +55,7 @@ var initData = () => {
 var initAction = () => {
     slide();
     clickToSlide();
+    renderImgBox();
 }
 
 export var init = () => {
