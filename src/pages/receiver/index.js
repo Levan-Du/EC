@@ -1,8 +1,8 @@
 import '../../assets/iconfont/iconfont.css';
 import '../../commons/css/comm.css';
-import './pay.css';
+import './receiver.css';
 
-import { init } from './pay.js';
+import { init } from './receiver.js';
 
 $(function(e) {
     init();

@@ -177,6 +177,7 @@ a {
     line-height: 3.2rem;
     border-top: solid 1px #eee;
     text-align: center;
+    background: #f8f8f8;
 }
 
 .topbar {
@@ -237,7 +238,6 @@ a {
             flex: 1;
 }
 
-
 .menubar .action-wrap .action-left {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -278,7 +278,8 @@ a {
             flex: 1;
     color: #fff;
     font-size: 1rem;
-}.main {
+}
+.main {
     background: #eee;
 }
 

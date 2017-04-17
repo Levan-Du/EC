@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7905,7 +7905,7 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _shopcar = __webpack_require__(30);
+var _shopcar = __webpack_require__(29);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
 
@@ -7913,14 +7913,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var createPage = function createPage(data) {
     var html = data.map(function (el) {
-        return '\n<li class="grid-item">\n\t<ul>\n\t\t<li class="checked">\n\t\t\t<a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><span class="iconfont icon-fangxingweixuanzhong"></span></a>\n\t\t</li>\n\t\t<li class="img-box">\n\t\t\t<a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><img src="' + el.IntroImg + '"></img></a>\n\t\t</li>\n\t\t<li class="info">\n\t\t\t<p class="title">' + el.GoodName + '2017\u6B3E 16G\u5185\u5B58256G SSD\u786C\u76D8</p>\n\t\t\t<ul class="content">\n\t\t\t\t<li class="left">\n\t\t\t\t\t<p><span>\u79EF\u5206</span><span class="price price-point" data-sid="' + el.ID + '">\uFFE5' + el.PointPrice + '</span></p>\n\t\t\t\t\t<p><span>\u91D1\u5E01</span><span class="price price-score" data-sid="' + el.ID + '">\uFFE5' + el.ScorePrice + '</span></p>\n\t\t\t\t\t<p><span>\u94BB\u77F3</span><span class="price price-diamond" data-sid="' + el.ID + '">\uFFE5' + el.DiamondPrice + '</span></p>\n\t\t\t\t</li>\n\t\t\t\t<li class="right">\n\t\t\t\t\t<a class="btn btn-reduce" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">-</a>\n\t\t\t\t\t<input type="number" class="num" value=1 data-sid="' + el.ID + '" data-gid="' + el.GoodID + '" />\n\t\t\t\t\t<a class="btn btn-add" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">+</a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</li>\n\t</ul>\n</li>\n\t';
+        return '\n<li class="grid-item">\n    <ul>\n        <li class="checked">\n            <a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><span class="iconfont icon-fangxingweixuanzhong"></span></a>\n        </li>\n        <li class="img-box">\n            <a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><img src="' + el.IntroImg + '"></img></a>\n        </li>\n        <li class="info">\n            <p class="title">' + el.GoodName + '2017\u6B3E 16G\u5185\u5B58256G SSD\u786C\u76D8</p>\n            <ul class="content">\n                <li class="left">\n                    <p><span>\u79EF\u5206</span><span class="price price-point" data-sid="' + el.ID + '">\uFFE5' + el.PointPrice + '</span></p>\n                    <p><span>\u91D1\u5E01</span><span class="price price-score" data-sid="' + el.ID + '">\uFFE5' + el.ScorePrice + '</span></p>\n                    <p><span>\u94BB\u77F3</span><span class="price price-diamond" data-sid="' + el.ID + '">\uFFE5' + el.DiamondPrice + '</span></p>\n                </li>\n                <li class="right">\n                    <a class="btn btn-reduce" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">-</a>\n                    <input type="number" class="num" value=1 data-sid="' + el.ID + '" data-gid="' + el.GoodID + '" data-pprice="' + el.PointPrice + '" data-sprice="' + el.ScorePrice + '" data-dprice="' + el.DiamondPrice + '" />\n                    <a class="btn btn-add" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">+</a>\n                </li>\n            </ul>\n        </li>\n    </ul>\n</li>\n    ';
     }).join('');
     $('#grid-shopCard').append(html);
 
     var reducBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce');
     var addBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-add');
     var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
-    var priceSpan = $('.main .grid .grid-item ul li.info ul li.left span.price');
+    var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
 
     reducBtns.click(function (e) {
         var target = $(e.currentTarget);
@@ -7935,7 +7935,7 @@ var createPage = function createPage(data) {
             var icon = target.closest('.grid-item').find('li.checked span.iconfont');
             var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
             if (isSelected) {
-                sumAmount(sid, gid, inum, liinfo, true, true);
+                sumAmount(sid, gid, inum, liinfo, true);
             }
         }
     });
@@ -7951,7 +7951,7 @@ var createPage = function createPage(data) {
         var icon = target.closest('.grid-item').find('li.checked span.iconfont');
         var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
         if (isSelected) {
-            sumAmount(sid, gid, inum, liinfo, false, true);
+            sumAmount(sid, gid, inum, liinfo, true);
         }
     });
 
@@ -7968,14 +7968,61 @@ var createPage = function createPage(data) {
         icon = aa.find('span.iconfont');
         var liinfo = aa.parent().siblings('li.info');
 
-        var isSelect = icon.prop('class').indexOf('icon-fangxingweixuanzhong') === -1;
+        var isSelect = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') === -1;
         var inum = liinfo.find('ul.content li.right input.num').val();
-        toggleSelect(icon, isSelect);
-        sumAmount(sid, gid, inum, liinfo, isadd, isSelect);
+        toggleSelect(icon, !isSelect);
+        sumAmount(sid, gid, inum, liinfo, isSelect);
+    });
+
+    var selectAllEle = $('#selectAll');
+    selectAllEle.click(function (e) {
+        var target = $(e.currentTarget);
+        var iconAll = target.find('span.iconfont');
+        var isSelect = iconAll.prop('class').indexOf('icon-fangxingxuanzhongfill') === -1;
+        if (isSelect) {
+            iconAll.removeClass('icon-fangxingweixuanzhong');
+            iconAll.addClass('icon-fangxingxuanzhongfill');
+            acheck.find('span.iconfont').removeClass('icon-fangxingweixuanzhong');
+            acheck.find('span.iconfont').addClass('icon-fangxingxuanzhongfill');
+            numInputs.forEach(function (el) {
+                var ele = $(el),
+                    sid = ele.attr('data-sid'),
+                    gid = ele.attr('data-gid'),
+                    inum = parseInt(ele.val()),
+                    pprice = parseInt(ele.attr('data-pprice')),
+                    sprice = parseInt(ele.attr('data-sprice')),
+                    dprice = parseInt(ele.attr('data-dprice')),
+                    p_am = inum * pprice,
+                    s_am = inum * sprice,
+                    d_am = inum * dprice;
+                selectedGoods.push({ ID: sid, GoodID: gid, Num: inum, PAmount: p_am, SAmount: s_am, DAmount: d_am });
+            });
+        } else {
+            iconAll.addClass('icon-fangxingweixuanzhong');
+            iconAll.removeClass('icon-fangxingxuanzhongfill');
+            acheck.find('span.iconfont').addClass('icon-fangxingweixuanzhong');
+            acheck.find('span.iconfont').removeClass('icon-fangxingxuanzhongfill');
+            selectedGoods.splice(0, selectedGoods.length);
+        }
+        var PAmount = 0,
+            SAmount = 0,
+            DAmount = 0,
+            num_all = 0;
+        selectedGoods.forEach(function (el, i) {
+            PAmount += el.PAmount;
+            SAmount += el.SAmount;
+            DAmount += el.DAmount;
+            num_all += el.Num;
+        });
+
+        $('#p_amount').text('￥' + PAmount);
+        $('#s_amount').text('￥' + SAmount);
+        $('#d_amount').text('￥' + DAmount);
+        $('#allnum').text(num_all);
     });
 };
 
-var sumAmount = function sumAmount(sid, gid, inum, liinfo, isadd, isSelect) {
+var sumAmount = function sumAmount(sid, gid, inum, liinfo, isSelect) {
     var ipprice = liinfo.find('ul.content li.left span.price.price-point').text().replace('￥', '');
     var isprice = liinfo.find('ul.content li.left span.price.price-score').text().replace('￥', '');
     var idprice = liinfo.find('ul.content li.left span.price.price-diamond').text().replace('￥', '');
@@ -7991,7 +8038,7 @@ var sumAmount = function sumAmount(sid, gid, inum, liinfo, isadd, isSelect) {
         return el.ID === sid;
     });
     if (!isSelect) {
-        selectedGoods.splice(i, 1);
+        selectedGoods.splice(index, 1);
     } else {
         if (el) {
             el.Num = inum;
@@ -8031,8 +8078,13 @@ var toggleSelect = function toggleSelect(icon, isSelect) {
 
 var selectedGoods = [];
 
+var getMockData = function getMockData() {
+    return Promise.resolve(_shopcar2.default);
+};
+
 var initData = function initData() {
-    (0, _ajax.fetchData)('/ShopCarList').then(function (res) {
+    // fetchData('/ShopCarList')
+    getMockData().then(function (res) {
         createPage(res.message);
     }).catch(function (err) {
         console.log(err);
@@ -8067,8 +8119,7 @@ var init = exports.init = function init() {
 /* 25 */,
 /* 26 */,
 /* 27 */,
-/* 28 */,
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8088,16 +8139,21 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var data = {
     "status": "success",
     "message": [{ "checked": false, "selected": false, "ID": "14", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/13 15:46:18", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "1" }, { "checked": false, "selected": false, "ID": "12", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "2" }, { "checked": false, "selected": false, "ID": "11", "GameID": "10020", "GoodID": "9", "Num": "7", "Created": "2017/4/13 9:59:37", "Modified": "2017/4/13 10:00:05", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "3" }, { "checked": false, "selected": false, "ID": "9", "GameID": "1001", "GoodID": "9", "Num": "1", "Created": "2017/4/13 9:26:54", "Modified": "2017/4/13 9:26:54", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "4" }, { "checked": false, "selected": false, "ID": "8", "GameID": "10012", "GoodID": "12", "Num": "6", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/12 18:54:00", "GoodName": "商品BBB", "PointPrice": "12.00", "ScorePrice": "12.00", "DiamondPrice": "12.00", "IntroImg": "/images/1003.png", "RowNo": "5" }, { "checked": false, "selected": false, "ID": "2", "GameID": "100104", "GoodID": "9", "Num": "14", "Created": "1990/1/1 0:00:00", "Modified": "1990/1/1 0:00:00", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "6" }]
 };
+
+exports.default = data;
 
 /***/ })
 /******/ ]);

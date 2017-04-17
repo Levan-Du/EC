@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -66,9 +66,8 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */
@@ -1726,29 +1725,111 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 }))
 
 /***/ }),
-
-/***/ 1:
+/* 1 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-
-/***/ 14:
+/* 2 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 2:
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.init = undefined;
+
+__webpack_require__(20);
+
+__webpack_require__(30);
+
+var _gooddetail = __webpack_require__(21);
+
+var _gooddetail2 = _interopRequireDefault(_gooddetail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mySwiper;
+var slide = function slide() {
+    mySwiper = new Swiper('.swiper-container', {
+        loop: false,
+        onSlideChangeStart: function onSlideChangeStart(e) {
+            selectTab(e);
+        }
+    });
+};
+var labels = $('.tab-swiper .tab-label');
+var clickToSlide = function clickToSlide() {
+    labels.find('a').click(function (e) {
+        var t = $(e.target).parent('.tab-label');
+        var index = labels.index(t[0]);
+        if (index === selectTabIndex) {
+            return;
+        }
+
+        mySwiper.slideTo(index, 600, false);
+
+        labels.eq(index).addClass('active');
+        labels.eq(selectTabIndex).removeClass('active');
+        selectTabIndex = index;
+    });
+};
+
+var selectTabIndex = 0;
+
+var selectTab = function selectTab(e) {
+    var tablabel = $('.swiper-slide.swiper-slide-active').attr('data-label');
+    var index = labels.index('[data-for="' + tablabel + '"]');
+    labels.eq(index).addClass('active');
+    labels.eq(selectTabIndex).removeClass('active');
+    selectTabIndex = index;
+};
+
+var initData = function initData() {};
+
+var initAction = function initAction() {
+    slide();
+    clickToSlide();
+};
+
+var init = exports.init = function init() {
+    initData();
+    initAction();
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-
-/***/ 20:
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2653,8 +2734,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //# sourceMappingURL=maps/swiper.jquery.min.js.map
 
 /***/ }),
-
-/***/ 21:
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2667,8 +2747,7 @@ var good = {
 };
 
 /***/ }),
-
-/***/ 22:
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2688,84 +2767,17 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-
-/***/ 31:
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.init = undefined;
-
-__webpack_require__(20);
-
-__webpack_require__(31);
-
-var _gooddetail = __webpack_require__(21);
-
-var _gooddetail2 = _interopRequireDefault(_gooddetail);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mySwiper;
-var slide = function slide() {
-    mySwiper = new Swiper('.swiper-container', {
-        loop: false,
-        onSlideChangeStart: function onSlideChangeStart(e) {
-            selectTab(e);
-        }
-    });
-};
-var labels = $('.tab-swiper .tab-label');
-var clickToSlide = function clickToSlide() {
-    labels.find('a').click(function (e) {
-        var t = $(e.target).parent('.tab-label');
-        var index = labels.index(t[0]);
-        if (index === selectTabIndex) {
-            return;
-        }
-
-        mySwiper.slideTo(index, 600, false);
-
-        labels.eq(index).addClass('active');
-        labels.eq(selectTabIndex).removeClass('active');
-        selectTabIndex = index;
-    });
-};
-
-var selectTabIndex = 0;
-
-var selectTab = function selectTab(e) {
-    var tablabel = $('.swiper-slide.swiper-slide-active').attr('data-label');
-    var index = labels.index('[data-for="' + tablabel + '"]');
-    labels.eq(index).addClass('active');
-    labels.eq(selectTabIndex).removeClass('active');
-    selectTabIndex = index;
-};
-
-var initData = function initData() {};
-
-var initAction = function initAction() {
-    slide();
-    clickToSlide();
-};
-
-var init = exports.init = function init() {
-    initData();
-    initAction();
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
 /***/ })
-
-/******/ });
+/******/ ]);

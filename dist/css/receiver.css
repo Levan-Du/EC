@@ -279,116 +279,104 @@ a {
     color: #fff;
     font-size: 1rem;
 }
-.topbar {
+.main section {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    border-bottom: solid 1px #eee;
+    padding: .8rem .5rem;    
+}
+
+.main section.form-valid p {
+    width: 100%;
+}
+
+.main section input {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.main section.form-valid button {
+    margin: .8rem 0 .8rem .5rem;
     padding: 0 .5rem;
 }
 
-.topbar input {
-    height: 1.8rem;
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-}
-
-.topbar button {
-    width: 2rem;
+.main section.form-info input {
     border: none;
-    background: transparent;
 }
 
-.menubar .action-wrap .action {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+.main section.form-info label {
+    display: block;
+    width: 5rem;
 }
 
-.main {
-    background: #eee;
-}
-
-.grid {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-}
-
-.grid .grid-item {
-    width: 32.5%;
-    background: #fff;
-    margin-top: .4rem;
-    font-size: .6rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: flex-end;
-}
-
-@media(max-width: 640px) {
-    .grid .grid-item {
-        width: 49.5%;
-        margin-top: .2rem;
-    }
-}
-
-.grid .grid-item .good-img-link {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-}
-
-.grid .grid-item .good-img-link img {
-    width: 100%;
-    height: 100%;
-}
-
-.grid .grid-item .good-info {
+.main section.form-detail {
+    font-size: .8rem;
     padding: .5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    padding-top: 0;
+    border-bottom: none;
 }
 
-.grid .grid-item .good-info .good-info-item {
+.main section.form-detail ul:before {
+    content: "";
+    display: block;
+    height: .6rem;
+    background: #f8f8f8;
+}
+
+.main section.form-detail ul {
     width: 100%;
 }
 
-.grid .grid-item .good-info .price {
-    font-size: .9rem;
-    color: #e33;
-}
-
-.grid .grid-item .good-info .action {
+.main section.form-detail ul li {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -ms-flex-line-pack: end;
-        align-content: flex-end;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
 }
 
-.grid .grid-item .good-info .action .btn {
-    padding: .2rem;
-    background: #e33;
+.main section.form-detail img {
+    width: 6rem;
+    height: 6rem;
+}
+
+.main section.form-detail p {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.main section.form-detail i {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    color: #f32;
+}
+
+.menubar {
+    padding: 0 .5rem;
+}
+
+.menubar input.btn-submit {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    width: 100%;
+    font-size: 1rem;
     color: #fff;
-}
-
-.grid .grid-item .good-info .action .btn span {
-    font-size: .7rem;
+    height: 2.5rem;
+    background: #f21;
 }

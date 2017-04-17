@@ -19,7 +19,7 @@ var createOrders = (data) => {
                     `)}
                 </dd>
                 <dd class="order-item-sum">
-                    <p>共${o.Num}件商品,兑换${formatPayTypeToString(o.PayType)}：${o.Amount}</p>
+                    <p>共${o.Num}件商品,兑换${formatreceiverTypeToString(o.receiverType)}：${o.Amount}</p>
                     <a class="btn" data-oid="${o.OrderID}">再次兑换</a>
                 </dd>
             </dl>
@@ -29,7 +29,7 @@ var createOrders = (data) => {
     $('#grid-orders').append(tmpl);
 }
 
-var formatPayTypeToString = (type) => {
+var formatreceiverTypeToString = (type) => {
     var new_type = parseInt(type);
     console.log(new_type)
     switch(new_type){

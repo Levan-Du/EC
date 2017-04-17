@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -7917,12 +7917,12 @@ var createOrders = function createOrders(data) {
     var tmpl = '\n    ' + data.map(function (o) {
         return '\n        <li class="grid-item">\n            <dl>\n                <dt class="order-item-title">\n                    <a><span class="iconfont icon-dingdan"><span>\u5151\u6362\u5355\u53F7\uFF1A<span class="ordercode">' + o.OrderNo + '</span></a>\n                    <span>\u72B6\u6001\uFF1A\u5B8C\u6210</span>\n                </dt>\n                <dd class="order-item-goods">\n                    ' + o.OrderDetails.map(function (g) {
             return '\n                    <a data-oid="' + o.OrderID + '" data-gid="' + g.GoodID + '">\n                        <img src="' + g.IntroImg + '">\n                    </a>\n                    ';
-        }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + formatPayTypeToString(o.PayType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
+        }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + formatreceiverTypeToString(o.receiverType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
     }).join('') + '\n    ';
     $('#grid-orders').append(tmpl);
 };
 
-var formatPayTypeToString = function formatPayTypeToString(type) {
+var formatreceiverTypeToString = function formatreceiverTypeToString(type) {
     var new_type = parseInt(type);
     console.log(new_type);
     switch (new_type) {
@@ -8015,14 +8015,14 @@ var data = {
         OrderCode: '001',
         Num: 1,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '2003.png' }]
     }, {
         OrderID: '001',
         OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1002.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }]
 
     }, {
@@ -8030,42 +8030,42 @@ var data = {
         OrderCode: '001',
         Num: 3,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1002.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '1003.png' }]
     }, {
         OrderID: '001',
         OrderCode: '001',
         Num: 1,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }]
     }, {
         OrderID: '001',
         OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '1007.png' }, { GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
         OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
         OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }, {
         OrderID: '001',
         OrderCode: '001',
         Num: 2,
         Amount: '6888.00',
-        payType: 1,
+        receiverType: 1,
         goods: [{ GoodID: 1, Price: '6888.00', ImgUrl: '4003.png' }]
     }]
 };

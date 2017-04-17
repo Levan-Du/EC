@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title id="head-title">购物车页面</title>
     <script type="text/javascript" src="/js/fit.js"></script>
-<link href="/css/shopcar.css?5a9eea6bffb316a28a96ec320a8fd460" rel="stylesheet"></head>
+<link href="/css/shopcar.css?bfb5a32665140803c87931be8af0a1f9" rel="stylesheet"></head>
 
 <body>
     <div class="container">
@@ -28,7 +28,7 @@
         <footer class="menubar">
             <ul class="action-wrap">
                 <li class="action-left left">
-                    <a>
+                    <a id="selectAll">
                         <span class="iconfont icon-fangxingweixuanzhong"></span>
                         <span>全选<span>
                     </a>
@@ -41,11 +41,11 @@
                                 <option value=2>金币</option>
                                 <option value=3>钻石</option>
                             </select>
-                            <span id="p_amount" class="amount active">￥0.00</span><span id="s_amount" class="amount">￥0.00</span><span id="d_amount" class="amount">￥0.00</span> 立减<span id="discount" class="amount active">￥0.00</span>
+                            <span id="p_amount" class="amount active">￥0</span><span id="s_amount" class="amount">￥0</span><span id="d_amount" class="amount">￥0</span> 立减<span id="discount" class="amount active">￥0</span>
                         </p>
                 </li>
                 <li class="action right">
-                    <a class="action-item-noicon" id="btn_topay" href="pay.html?id=1">去结算(<span id="allnum">0</span>)</a>
+                    <a class="action-item-noicon" id="btn_toreceiver" href="receiver.html?id=1">去结算(<span id="allnum">0</span>)</a>
                 </li>
             </ul>
         </footer>

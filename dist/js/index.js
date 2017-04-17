@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -7914,7 +7914,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var createGoods = function createGoods(data) {
     var tmpl = '\n        ' + data.map(function (r) {
-        return '\n            <li class="grid-item">\n                <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                    <img src="' + r.IntroImg + '"></img>\n                </a>\n                <dl class="good-info">\n                    <dt class="good-info-item title">\n                        <p>Apple MacBook Pro 13.3\u82F1\u5BF8\u7B14\u8BB0\u672C\u7535\u8111 \u6DF1\u7A7A\u7070\u8272</p>\n                    </dt>\n                    <dt class="good-info-item price">\n                        <i>\uFFE5' + r.Price + '</i>\n                    </dt>\n                    <dt class="good-info-item action">\n                        <a class="btn" data-gid="' + r.GoodID + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                        <a class="btn" data-gid="' + r.GoodID + '" href="pay.html?id=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                    </dt>\n                </dl>\n            </li>';
+        return '\n            <li class="grid-item">\n                <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                    <img src="' + r.IntroImg + '"></img>\n                </a>\n                <dl class="good-info">\n                    <dt class="good-info-item title">\n                        <p>Apple MacBook Pro 13.3\u82F1\u5BF8\u7B14\u8BB0\u672C\u7535\u8111 \u6DF1\u7A7A\u7070\u8272</p>\n                    </dt>\n                    <dt class="good-info-item price">\n                        <i>\uFFE5' + r.Price + '</i>\n                    </dt>\n                    <dt class="good-info-item action">\n                        <a class="btn" data-gid="' + r.GoodID + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                        <a class="btn" data-gid="' + r.GoodID + '" href="receiver.html?id=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                    </dt>\n                </dl>\n            </li>';
     }).join('');
     $('#grid-goods').append(tmpl);
 };

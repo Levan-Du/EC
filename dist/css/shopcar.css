@@ -177,6 +177,7 @@ a {
     line-height: 3.2rem;
     border-top: solid 1px #eee;
     text-align: center;
+    background: #f8f8f8;
 }
 
 .topbar {
@@ -237,7 +238,6 @@ a {
             flex: 1;
 }
 
-
 .menubar .action-wrap .action-left {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -278,7 +278,8 @@ a {
             flex: 1;
     color: #fff;
     font-size: 1rem;
-}.menubar .action-wrap .action-left.left {
+}
+.menubar .action-wrap .action-left.left {
     -webkit-box-flex: 0;
         -ms-flex: none;
             flex: none;
@@ -350,7 +351,7 @@ span.iconfont.icon-fangxingxuanzhongfill {
 
 @media(max-width: 320px) {
     .menubar .action-wrap .action.right {
-        width: 5rem;
+        width: 6rem;
     }
 }
 
@@ -434,6 +435,7 @@ span.iconfont.icon-fangxingxuanzhongfill {
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
+    font-size: .8rem;
 }
 
 .main .grid .grid-item ul li.info ul li.left p {

@@ -1,62 +1,97 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>付款页面</title>
-    <script type="text/javascript" src="/js/fit.js"></script>
-<link href="/css/pay.css?42c7b0411b813a11761e703716033fd1" rel="stylesheet"></head>
-
-<body>
-    <div class="container tab" id=tab-1>
-        <header class="topbar">
-            <div class="left">
-                <a id="btn_back" class="btn-back" href="gooddetail.html"><span class="iconfont icon-xiangzuo1"></span></a>
-            </div>
-            <div class="mid">
-                <span>收货人信息</span>
-            </div>
-            <div class="right"><a>登录</a></div>
-        </header>
-        <article class="main">
-            <form>
-                <section class="form-valid">
-                    <p for="txt_mobile">快捷下单验证(安全保证)</p>
-                    <input id="txt_mobile" type="text" name="validMobile">
-                    <button class="btn">获得验证码</button>
-                    <input id="txt_validCode" type="text" name="validCode">
-                </section>
-                <section class="form-info">
-                    <label for="txt_receiver">收货人：</label>
-                    <input id="txt_receiver" type="text" name="receiver">
-                </section>
-                <section class="form-info">
-                    <label for="txt_mobile">手机号码：</label>
-                    <input id="txt_mobile" type="text" name="mobile">
-                </section>
-                <section class="form-info">
-                    <label for="txt_mobile">所在地区：</label>
-                    <input id="txt_mobile" type="text" name="mobile">
-                </section>
-                <section class="form-info">
-                    <label for="txt_mobile">详细地址：</label>
-                    <input id="txt_mobile" type="text" name="mobile">
-                </section>
-                <section class="form-detail">
-                    <ul>
-                        <li>
-                            <img src="./images/1007.png">
-                            <p>Macbook Air 2017款 8G内存256G SSD硬盘</p>
-                            <i><span>￥</span><span class="price">6888.00<span></i>
-                        </li>
-                    </ul>
-                </section>
-            </form>
-        </article>
-        <footer class="menubar">
-            <input type="submit" name="submit" value="保存信息" class="btn-submit">
-        </footer>
-<script type="text/javascript" src="/js/pay.js"></script></body>
-
-</html>
+Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Entry module not found: Error: Can't resolve 'E:\dhz\nodejs\github\EC\src\page  s\pay\pay.html' in 'E:\dhz\nodejs\github\EC':
+  Error: Can't resolve 'E:\dhz\nodejs\github\EC\src\pages\pay\pay.html' in 'E:\d  hz\nodejs\github\EC'
+  
+  - compiler.js:76 
+    [EC]/[html-webpack-plugin]/lib/compiler.js:76:16
+  
+  - Compiler.js:291 Compiler.<anonymous>
+    [EC]/[webpack]/lib/Compiler.js:291:10
+  
+  - Compiler.js:494 
+    [EC]/[webpack]/lib/Compiler.js:494:13
+  
+  - Tapable.js:138 next
+    [EC]/[tapable]/lib/Tapable.js:138:11
+  
+  - CachePlugin.js:62 Compiler.<anonymous>
+    [EC]/[webpack]/lib/CachePlugin.js:62:5
+  
+  - Tapable.js:142 Compiler.applyPluginsAsyncSeries
+    [EC]/[tapable]/lib/Tapable.js:142:13
+  
+  - Compiler.js:491 
+    [EC]/[webpack]/lib/Compiler.js:491:10
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [EC]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:645 self.applyPluginsAsync.err
+    [EC]/[webpack]/lib/Compilation.js:645:19
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [EC]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:636 self.applyPluginsAsync.err
+    [EC]/[webpack]/lib/Compilation.js:636:11
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [EC]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:631 self.applyPluginsAsync.err
+    [EC]/[webpack]/lib/Compilation.js:631:10
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [EC]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:627 sealPart2
+    [EC]/[webpack]/lib/Compilation.js:627:9
+  
+  - Tapable.js:131 Compilation.applyPluginsAsyncSeries
+    [EC]/[tapable]/lib/Tapable.js:131:46
+  
+  - Compilation.js:575 Compilation.seal
+    [EC]/[webpack]/lib/Compilation.js:575:8
+  
+  - Compiler.js:488 
+    [EC]/[webpack]/lib/Compiler.js:488:16
+  
+  - Tapable.js:225 
+    [EC]/[tapable]/lib/Tapable.js:225:11
+  
+  - Compilation.js:477 _addModuleChain
+    [EC]/[webpack]/lib/Compilation.js:477:11
+  
+  - Compilation.js:366 Compilation.errorAndCallback
+    [EC]/[webpack]/lib/Compilation.js:366:4
+  
+  - Compilation.js:387 moduleFactory.create
+    [EC]/[webpack]/lib/Compilation.js:387:12
+  
+  - NormalModuleFactory.js:247 factory
+    [EC]/[webpack]/lib/NormalModuleFactory.js:247:20
+  
+  - NormalModuleFactory.js:65 resolver
+    [EC]/[webpack]/lib/NormalModuleFactory.js:65:21
+  
+  - NormalModuleFactory.js:138 asyncLib.parallel
+    [EC]/[webpack]/lib/NormalModuleFactory.js:138:21
+  
+  - async.js:3824 
+    [EC]/[async]/dist/async.js:3824:9
+  
+  - async.js:460 
+    [EC]/[async]/dist/async.js:460:16
+  
+  - async.js:1032 iteratorCallback
+    [EC]/[async]/dist/async.js:1032:13
+  
+  - async.js:944 
+    [EC]/[async]/dist/async.js:944:16
+  
+  - async.js:3821 
+    [EC]/[async]/dist/async.js:3821:13
+  
+</pre>

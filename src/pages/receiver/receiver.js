@@ -1,5 +1,3 @@
-import mockData from './pay.mock';
-
 var initData = () => {
 
 }

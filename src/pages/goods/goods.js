@@ -18,7 +18,7 @@ var createGoods = (data) => {
                     </dt>
                     <dt class="good-info-item action">
                         <a class="btn" data-gid="${r.GoodID}"><span class="iconfont icon-gouwuche"></span><span>加入购物车</span></a>
-                        <a class="btn" data-gid="${r.GoodID}" href="pay.html?id=${r.GoodID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
+                        <a class="btn" data-gid="${r.GoodID}" href="receiver.html?id=${r.GoodID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
                     </dt>
                 </dl>
             </li>`
@@ -35,20 +35,11 @@ var initData = () => {
     // getGoods()
     fetchData('/GoodsList')
         .then((res) => {
-            console.log(res);
             createGoods(res.message);
         })
         .catch((err)=>{
             alert(err);
         });
-
-        // fetchData('/GoodsList')
-        // .then((res)=>{
-        //     console.log(res);
-        // })
-        // .catch((err)=>{
-        //     console.log(err);
-        // });
 }
 
 var selectMunuItem='#btn_home';

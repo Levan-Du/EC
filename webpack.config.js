@@ -20,7 +20,7 @@ module.exports = {
     entry: {
         index: path.join(__dirname, 'src/pages/goods/index.js'),
         gooddetail: path.join(__dirname, 'src/pages/gooddetail/index.js'),
-        pay: path.join(__dirname, 'src/pages/pay/index.js'),
+        receiver: path.join(__dirname, 'src/pages/receiver/index.js'),
         shopcar: path.join(__dirname, 'src/pages/shopcar/index.js'),
         orders: path.join(__dirname, 'src/pages/orders/index.js'),
         fit: path.join(__dirname, 'src/commons/basic/fit')
@@ -54,7 +54,7 @@ module.exports = {
         }),
         // new webpack.optimize.CommonsChunkPlugin({
         //     name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
-        //     chunks: ['index', 'gooddetail', 'pay', 'shopcar', 'orders'], //提取哪些模块共有的部分
+        //     chunks: ['index', 'gooddetail', 'receiver', 'shopcar', 'orders'], //提取哪些模块共有的部分
         //     minChunks: 3 // 提取至少3个模块共有的部分
         // }),
         new ExtractTextPlugin('css/[name].css?[contenthash]'),
@@ -71,10 +71,10 @@ module.exports = {
             chunks: ['gooddetail']
         }),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src/pages/pay/pay.html'),
-            filename: 'pay.html',
+            template: path.join(__dirname, 'src/pages/receiver/receiver.html'),
+            filename: 'receiver.html',
             inject: 'body',
-            chunks: ['pay']
+            chunks: ['receiver']
         }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src/pages/shopcar/shopcar.html'),
