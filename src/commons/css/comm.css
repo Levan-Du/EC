@@ -149,5 +149,6 @@ a {
 .menubar .action-wrap .action .action-item-noicon {
     flex: 1;
     color: #fff;
+    background: #e33;
     font-size: 1rem;
 }

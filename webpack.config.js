@@ -23,6 +23,7 @@ module.exports = {
         receiver: path.join(__dirname, 'src/pages/receiver/index.js'),
         shopcar: path.join(__dirname, 'src/pages/shopcar/index.js'),
         orders: path.join(__dirname, 'src/pages/orders/index.js'),
+        pay: path.join(__dirname, 'src/pages/pay/index.js'),
         fit: path.join(__dirname, 'src/commons/basic/fit')
     },
     output: {
@@ -77,6 +78,11 @@ module.exports = {
             chunks: ['receiver']
         }),
         new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'src/pages/pay/pay.html'),
+            filename: 'pay.html',
+            inject: 'body',
+            chunks: ['pay']
+        }),        new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src/pages/shopcar/shopcar.html'),
             filename: 'shopcar.html',
             inject: 'body',

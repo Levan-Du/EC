@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7890,7 +7890,8 @@ exports.clearImmediate = clearImmediate;
 /***/ }),
 /* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7903,7 +7904,7 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _orders = __webpack_require__(26);
+var _orders = __webpack_require__(28);
 
 var _orders2 = _interopRequireDefault(_orders);
 
@@ -7917,12 +7918,12 @@ var createOrders = function createOrders(data) {
     var tmpl = '\n    ' + data.map(function (o) {
         return '\n        <li class="grid-item">\n            <dl>\n                <dt class="order-item-title">\n                    <a><span class="iconfont icon-dingdan"><span>\u5151\u6362\u5355\u53F7\uFF1A<span class="ordercode">' + o.OrderNo + '</span></a>\n                    <span>\u72B6\u6001\uFF1A\u5B8C\u6210</span>\n                </dt>\n                <dd class="order-item-goods">\n                    ' + o.OrderDetails.map(function (g) {
             return '\n                    <a data-oid="' + o.OrderID + '" data-gid="' + g.GoodID + '">\n                        <img src="' + g.IntroImg + '">\n                    </a>\n                    ';
-        }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + formatreceiverTypeToString(o.receiverType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
+        }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + formatPayTypeToString(o.receiverType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
     }).join('') + '\n    ';
     $('#grid-orders').append(tmpl);
 };
 
-var formatreceiverTypeToString = function formatreceiverTypeToString(type) {
+var formatPayTypeToString = function formatPayTypeToString(type) {
     var new_type = parseInt(type);
     console.log(new_type);
     switch (new_type) {
@@ -7961,25 +7962,26 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 17 */,
-/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */,
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7989,9 +7991,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(16);
+__webpack_require__(18);
 
-var _orders = __webpack_require__(11);
+var _orders = __webpack_require__(12);
 
 $(function (e) {
     (0, _orders.init)();
@@ -7999,7 +8001,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

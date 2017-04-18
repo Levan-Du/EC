@@ -177,6 +177,7 @@ a {
     line-height: 3.2rem;
     border-top: solid 1px #eee;
     text-align: center;
+    background: #f8f8f8;
 }
 
 .topbar {
@@ -237,7 +238,6 @@ a {
             flex: 1;
 }
 
-
 .menubar .action-wrap .action-left {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -278,104 +278,4 @@ a {
             flex: 1;
     color: #fff;
     font-size: 1rem;
-}.main section {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-box-align: baseline;
-        -ms-flex-align: baseline;
-            align-items: baseline;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    border-bottom: solid 1px #eee;
-    padding: .8rem .5rem;    
-}
-
-.main section.form-valid p {
-    width: 100%;
-}
-
-.main section input {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-}
-
-.main section.form-valid button {
-    margin: .8rem 0 .8rem .5rem;
-    padding: 0 .5rem;
-}
-
-.main section.form-info input {
-    border: none;
-}
-
-.main section.form-info label {
-    display: block;
-    width: 5rem;
-}
-
-.main section.form-detail {
-    font-size: .8rem;
-    padding: .5rem;
-    padding-top: 0;
-    border-bottom: none;
-}
-
-.main section.form-detail ul:before {
-    content: "";
-    display: block;
-    height: .6rem;
-    background: #f8f8f8;
-}
-
-.main section.form-detail ul {
-    width: 100%;
-}
-
-.main section.form-detail ul li {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-}
-
-.main section.form-detail img {
-    width: 6rem;
-    height: 6rem;
-}
-
-.main section.form-detail p {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-}
-
-.main section.form-detail i {
-    -ms-flex-item-align: center;
-        -ms-grid-row-align: center;
-        align-self: center;
-    color: #f32;
-}
-
-.menubar {
-    padding: 0 .5rem;
-}
-
-.menubar input.btn-submit {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    width: 100%;
-    font-size: 1rem;
-    color: #fff;
-    height: 2.5rem;
-    background: #f21;
 }

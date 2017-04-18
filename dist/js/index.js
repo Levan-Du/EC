@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7889,7 +7889,8 @@ exports.clearImmediate = clearImmediate;
 
 /***/ }),
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7902,7 +7903,7 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _goods = __webpack_require__(23);
+var _goods = __webpack_require__(25);
 
 var _goods2 = _interopRequireDefault(_goods);
 
@@ -7913,8 +7914,8 @@ var _bluebird2 = _interopRequireDefault(_bluebird);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var createGoods = function createGoods(data) {
-    var tmpl = '\n        ' + data.map(function (r) {
-        return '\n            <li class="grid-item">\n                <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                    <img src="' + r.IntroImg + '"></img>\n                </a>\n                <dl class="good-info">\n                    <dt class="good-info-item title">\n                        <p>Apple MacBook Pro 13.3\u82F1\u5BF8\u7B14\u8BB0\u672C\u7535\u8111 \u6DF1\u7A7A\u7070\u8272</p>\n                    </dt>\n                    <dt class="good-info-item price">\n                        <i>\uFFE5' + r.Price + '</i>\n                    </dt>\n                    <dt class="good-info-item action">\n                        <a class="btn" data-gid="' + r.GoodID + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                        <a class="btn" data-gid="' + r.GoodID + '" href="receiver.html?id=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                    </dt>\n                </dl>\n            </li>';
+    var tmpl = data.map(function (r) {
+        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>Apple MacBook Pro 13.3\u82F1\u5BF8\u7B14\u8BB0\u672C\u7535\u8111 \u6DF1\u7A7A\u7070\u8272</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + r.Price + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn" data-gid="' + r.GoodID + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.GoodID + '" href="pay.html?id=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
     }).join('');
     $('#grid-goods').append(tmpl);
 };
@@ -7952,6 +7953,8 @@ var initAction = function initAction() {
     });
 };
 
+var submit = function submit() {};
+
 var init = exports.init = function init() {
     initData();
     initAction();
@@ -7959,24 +7962,25 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 16 */,
-/* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */
+/* 23 */,
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7993,7 +7997,7 @@ var data = {
 exports.default = data;
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8003,9 +8007,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(15);
+__webpack_require__(17);
 
-var _goods = __webpack_require__(10);
+var _goods = __webpack_require__(11);
 
 $(function (e) {
     (0, _goods.init)();

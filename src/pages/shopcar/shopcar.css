@@ -135,26 +135,29 @@ span.iconfont.icon-fangxingxuanzhongfill {
 .main .grid .grid-item ul li.info ul li.right input.num {
     border-radius: 0;
     width: 2rem;
+    height: 1.5rem;
     border-top: solid 1px #ccc;
     border-bottom: solid 1px #ccc;
     text-align: center;
 }
 
 .main .grid .grid-item ul li.info ul li.right .btn {
-    font-size: 1.3rem;
-    padding: 0 .5rem;
+    height: 1.5rem;
+    padding: 0 .3rem;
     border-radius: 0;
 }
 
 .main .grid .grid-item ul li.info ul li.right .btn.btn-reduce {
-    padding: 0 .7rem;
+    padding: 0 .5rem;
 }
 
 .menubar .action-wrap .action p span.amount {
-    display: none;
-    padding-right: .5rem;
+    padding-right: 1rem;
+    color: #e33;
 }
 
-.menubar .action-wrap .action p span.amount.active {
+
+/*.menubar .action-wrap .action p span.amount.active {
     display: block;
 }
+*/

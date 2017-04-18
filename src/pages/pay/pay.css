@@ -1,1 +1,74 @@
-pay.css
+.main #receiverinfo {
+    display: flex;
+    align-items: stretch;
+    border-bottom: dashed 2px #aaa;
+}
+
+.main #receiverinfo article.info {
+    flex: 1;
+    padding: .8rem;
+}
+
+.main #receiverinfo p.direction {
+    width: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.main #receiverinfo article.info .info-contact {
+    display: flex;
+}
+
+.main #receiverinfo article.info .info-contact h1 {
+    margin: 0 1rem;
+}
+
+.main #receiverinfo article.info .info-contact span.isdefault {
+    background: #e33;
+    padding: .1rem;
+    color: #fff;
+}
+
+.menubar .action-wrap .action.left {
+    flex: 1;
+}
+
+.menubar .action-wrap .action.right {
+    flex: none;
+    width: 8rem;
+}
+
+.menubar #goodssum {
+    padding: .5rem;
+}
+
+.menubar #goodssum p {
+    flex: 1;
+    text-align: center;
+}
+
+.menubar #goodssum p span.amount {
+    color: #e33;
+}
+
+.main #goodsinfo li {
+    display: flex;
+    align-items: center;
+}
+
+.main #goodsinfo li .img-box {
+    width: 6rem;
+}
+
+.main #goodsinfo li span.goodname {
+    flex: 1;
+}
+
+.main #goodsinfo li span.num {
+    width: 2rem;
+}
+
+.main #goodsinfo li span.price {
+    width: 4rem;
+    color: #e33;
+}

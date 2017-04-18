@@ -12,7 +12,7 @@
     <div class="container">
         <header class="topbar">
             <div class="left">
-                <a id="btn_back" class="btn-back" href="index.html">
+                <a id="btn_back" class="btn-back">
                     <span class="iconfont icon-xiangzuo1"></span>
                 </a>
             </div>
@@ -35,17 +35,12 @@
                 </li>
                 <li class="action mid">
                     <!-- <p>合计：￥<span>6888.00</span></p> -->
-                        <p>总额：
-                            <select>
-                                <option value=1>积分</option>
-                                <option value=2>金币</option>
-                                <option value=3>钻石</option>
-                            </select>
-                            <span id="p_amount" class="amount active">￥0</span><span id="s_amount" class="amount">￥0</span><span id="d_amount" class="amount">￥0</span> 立减<span id="discount" class="amount active">￥0</span>
+                        <p>合计：
+                            金币<span id="s_amount" class="amount">￥0</span>钻石<span id="d_amount" class="amount">￥0</span>积分<span id="p_amount" class="amount">￥0</span> 立减<span id="discount" class="amount">￥0</span>
                         </p>
                 </li>
                 <li class="action right">
-                    <a class="action-item-noicon" id="btn_toreceiver" href="receiver.html?id=1">去结算(<span id="allnum">0</span>)</a>
+                    <a class="action-item-noicon" id="btn_toreceiver" href="pay.html?id=1">去结算(<span id="allnum">0</span>)</a>
                 </li>
             </ul>
         </footer>

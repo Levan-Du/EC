@@ -63,11 +63,12 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */
@@ -1725,25 +1726,15 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 }))
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1754,11 +1745,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-__webpack_require__(20);
+__webpack_require__(22);
 
-__webpack_require__(30);
+__webpack_require__(34);
 
-var _gooddetail = __webpack_require__(21);
+var _gooddetail = __webpack_require__(23);
 
 var _gooddetail2 = _interopRequireDefault(_gooddetail);
 
@@ -1766,7 +1757,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mySwiper;
 var slide = function slide() {
-    mySwiper = new Swiper('.swiper-container', {
+    mySwiper = new Swiper('.swiper-page', {
         loop: false,
         onSlideChangeStart: function onSlideChangeStart(e) {
             selectTab(e);
@@ -1800,11 +1791,19 @@ var selectTab = function selectTab(e) {
     selectTabIndex = index;
 };
 
+var renderImgBox = function renderImgBox() {
+    var html = _gooddetail2.default.images.map(function (el) {
+        return '\n        <li class="swiper-slide">\n            <img src="' + el + '"\n        <li>\n';
+    });
+    $('.main #good-img-box').append(html);
+};
+
 var initData = function initData() {};
 
 var initAction = function initAction() {
     slide();
     clickToSlide();
+    renderImgBox();
 };
 
 var init = exports.init = function init() {
@@ -1814,22 +1813,22 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+
+/***/ 16:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2734,20 +2733,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //# sourceMappingURL=maps/swiper.jquery.min.js.map
 
 /***/ }),
-/* 21 */
+
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var good = {
     goodid: 1,
     goodname: 'Macbook Air 2014 4G内存 128GSSD硬盘',
-    price: 6388
+    price: 6388,
+    images: ['/images/1002.png', '/images/1003.png', '/images/1007.png']
 };
 
+exports.default = good;
+
 /***/ }),
-/* 22 */
+
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2757,9 +2764,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(14);
+__webpack_require__(16);
 
-var _gooddetail = __webpack_require__(9);
+var _gooddetail = __webpack_require__(10);
 
 $(function (e) {
     (0, _gooddetail.init)();
@@ -2767,17 +2774,12 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */
+
+/***/ 34:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
-/******/ ]);
+
+/******/ });

@@ -1,4 +1,5 @@
 import '../../commons/vendor/swiper/swiper-3.4.2.jquery.min';
+import { backToLastPage } from '../../commons/basic/page';
 import '../../commons/vendor/swiper/swiper-3.4.2.min.css';
 import mockData from './gooddetail.mock';
 
@@ -47,18 +48,19 @@ var renderImgBox = () => {
     $('.main #good-img-box').append(html);
 }
 
-var initData = () => {
+var loadData = () => {
 
 }
 
 
 var initAction = () => {
+    backToLastPage('#btn_back');
     slide();
     clickToSlide();
     renderImgBox();
 }
 
 export var init = () => {
-    initData();
+    loadData();
     initAction();
 }

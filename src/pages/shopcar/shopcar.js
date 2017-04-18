@@ -1,7 +1,25 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
+import { backToLastPage } from '../../commons/basic/page';
 import mockData from './shopcar.mock';
 
-var createPage = (data) => {
+
+var renderPrice = (el) => {
+    var tmpl = '';
+    var pprice = parseInt(el.PointPrice),
+        sprice = parseInt(el.ScorePrice),
+        dprice = parseInt(el.DiamondPrice);
+
+    if (el.PayType == 1)
+        tmpl += `<p><span>金币</span><span class="price price-score" data-sid="${el.ID}">￥${sprice}</span></p>`;
+    if (el.PayType == 2)
+        tmpl += `<p><span>钻石</span><span class="price price-diamond" data-sid="${el.ID}">￥${dprice}</span></p>`;
+    if (el.PayType == 3)
+        tmpl += `<p><span>积分</span><span class="price price-point" data-sid="${el.ID}">￥${pprice}</span></p>`;
+    //    console.log(parseInt(el.PointPrice), parseInt(el.ScorePrice), parseInt(el.DiamondPrice))
+    return tmpl;
+}
+
+var renderGrid = (data) => {
     var html = data.map(el => `
 <li class="grid-item">
     <ul>
@@ -12,16 +30,12 @@ var createPage = (data) => {
             <a data-sid="${el.ID}" data-gid="${el.GoodID}"><img src="${el.IntroImg}"></img></a>
         </li>
         <li class="info">
-            <p class="title">${el.GoodName}2017款 16G内存256G SSD硬盘</p>
+            <p class="title">${el.GoodName}</p>
             <ul class="content">
-                <li class="left">
-                    <p><span>积分</span><span class="price price-point" data-sid="${el.ID}">￥${el.PointPrice}</span></p>
-                    <p><span>金币</span><span class="price price-score" data-sid="${el.ID}">￥${el.ScorePrice}</span></p>
-                    <p><span>钻石</span><span class="price price-diamond" data-sid="${el.ID}">￥${el.DiamondPrice}</span></p>
-                </li>
+                <li class="left">${renderPrice(el)}</li>
                 <li class="right">
                     <a class="btn btn-reduce" data-sid="${el.ID}" data-gid="${el.GoodID}">-</a>
-                    <input type="number" class="num" value=1 data-sid="${el.ID}" data-gid="${el.GoodID}" data-pprice="${el.PointPrice}" data-sprice="${el.ScorePrice}" data-dprice="${el.DiamondPrice}" />
+                    <input type="number" class="num" value=${el.Num} data-sid="${el.ID}" data-gid="${el.GoodID}" data-pprice="${el.PointPrice}" data-sprice="${el.ScorePrice}" data-dprice="${el.DiamondPrice}" data-paytype="${el.PayType}" />
                     <a class="btn btn-add" data-sid="${el.ID}" data-gid="${el.GoodID}">+</a>
                 </li>
             </ul>
@@ -40,11 +54,20 @@ var createPage = (data) => {
         var target = $(e.currentTarget);
         var sid = target.attr('data-sid');
         var gid = target.attr('data-gid');
-        var num = target.siblings('input.num'); //reducBtns.parent().find('input.num[data-sid="' + sid + '"]');
-        var inum = parseInt(num.val());
+        var numEle = target.siblings('input.num');
+        var inum = parseInt(numEle.val());
         if (inum > 1) {
             inum = inum - 1;
-            num.val(inum);
+            numEle.val(inum);
+            var paytype = numEle.attr('data-paytype');
+            var jsondata = {
+                GameID: localStorage.GameID,
+                GoodID: gid,
+                Num: inum,
+                PayType: paytype,
+                EditType: 2
+            }
+            postData('/OnShopCar', jsondata);
             var liinfo = target.closest('li.info');
             var icon = target.closest('.grid-item').find('li.checked span.iconfont');
             var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
@@ -58,9 +81,18 @@ var createPage = (data) => {
         var target = $(e.currentTarget);
         var sid = target.attr('data-sid');
         var gid = target.attr('data-gid');
-        var num = target.siblings('input.num'); //addBtns.parent().find('input.num[data-sid="' + sid + '"]');
-        var inum = parseInt(num.val()) + 1;
-        num.val(inum);
+        var numEle = target.siblings('input.num');
+        var inum = parseInt(numEle.val()) + 1;
+        numEle.val(inum);
+        var paytype = numEle.attr('data-paytype');
+        var jsondata = {
+            GameID: localStorage.GameID,
+            GoodID: gid,
+            Num: inum,
+            PayType: paytype,
+            EditType: 2
+        }
+        postData('/OnShopCar', jsondata);
         var liinfo = target.closest('li.info');
         var icon = target.closest('.grid-item').find('li.checked span.iconfont');
         var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
@@ -137,14 +169,17 @@ var createPage = (data) => {
 }
 
 var sumAmount = (sid, gid, inum, liinfo, isSelect) => {
-    var ipprice = liinfo.find('ul.content li.left span.price.price-point').text().replace('￥', '');
-    var isprice = liinfo.find('ul.content li.left span.price.price-score').text().replace('￥', '');
-    var idprice = liinfo.find('ul.content li.left span.price.price-diamond').text().replace('￥', '');
+    var s_sprice = liinfo.find('ul.content li.left span.price.price-score').text();
+    var s_dprice = liinfo.find('ul.content li.left span.price.price-diamond').text();
+    var s_pprice = liinfo.find('ul.content li.left span.price.price-point').text();
+    var ipprice = s_pprice ? s_pprice.replace('￥', '') : '0';
+    var isprice = s_sprice ? s_sprice.replace('￥', '') : '0';
+    var idprice = s_dprice ? s_dprice.replace('￥', '') : '0';
 
     inum = parseInt(inum);
-    var p_am = inum * parseFloat(ipprice);
-    var s_am = inum * parseFloat(isprice);
-    var d_am = inum * parseFloat(idprice);
+    var p_am = inum * parseInt(ipprice);
+    var s_am = inum * parseInt(isprice);
+    var d_am = inum * parseInt(idprice);
 
     var index = 0;
     var el = selectedGoods.find((el, i) => {
@@ -196,11 +231,11 @@ var getMockData = () => {
     return Promise.resolve(mockData);
 }
 
-var initData = () => {
-    // fetchData('/ShopCarList')
-    getMockData()
+var loadData = () => {
+    fetchData('/ShopCarList')
+        // getMockData()
         .then((res) => {
-            createPage(res.message);
+            renderGrid(res.message);
         })
         .catch((err) => {
             console.log(err);
@@ -209,10 +244,10 @@ var initData = () => {
 
 
 var initAction = () => {
-
+    backToLastPage('#btn_back');
 }
 
 export var init = () => {
-    initData();
+    loadData();
     initAction();
 }

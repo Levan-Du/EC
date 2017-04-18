@@ -1,10 +1,11 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
+import { backToLastPage } from '../../commons/basic/page';
 import mockData from './orders.mock';
 import Promise from 'bluebird';
 
 var createOrders = (data) => {
-        var tmpl = `
-    ${data.map(o=>`
+        console.log(data);
+        var tmpl = data.map(o => `
         <li class="grid-item">
             <dl>
                 <dt class="order-item-title">
@@ -19,17 +20,17 @@ var createOrders = (data) => {
                     `)}
                 </dd>
                 <dd class="order-item-sum">
-                    <p>共${o.Num}件商品,兑换${formatreceiverTypeToString(o.receiverType)}：${o.Amount}</p>
+                    <p>共${o.Num}件商品,兑换${formatPayTypeToString(o.receiverType)}：${o.Amount}</p>
                     <a class="btn" data-oid="${o.OrderID}">再次兑换</a>
                 </dd>
             </dl>
         </li>`
-    ).join('')}
-    `;
+    ).join('');
+
     $('#grid-orders').append(tmpl);
 }
 
-var formatreceiverTypeToString = (type) => {
+var formatPayTypeToString = (type) => {
     var new_type = parseInt(type);
     console.log(new_type)
     switch(new_type){
@@ -45,7 +46,7 @@ var getOrders = () => {
     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
 }
 
-var initData = () => {
+var loadData = () => {
     // getOrders()
     fetchData('/OrdersList')
         .then((res) => {
@@ -57,10 +58,10 @@ var initData = () => {
 }
 
 var initAction = () => {
-
+    backToLastPage('#btn_back');
 }
 
 export var init = () => {
-    initData();
+    loadData();
     initAction();
 }

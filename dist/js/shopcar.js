@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7892,7 +7892,9 @@ exports.clearImmediate = clearImmediate;
 /* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7905,7 +7907,7 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _shopcar = __webpack_require__(29);
+var _shopcar = __webpack_require__(33);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
 
@@ -8100,18 +8102,16 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */,
-/* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 19 */,
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
@@ -8119,7 +8119,11 @@ var init = exports.init = function init() {
 /* 25 */,
 /* 26 */,
 /* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8129,9 +8133,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(18);
+__webpack_require__(20);
 
-var _shopcar = __webpack_require__(13);
+var _shopcar = __webpack_require__(15);
 
 $(function (e) {
     (0, _shopcar.init)();
@@ -8139,7 +8143,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
