@@ -5,23 +5,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>确认兑换</title>
-<link href="/css/pay.css?7dcae310493a597445c1d766538760ef" rel="stylesheet"></head>
+    <script type="text/javascript" src="/js/fit.js"></script>
+<link href="/css/pay.css?89783c9073071e1020d08dd24dae37ca" rel="stylesheet"></head>
 
 <body>
-    <header class="topbar"></header>
-    <article class="main">
-        <section id="receiverinfo"></section>
-        <section id="goods"></section>
-    </article>
-    <footer class="menubar">
-        <ul class="action-wrap">
-            <li class="action-left left">
-            </li>
-            <li class="action right">
-                <a class="action-item-noicon" id="btn_confirm">确认兑换</a>
-            </li>
-        </ul>
-    </footer>
+    <div class="container">
+        <header class="topbar">
+            <div class="left">
+                <a id="btn_back" class="btn-back"><span class="iconfont icon-xiangzuo1"></span></a>
+            </div>
+            <div class="mid">
+                确认兑换
+            </div>
+            <div class="right"></div>
+        </header>
+        <article class="main">
+            <section>
+                <a id="receiverinfo" href="addr.html"></a>
+            </section>
+            <section>
+                <ul id="goodsinfo"></ul>
+            </section>
+        </article>
+        <footer class="menubar">
+            <ul class="action-wrap">
+                <li class="action left" id="goodssum">
+                </li>
+                <li class="action right">
+                    <a class="action-item-noicon" id="btn_confirm">确认兑换</a>
+                </li>
+            </ul>
+        </footer>
+    </div>
 <script type="text/javascript" src="/js/pay.js"></script></body>
 
 </html>

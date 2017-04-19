@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7595,12 +7595,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var API_URL = 'http://localhost:55555/api/Exchange';
 
-function fetchData(url) {
+function fetchData(url, data) {
     url = API_URL + url;
+    var newdata = data ? data + "&from=ec" : "from=ec";
+    newdata += "&gameid=" + localStorage.GameID;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7614,13 +7617,16 @@ function fetchData(url) {
     });
 }
 
-function postData(url, data) {
+function postData(url, jsonObj) {
     url = API_URL + url;
+    jsonObj["GameID"] = localStorage.GameID;
+    var parms = jsonToParams(jsonObj);
+    console.log(parms);
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: data,
+            data: parms,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7633,10 +7639,49 @@ function postData(url, data) {
         });
     });
 }
+
+var jsonToParams = function jsonToParams(jsonObj) {
+    var parms = '';
+    for (var i in jsonObj) {
+        parms += '&' + i + '=' + jsonObj[i];
+    }
+    return parms.substring(1, parms.length);
+};
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7829,7 +7874,7 @@ function postData(url, data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7882,60 +7927,111 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(7);
+__webpack_require__(8);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
-				value: true
+    value: true
 });
 exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _pay = __webpack_require__(30);
+var _page = __webpack_require__(7);
+
+var _pay = __webpack_require__(31);
 
 var _pay2 = _interopRequireDefault(_pay);
 
-__webpack_require__(9);
+__webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var renderReceiverInfo = function renderReceiverInfo() {
-				if (_pay2.default.addrs.length === 0) {
-								window.location = "./receiver.html";
-								return;
-				}
+var addrs = _pay2.default.addrs,
+    goods = _pay2.default.goods;
 
-				var dfAddr = _pay2.default.addrs.find(function (el) {
-								return el.IsDefault === true;
-				});
-				var html = '\n\t<article>\n\t\t<section>\n\t\t\t<h1>' + dfAddr.ReceiverName + '</h1>\n\t\t\t<p>' + dfAddr.ReceiverMobile + '</p>\n\t\t</section>\n\t\t<section>\n\t\t\t<p>' + dfAddr.Addr + '</p>\n\t\t</section>\n\t</article>\n\t<a><span class="iconfont icon-xiangyou1"><span></a>\n\t';
+
+var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
+    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
+    $('#receiverinfo').append(html);
+};
+
+var loadReceiverInfo = function loadReceiverInfo() {
+    if (addrs.length === 0) {
+        window.location = "./receiver.html";
+        return;
+    }
+
+    var dfAddr = addrs.find(function (el) {
+        return el.IsDefault;
+    });
+    renderReceiverInfo(dfAddr);
+};
+
+var renderGoodsInfo = function renderGoodsInfo() {
+    var html = goods.map(function (el) {
+        return '\n    <li>\n        <p class="img-box"><img src="' + el.ImgUrl + '"></p>\n        <span class="goodname">' + el.GoodName + '</span>\n        <span class="num">x ' + el.Num + '</span>\n        <span class="price">\uFFE5' + el.Price + '</span>\n    </li>\n    ';
+    }).join('');
+    $('#goodsinfo').append(html);
+};
+
+var renderGoodsSum = function renderGoodsSum() {
+    var sum = 0;
+    goods.forEach(function (el) {
+        sum += parseInt(el.Price) * parseInt(el.Num);
+    });
+    var tmpl = '\n        <p>\u5408\u8BA1\uFF1A<span class="amount">\uFFE5' + sum + '</span><p>\n    ';
+    $('#goodssum').append(tmpl);
+};
+
+var loadData = function loadData() {};
+
+var initAction = function initAction() {
+    (0, _page.backToLastPage)('#btn_back');
+    console.log(document.referrer);
+    loadReceiverInfo();
+    renderGoodsInfo();
+    renderGoodsSum();
+};
+
+var selectAddr = function selectAddr() {};
+
+var submit = function submit() {
+    $('#btn_confirm').click(function (e) {
+        if (goods.length === 1) {
+            var data = { Game: Game };
+            PostData('/OnOrder');
+        } else {
+            PostData('/OnOrderCar');
+        }
+    });
 };
 
 var init = exports.init = function init() {
-				renderReceiverInfo();
+    loadData();
+    initAction();
 };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
@@ -7950,7 +8046,8 @@ var init = exports.init = function init() {
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7960,9 +8057,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(9);
+__webpack_require__(10);
 
-var _pay = __webpack_require__(13);
+var _pay = __webpack_require__(14);
 
 $(function (e) {
     (0, _pay.init)();
@@ -7970,15 +8067,21 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var data = {
-    addrs: [{ AddrID: 1, ReceiverName: 'aaabbb', Addr: '广州市天河区科韵路16号广州信息港C栋101', IsDefault: IsDefault }, { AddrID: 2, ReceiverName: 'CCCCCC', Addr: '广州市天河区东圃镇车陂永泰市大街9号', IsDefault: IsDefault }]
+    addrs: [{ AddrID: 1, ReceiverName: 'aaabbb', ReceiverMobile: '13712348974', Addr: '广州市天河区科韵路16号广州信息港C栋101' }, { AddrID: 2, ReceiverName: 'CCCCCC', ReceiverMobile: '13788748974', Addr: '广州市天河区东圃镇车陂永泰市大街9号', IsDefault: true }],
+    goods: [{ GoodID: 1, GoodName: '苹果电脑2017款256G SSD硬盘 8G内存', Num: 2, Price: '7188' }]
 };
+
+exports.default = data;
 
 /***/ })
 /******/ ]);

@@ -51,54 +51,11 @@ var renderGrid = (data) => {
     var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
 
     reducBtns.click((e) => {
-        var target = $(e.currentTarget);
-        var sid = target.attr('data-sid');
-        var gid = target.attr('data-gid');
-        var numEle = target.siblings('input.num');
-        var inum = parseInt(numEle.val());
-        if (inum > 1) {
-            inum = inum - 1;
-            numEle.val(inum);
-            var paytype = numEle.attr('data-paytype');
-            var jsondata = {
-                GameID: localStorage.GameID,
-                GoodID: gid,
-                Num: inum,
-                PayType: paytype,
-                EditType: 2
-            }
-            postData('/OnShopCar', jsondata);
-            var liinfo = target.closest('li.info');
-            var icon = target.closest('.grid-item').find('li.checked span.iconfont');
-            var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
-            if (isSelected) {
-                sumAmount(sid, gid, inum, liinfo, true);
-            }
-        }
+        numClick(e);
     });
 
     addBtns.click((e) => {
-        var target = $(e.currentTarget);
-        var sid = target.attr('data-sid');
-        var gid = target.attr('data-gid');
-        var numEle = target.siblings('input.num');
-        var inum = parseInt(numEle.val()) + 1;
-        numEle.val(inum);
-        var paytype = numEle.attr('data-paytype');
-        var jsondata = {
-            GameID: localStorage.GameID,
-            GoodID: gid,
-            Num: inum,
-            PayType: paytype,
-            EditType: 2
-        }
-        postData('/OnShopCar', jsondata);
-        var liinfo = target.closest('li.info');
-        var icon = target.closest('.grid-item').find('li.checked span.iconfont');
-        var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
-        if (isSelected) {
-            sumAmount(sid, gid, inum, liinfo, true);
-        }
+        numClick(e);
     });
 
     // fangxingxuanzhongfill
@@ -117,7 +74,7 @@ var renderGrid = (data) => {
         var isSelect = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') === -1;
         var inum = liinfo.find('ul.content li.right input.num').val();
         toggleSelect(icon, !isSelect);
-        sumAmount(sid, gid, inum, liinfo, isSelect);
+        fillSelectGoods(sid, gid, inum, liinfo, isSelect);
     });
 
     var selectAllEle = $('#selectAll');
@@ -150,25 +107,42 @@ var renderGrid = (data) => {
             acheck.find('span.iconfont').removeClass('icon-fangxingxuanzhongfill');
             selectedGoods.splice(0, selectedGoods.length);
         }
-        var PAmount = 0,
-            SAmount = 0,
-            DAmount = 0,
-            num_all = 0;
-        selectedGoods.forEach((el, i) => {
-            PAmount += el.PAmount;
-            SAmount += el.SAmount;
-            DAmount += el.DAmount;
-            num_all += el.Num;
-        });
-
-        $('#p_amount').text('￥' + PAmount);
-        $('#s_amount').text('￥' + SAmount);
-        $('#d_amount').text('￥' + DAmount);
-        $('#allnum').text(num_all);
+        renderSumAmount();
     });
 }
 
-var sumAmount = (sid, gid, inum, liinfo, isSelect) => {
+var numClick = (e) => {
+    var target = $(e.currentTarget);
+    var numEle = target.siblings('input.num');
+    var inum = parseInt(numEle.val());
+    if (target.attr('class').indexOf('btn-reduce') !== -1) {
+        inum = inum - 1;
+        if (inum <= 1) return;
+    } else {
+        var inum = parseInt(numEle.val()) + 1;
+    }
+    numEle.val(inum);
+    var sid = target.attr('data-sid');
+    var gid = target.attr('data-gid');
+    var paytype = numEle.attr('data-paytype');
+    var jsondata = {
+        GameID: localStorage.GameID,
+        GoodID: gid,
+        Num: inum,
+        PayType: paytype,
+        EditType: 2
+    }
+    postData('/OnShopCar', jsondata);
+    var liinfo = target.closest('li.info');
+    var icon = target.closest('.grid-item').find('li.checked span.iconfont');
+    var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
+    if (isSelected) {
+        fillSelectGoods(sid, gid, inum, liinfo, true);
+    }
+
+}
+
+var fillSelectGoods = (sid, gid, inum, liinfo, isSelect) => {
     var s_sprice = liinfo.find('ul.content li.left span.price.price-score').text();
     var s_dprice = liinfo.find('ul.content li.left span.price.price-diamond').text();
     var s_pprice = liinfo.find('ul.content li.left span.price.price-point').text();
@@ -198,6 +172,10 @@ var sumAmount = (sid, gid, inum, liinfo, isSelect) => {
             selectedGoods.push({ ID: sid, GoodID: gid, Num: inum, PAmount: p_am, SAmount: s_am, DAmount: d_am });
         }
     }
+    renderSumAmount();
+}
+
+var renderSumAmount = () => {
     var PAmount = 0,
         SAmount = 0,
         DAmount = 0,
@@ -235,6 +213,7 @@ var loadData = () => {
     fetchData('/ShopCarList')
         // getMockData()
         .then((res) => {
+            localStorage.Shopcar = res.message;
             renderGrid(res.message);
         })
         .catch((err) => {

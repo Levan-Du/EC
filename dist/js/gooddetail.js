@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1734,7 +1734,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1745,11 +1745,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-__webpack_require__(22);
+__webpack_require__(23);
 
-__webpack_require__(34);
+var _page = __webpack_require__(7);
 
-var _gooddetail = __webpack_require__(23);
+__webpack_require__(35);
+
+var _gooddetail = __webpack_require__(24);
 
 var _gooddetail2 = _interopRequireDefault(_gooddetail);
 
@@ -1798,23 +1800,24 @@ var renderImgBox = function renderImgBox() {
     $('.main #good-img-box').append(html);
 };
 
-var initData = function initData() {};
+var loadData = function loadData() {};
 
 var initAction = function initAction() {
+    (0, _page.backToLastPage)('#btn_back');
     slide();
     clickToSlide();
     renderImgBox();
 };
 
 var init = exports.init = function init() {
-    initData();
+    loadData();
     initAction();
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 16:
+/***/ 17:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -1828,7 +1831,7 @@ var init = exports.init = function init() {
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2734,7 +2737,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 23:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2754,7 +2757,7 @@ exports.default = good;
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2764,9 +2767,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(16);
+__webpack_require__(17);
 
-var _gooddetail = __webpack_require__(10);
+var _gooddetail = __webpack_require__(11);
 
 $(function (e) {
     (0, _gooddetail.init)();
@@ -2775,10 +2778,42 @@ $(function (e) {
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7595,12 +7595,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var API_URL = 'http://localhost:55555/api/Exchange';
 
-function fetchData(url) {
+function fetchData(url, data) {
     url = API_URL + url;
+    var newdata = data ? data + "&from=ec" : "from=ec";
+    newdata += "&gameid=" + localStorage.GameID;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7614,13 +7617,16 @@ function fetchData(url) {
     });
 }
 
-function postData(url, data) {
+function postData(url, jsonObj) {
     url = API_URL + url;
+    jsonObj["GameID"] = localStorage.GameID;
+    var parms = jsonToParams(jsonObj);
+    console.log(parms);
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: data,
+            data: parms,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7633,10 +7639,49 @@ function postData(url, data) {
         });
     });
 }
+
+var jsonToParams = function jsonToParams(jsonObj) {
+    var parms = '';
+    for (var i in jsonObj) {
+        parms += '&' + i + '=' + jsonObj[i];
+    }
+    return parms.substring(1, parms.length);
+};
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7829,7 +7874,7 @@ function postData(url, data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7882,15 +7927,15 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(7);
+__webpack_require__(8);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7903,7 +7948,9 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _goods = __webpack_require__(25);
+var _page = __webpack_require__(7);
+
+var _goods = __webpack_require__(26);
 
 var _goods2 = _interopRequireDefault(_goods);
 
@@ -7915,9 +7962,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var createGoods = function createGoods(data) {
     var tmpl = data.map(function (r) {
-        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>Apple MacBook Pro 13.3\u82F1\u5BF8\u7B14\u8BB0\u672C\u7535\u8111 \u6DF1\u7A7A\u7070\u8272</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + r.Price + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn" data-gid="' + r.GoodID + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.GoodID + '" href="pay.html?id=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
+        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>' + r.GoodName + '</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + parseInt(r.PayPrice) + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn btn_addtoshopcar" data-gid="' + r.ID + '" data-paytype="' + r.PayType + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.GoodID + '" href="pay.html?type=singlepay&goodno=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
     }).join('');
     $('#grid-goods').append(tmpl);
+
+    $('.main .grid .grid-item .btn.btn_addtoshopcar').click(function (e) {
+        var target = $(e.currentTarget);
+        var gid = target.attr('data-gid'),
+            paytype = target.attr('data-paytype');
+        console.log(target);
+        var jsondata = {
+            GameID: localStorage.GameID,
+            GoodID: gid,
+            Num: 1,
+            PayType: paytype,
+            EditType: 1
+        };
+        (0, _ajax.postData)('/OnShopCar', jsondata);
+    });
 };
 
 var getGoods = function getGoods() {
@@ -7926,13 +7988,23 @@ var getGoods = function getGoods() {
     });
 };
 
-var initData = function initData() {
+var saveGameID = function saveGameID() {
+    var qsObj = (0, _page.getQueryString)();
+    localStorage.GameID = qsObj["gameid"];
+};
+
+var fetchGoods = function fetchGoods() {
     // getGoods()
     (0, _ajax.fetchData)('/GoodsList').then(function (res) {
         createGoods(res.message);
     }).catch(function (err) {
         alert(err);
     });
+};
+
+var loadData = function loadData() {
+    saveGameID();
+    fetchGoods();
 };
 
 var selectMunuItem = '#btn_home';
@@ -7956,31 +8028,31 @@ var initAction = function initAction() {
 var submit = function submit() {};
 
 var init = exports.init = function init() {
-    initData();
+    loadData();
     initAction();
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7997,7 +8069,7 @@ var data = {
 exports.default = data;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8007,9 +8079,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(17);
+__webpack_require__(18);
 
-var _goods = __webpack_require__(11);
+var _goods = __webpack_require__(12);
 
 $(function (e) {
     (0, _goods.init)();

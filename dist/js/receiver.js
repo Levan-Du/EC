@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7595,12 +7595,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var API_URL = 'http://localhost:55555/api/Exchange';
 
-function fetchData(url) {
+function fetchData(url, data) {
     url = API_URL + url;
+    var newdata = data ? data + "&from=ec" : "from=ec";
+    newdata += "&gameid=" + localStorage.GameID;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7614,13 +7617,16 @@ function fetchData(url) {
     });
 }
 
-function postData(url, data) {
+function postData(url, jsonObj) {
     url = API_URL + url;
+    jsonObj["GameID"] = localStorage.GameID;
+    var parms = jsonToParams(jsonObj);
+    console.log(parms);
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: data,
+            data: parms,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7633,10 +7639,19 @@ function postData(url, data) {
         });
     });
 }
+
+var jsonToParams = function jsonToParams(jsonObj) {
+    var parms = '';
+    for (var i in jsonObj) {
+        parms += '&' + i + '=' + jsonObj[i];
+    }
+    return parms.substring(1, parms.length);
+};
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7829,7 +7844,7 @@ function postData(url, data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7882,18 +7897,18 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(7);
+__webpack_require__(8);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 9 */,
 /* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7923,17 +7938,16 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
@@ -7944,7 +7958,8 @@ var init = exports.init = function init() {
 /* 28 */,
 /* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7954,9 +7969,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(19);
+__webpack_require__(20);
 
-var _receiver = __webpack_require__(14);
+var _receiver = __webpack_require__(15);
 
 $(function (e) {
     (0, _receiver.init)();

@@ -277,5 +277,104 @@ a {
         -ms-flex: 1;
             flex: 1;
     color: #fff;
+    background: #e33;
     font-size: 1rem;
+}
+.main #receiverinfo {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+    border-bottom: dashed 2px #aaa;
+}
+
+.main #receiverinfo article.info {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    padding: .8rem;
+}
+
+.main #receiverinfo p.direction {
+    width: 2rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.main #receiverinfo article.info .info-contact {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.main #receiverinfo article.info .info-contact h1 {
+    margin: 0 1rem;
+}
+
+.main #receiverinfo article.info .info-contact span.isdefault {
+    background: #e33;
+    padding: .1rem;
+    color: #fff;
+}
+
+.menubar .action-wrap .action.left {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.menubar .action-wrap .action.right {
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+    width: 8rem;
+}
+
+.menubar #goodssum {
+    padding: .5rem;
+}
+
+.menubar #goodssum p {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    text-align: center;
+}
+
+.menubar #goodssum p span.amount {
+    color: #e33;
+}
+
+.main #goodsinfo li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.main #goodsinfo li .img-box {
+    width: 6rem;
+}
+
+.main #goodsinfo li span.goodname {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.main #goodsinfo li span.num {
+    width: 2rem;
+}
+
+.main #goodsinfo li span.price {
+    width: 4rem;
+    color: #e33;
 }

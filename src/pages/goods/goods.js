@@ -18,7 +18,7 @@ const createGoods = (data) => {
                 </dt>
                 <dt class="good-info-item action">
                     <a class="btn btn_addtoshopcar" data-gid="${r.ID}" data-paytype="${r.PayType}"><span class="iconfont icon-gouwuche"></span><span>加入购物车</span></a>
-                    <a class="btn" data-gid="${r.GoodID}" href="pay.html?type=singlepay&goodno=${r.GoodID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
+                    <a class="btn" data-gid="${r.GoodID}" href="pay.html?type=singlepay&goodid=${r.GoodID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
                 </dt>
             </dl>
         </li>`).join('');

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7595,12 +7595,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var API_URL = 'http://localhost:55555/api/Exchange';
 
-function fetchData(url) {
+function fetchData(url, data) {
     url = API_URL + url;
+    var newdata = data ? data + "&from=ec" : "from=ec";
+    newdata += "&gameid=" + localStorage.GameID;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7614,13 +7617,16 @@ function fetchData(url) {
     });
 }
 
-function postData(url, data) {
+function postData(url, jsonObj) {
     url = API_URL + url;
+    jsonObj["GameID"] = localStorage.GameID;
+    var parms = jsonToParams(jsonObj);
+    console.log(parms);
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: data,
+            data: parms,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7633,10 +7639,49 @@ function postData(url, data) {
         });
     });
 }
+
+var jsonToParams = function jsonToParams(jsonObj) {
+    var parms = '';
+    for (var i in jsonObj) {
+        parms += '&' + i + '=' + jsonObj[i];
+    }
+    return parms.substring(1, parms.length);
+};
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7829,7 +7874,7 @@ function postData(url, data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7882,19 +7927,19 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(7);
+__webpack_require__(8);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 9 */,
 /* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7907,15 +7952,30 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _shopcar = __webpack_require__(33);
+var _page = __webpack_require__(7);
+
+var _shopcar = __webpack_require__(34);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var createPage = function createPage(data) {
+var renderPrice = function renderPrice(el) {
+    var tmpl = '';
+    var pprice = parseInt(el.PointPrice),
+        sprice = parseInt(el.ScorePrice),
+        dprice = parseInt(el.DiamondPrice);
+
+    if (el.PayType == 1) tmpl += '<p><span>\u91D1\u5E01</span><span class="price price-score" data-sid="' + el.ID + '">\uFFE5' + sprice + '</span></p>';
+    if (el.PayType == 2) tmpl += '<p><span>\u94BB\u77F3</span><span class="price price-diamond" data-sid="' + el.ID + '">\uFFE5' + dprice + '</span></p>';
+    if (el.PayType == 3) tmpl += '<p><span>\u79EF\u5206</span><span class="price price-point" data-sid="' + el.ID + '">\uFFE5' + pprice + '</span></p>';
+    //    console.log(parseInt(el.PointPrice), parseInt(el.ScorePrice), parseInt(el.DiamondPrice))
+    return tmpl;
+};
+
+var renderGrid = function renderGrid(data) {
     var html = data.map(function (el) {
-        return '\n<li class="grid-item">\n    <ul>\n        <li class="checked">\n            <a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><span class="iconfont icon-fangxingweixuanzhong"></span></a>\n        </li>\n        <li class="img-box">\n            <a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><img src="' + el.IntroImg + '"></img></a>\n        </li>\n        <li class="info">\n            <p class="title">' + el.GoodName + '2017\u6B3E 16G\u5185\u5B58256G SSD\u786C\u76D8</p>\n            <ul class="content">\n                <li class="left">\n                    <p><span>\u79EF\u5206</span><span class="price price-point" data-sid="' + el.ID + '">\uFFE5' + el.PointPrice + '</span></p>\n                    <p><span>\u91D1\u5E01</span><span class="price price-score" data-sid="' + el.ID + '">\uFFE5' + el.ScorePrice + '</span></p>\n                    <p><span>\u94BB\u77F3</span><span class="price price-diamond" data-sid="' + el.ID + '">\uFFE5' + el.DiamondPrice + '</span></p>\n                </li>\n                <li class="right">\n                    <a class="btn btn-reduce" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">-</a>\n                    <input type="number" class="num" value=1 data-sid="' + el.ID + '" data-gid="' + el.GoodID + '" data-pprice="' + el.PointPrice + '" data-sprice="' + el.ScorePrice + '" data-dprice="' + el.DiamondPrice + '" />\n                    <a class="btn btn-add" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">+</a>\n                </li>\n            </ul>\n        </li>\n    </ul>\n</li>\n    ';
+        return '\n<li class="grid-item">\n    <ul>\n        <li class="checked">\n            <a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><span class="iconfont icon-fangxingweixuanzhong"></span></a>\n        </li>\n        <li class="img-box">\n            <a data-sid="' + el.ID + '" data-gid="' + el.GoodID + '"><img src="' + el.IntroImg + '"></img></a>\n        </li>\n        <li class="info">\n            <p class="title">' + el.GoodName + '</p>\n            <ul class="content">\n                <li class="left">' + renderPrice(el) + '</li>\n                <li class="right">\n                    <a class="btn btn-reduce" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">-</a>\n                    <input type="number" class="num" value=' + el.Num + ' data-sid="' + el.ID + '" data-gid="' + el.GoodID + '" data-pprice="' + el.PointPrice + '" data-sprice="' + el.ScorePrice + '" data-dprice="' + el.DiamondPrice + '" data-paytype="' + el.PayType + '" />\n                    <a class="btn btn-add" data-sid="' + el.ID + '" data-gid="' + el.GoodID + '">+</a>\n                </li>\n            </ul>\n        </li>\n    </ul>\n</li>\n    ';
     }).join('');
     $('#grid-shopCard').append(html);
 
@@ -7928,11 +7988,20 @@ var createPage = function createPage(data) {
         var target = $(e.currentTarget);
         var sid = target.attr('data-sid');
         var gid = target.attr('data-gid');
-        var num = target.siblings('input.num'); //reducBtns.parent().find('input.num[data-sid="' + sid + '"]');
-        var inum = parseInt(num.val());
+        var numEle = target.siblings('input.num');
+        var inum = parseInt(numEle.val());
         if (inum > 1) {
             inum = inum - 1;
-            num.val(inum);
+            numEle.val(inum);
+            var paytype = numEle.attr('data-paytype');
+            var jsondata = {
+                GameID: localStorage.GameID,
+                GoodID: gid,
+                Num: inum,
+                PayType: paytype,
+                EditType: 2
+            };
+            (0, _ajax.postData)('/OnShopCar', jsondata);
             var liinfo = target.closest('li.info');
             var icon = target.closest('.grid-item').find('li.checked span.iconfont');
             var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
@@ -7946,9 +8015,18 @@ var createPage = function createPage(data) {
         var target = $(e.currentTarget);
         var sid = target.attr('data-sid');
         var gid = target.attr('data-gid');
-        var num = target.siblings('input.num'); //addBtns.parent().find('input.num[data-sid="' + sid + '"]');
-        var inum = parseInt(num.val()) + 1;
-        num.val(inum);
+        var numEle = target.siblings('input.num');
+        var inum = parseInt(numEle.val()) + 1;
+        numEle.val(inum);
+        var paytype = numEle.attr('data-paytype');
+        var jsondata = {
+            GameID: localStorage.GameID,
+            GoodID: gid,
+            Num: inum,
+            PayType: paytype,
+            EditType: 2
+        };
+        (0, _ajax.postData)('/OnShopCar', jsondata);
         var liinfo = target.closest('li.info');
         var icon = target.closest('.grid-item').find('li.checked span.iconfont');
         var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
@@ -8025,14 +8103,17 @@ var createPage = function createPage(data) {
 };
 
 var sumAmount = function sumAmount(sid, gid, inum, liinfo, isSelect) {
-    var ipprice = liinfo.find('ul.content li.left span.price.price-point').text().replace('￥', '');
-    var isprice = liinfo.find('ul.content li.left span.price.price-score').text().replace('￥', '');
-    var idprice = liinfo.find('ul.content li.left span.price.price-diamond').text().replace('￥', '');
+    var s_sprice = liinfo.find('ul.content li.left span.price.price-score').text();
+    var s_dprice = liinfo.find('ul.content li.left span.price.price-diamond').text();
+    var s_pprice = liinfo.find('ul.content li.left span.price.price-point').text();
+    var ipprice = s_pprice ? s_pprice.replace('￥', '') : '0';
+    var isprice = s_sprice ? s_sprice.replace('￥', '') : '0';
+    var idprice = s_dprice ? s_dprice.replace('￥', '') : '0';
 
     inum = parseInt(inum);
-    var p_am = inum * parseFloat(ipprice);
-    var s_am = inum * parseFloat(isprice);
-    var d_am = inum * parseFloat(idprice);
+    var p_am = inum * parseInt(ipprice);
+    var s_am = inum * parseInt(isprice);
+    var d_am = inum * parseInt(idprice);
 
     var index = 0;
     var el = selectedGoods.find(function (el, i) {
@@ -8084,35 +8165,37 @@ var getMockData = function getMockData() {
     return Promise.resolve(_shopcar2.default);
 };
 
-var initData = function initData() {
-    // fetchData('/ShopCarList')
-    getMockData().then(function (res) {
-        createPage(res.message);
+var loadData = function loadData() {
+    (0, _ajax.fetchData)('/ShopCarList')
+    // getMockData()
+    .then(function (res) {
+        renderGrid(res.message);
     }).catch(function (err) {
         console.log(err);
     });
 };
 
-var initAction = function initAction() {};
+var initAction = function initAction() {
+    (0, _page.backToLastPage)('#btn_back');
+};
 
 var init = exports.init = function init() {
-    initData();
+    loadData();
     initAction();
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
@@ -8123,7 +8206,8 @@ var init = exports.init = function init() {
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8133,9 +8217,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(20);
+__webpack_require__(21);
 
-var _shopcar = __webpack_require__(15);
+var _shopcar = __webpack_require__(16);
 
 $(function (e) {
     (0, _shopcar.init)();
@@ -8143,7 +8227,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8154,7 +8238,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var data = {
     "status": "success",
-    "message": [{ "checked": false, "selected": false, "ID": "14", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/13 15:46:18", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "1" }, { "checked": false, "selected": false, "ID": "12", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "2" }, { "checked": false, "selected": false, "ID": "11", "GameID": "10020", "GoodID": "9", "Num": "7", "Created": "2017/4/13 9:59:37", "Modified": "2017/4/13 10:00:05", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "3" }, { "checked": false, "selected": false, "ID": "9", "GameID": "1001", "GoodID": "9", "Num": "1", "Created": "2017/4/13 9:26:54", "Modified": "2017/4/13 9:26:54", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "4" }, { "checked": false, "selected": false, "ID": "8", "GameID": "10012", "GoodID": "12", "Num": "6", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/12 18:54:00", "GoodName": "商品BBB", "PointPrice": "12.00", "ScorePrice": "12.00", "DiamondPrice": "12.00", "IntroImg": "/images/1003.png", "RowNo": "5" }, { "checked": false, "selected": false, "ID": "2", "GameID": "100104", "GoodID": "9", "Num": "14", "Created": "1990/1/1 0:00:00", "Modified": "1990/1/1 0:00:00", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "6" }]
+    "message": [{ "checked": false, "selected": false, "ID": "14", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/13 15:46:18", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "1" }, { "checked": false, "selected": false, "ID": "12", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "2" }, { "checked": false, "selected": false, "ID": "11", "GameID": "10020", "GoodID": "9", "Num": "7", "Created": "2017/4/13 9:59:37", "Modified": "2017/4/13 10:00:05", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "3" }, { "checked": false, "selected": false, "ID": "9", "GameID": "1001", "GoodID": "9", "Num": "1", "Created": "2017/4/13 9:26:54", "Modified": "2017/4/13 9:26:54", "GoodName": "苹果a", "PointPrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "4" }, { "checked": false, "selected": false, "ID": "8", "GameID": "10012", "GoodID": "12", "Num": "6", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/12 18:54:00", "GoodName": "商品BBB", "PointPrice": "12.00", "ScorePrice": "12.00", "DiamondPrice": "12.00", "IntroImg": "/images/1003.png", "RowNo": "5" }, { "checked": false, "selected": false, "ID": "2", "GameID": "100104", "GoodID": "9", "Num": "14", "Created": "1990/1/1 0:00:00", "Modified": "1990/1/1 0:00:00", "GoodName": "苹果a", "PointPrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "6" }]
 };
 
 exports.default = data;
