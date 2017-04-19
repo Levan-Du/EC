@@ -1,9 +1,10 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
-import { backToLastPage } from '../../commons/basic/page';
-import mockData from './pay.mock';
+import SessionGoods from '../../commons/basic/SessionGoods';
+import { backToLastPage, getQueryString } from '../../commons/basic/page';
+// import mockData from './pay.mock';
 import './pay.css';
 
-var { addrs, goods } = mockData;
+// var { addrs, goods } = mockData;
 
 var renderReceiverInfo = (dfAddr) => {
     var html = `
@@ -23,24 +24,32 @@ var renderReceiverInfo = (dfAddr) => {
 }
 
 var loadReceiverInfo = () => {
-    if (addrs.length === 0) {
-        window.location = "./receiver.html";
-        return;
-    }
+    fetchData('/GetUserAddr', {})
+        .then((res) => {
+            var addrs = res.message;
+            if (addrs.length === 0) {
+                window.location = "./receiver.html";
+                return;
+            }
 
-    var dfAddr = addrs.find((el) => {
-        return el.IsDefault;
-    });
-    renderReceiverInfo(dfAddr);
+            var dfAddr = addrs.find((el) => {
+                return el.IsDefault;
+            });
+            renderReceiverInfo(dfAddr);
+        });
 }
 
 var renderGoodsInfo = () => {
     var html = goods.map(el => `
-    <li>
-        <p class="img-box"><img src="${el.ImgUrl}"></p>
-        <span class="goodname">${el.GoodName}</span>
-        <span class="num">x ${el.Num}</span>
-        <span class="price">￥${el.Price}</span>
+    <li class="gooditem">
+        <article class="img-box"><img src="/images/4003.png"></article>
+        <article class="info">
+            <p class="goodname">${el.GoodName}</p>
+            <p class="number">
+                <span class="price">￥${el.Price}</span>
+                <span class="num">x ${el.Num}</span>
+            </p>
+        </article>
     </li>
     `).join('');
     $('#goodsinfo').append(html);
@@ -58,15 +67,13 @@ var renderGoodsSum = () => {
 }
 
 var loadData = () => {
-
+    loadReceiverInfo();
 }
 
 var initAction = () => {
     backToLastPage('#btn_back');
-    console.log(document.referrer);
-    loadReceiverInfo();
-    renderGoodsInfo();
-    renderGoodsSum();
+    // renderGoodsInfo();
+    // renderGoodsSum();
 }
 
 var selectAddr = () => {

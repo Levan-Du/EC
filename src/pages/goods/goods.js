@@ -1,12 +1,12 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
 import { getQueryString } from '../../commons/basic/page';
-import mockData from './goods.mock';
+// import mockData from './goods.mock';
 import Promise from 'bluebird';
 
 const createGoods = (data) => {
     var tmpl = data.map(r => `
         <li class="grid-item">
-            <a class="good-img-link" href="./gooddetail.html?id=${r.GoodID}">
+            <a class="good-img-link" href="./gooddetail.html?id=${r.ID}">
                 <img src="${r.IntroImg}"></img>
             </a>
             <dl class="good-info">
@@ -18,7 +18,7 @@ const createGoods = (data) => {
                 </dt>
                 <dt class="good-info-item action">
                     <a class="btn btn_addtoshopcar" data-gid="${r.ID}" data-paytype="${r.PayType}"><span class="iconfont icon-gouwuche"></span><span>加入购物车</span></a>
-                    <a class="btn" data-gid="${r.GoodID}" href="pay.html?type=singlepay&goodid=${r.GoodID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
+                    <a class="btn" data-gid="${r.ID}" href="pay.html?type=singlepay&goodid=${r.ID}"><span class="iconfont icon-danpin"></span><span>立即兑换</span></a>                        
                 </dt>
             </dl>
         </li>`).join('');
@@ -28,7 +28,7 @@ const createGoods = (data) => {
         var target = $(e.currentTarget);
         var gid = target.attr('data-gid'),
             paytype = target.attr('data-paytype');
-console.log(target);
+        console.log(target);
         var jsondata = {
             GameID: localStorage.GameID,
             GoodID: gid,
@@ -41,20 +41,22 @@ console.log(target);
 }
 
 
-const getGoods = () => {
-    return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
-}
+// const getGoods = () => {
+//     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
+// }
 
-var saveGameID = () => {
+const saveGameID = () => {
     var qsObj = getQueryString();
     localStorage.GameID = qsObj["gameid"];
 }
 
-var fetchGoods = () => {
-    // getGoods()
+const fetchGoods = () => {
     fetchData('/GoodsList')
         .then((res) => {
             createGoods(res.message);
+            if (!sessionStorage.Goods) {
+                sessionStorage.Goods = res.message;
+            }
         })
         .catch((err) => {
             alert(err);
@@ -64,6 +66,10 @@ var fetchGoods = () => {
 const loadData = () => {
     saveGameID();
     fetchGoods();
+}
+
+const submit = () => {
+
 }
 
 var selectMunuItem = '#btn_home';
@@ -82,10 +88,6 @@ const initAction = () => {
     ['#btn_home', '#btn_history', '#btn_shopcar'].forEach((el) => {
         addClick(el);
     });
-}
-
-const submit = () => {
-
 }
 
 export var init = () => {

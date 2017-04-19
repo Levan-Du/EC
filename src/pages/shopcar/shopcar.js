@@ -1,7 +1,7 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
 import { backToLastPage } from '../../commons/basic/page';
+import LocalShopCar from '../../commons/basic/LocalShopCar';
 import mockData from './shopcar.mock';
-
 
 var renderPrice = (el) => {
     var tmpl = '';
@@ -15,7 +15,6 @@ var renderPrice = (el) => {
         tmpl += `<p><span>钻石</span><span class="price price-diamond" data-sid="${el.ID}">￥${dprice}</span></p>`;
     if (el.PayType == 3)
         tmpl += `<p><span>积分</span><span class="price price-point" data-sid="${el.ID}">￥${pprice}</span></p>`;
-    //    console.log(parseInt(el.PointPrice), parseInt(el.ScorePrice), parseInt(el.DiamondPrice))
     return tmpl;
 }
 
@@ -24,7 +23,7 @@ var renderGrid = (data) => {
 <li class="grid-item">
     <ul>
         <li class="checked">
-            <a data-sid="${el.ID}" data-gid="${el.GoodID}"><span class="iconfont icon-fangxingweixuanzhong"></span></a>
+            <a data-sid="${el.ID}" data-gid="${el.GoodID}"><span class="iconfont icon-${el.checked?'fangxingxuanzhongfill':'fangxingweixuanzhong'}"></span></a>
         </li>
         <li class="img-box">
             <a data-sid="${el.ID}" data-gid="${el.GoodID}"><img src="${el.IntroImg}"></img></a>
@@ -51,11 +50,11 @@ var renderGrid = (data) => {
     var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
 
     reducBtns.click((e) => {
-        numClick(e);
+        onNumClick(e);
     });
 
     addBtns.click((e) => {
-        numClick(e);
+        onNumClick(e);
     });
 
     // fangxingxuanzhongfill
@@ -63,18 +62,16 @@ var renderGrid = (data) => {
     acheck.click((e) => {
         e.stopPropagation();
         e.preventDefault();
-        var sid, gid, icon, aa;
-
-        sid = $(e.currentTarget).attr('data-sid');
-        gid = $(e.currentTarget).attr('data-gid');
-        aa = $(e.currentTarget); //acheck.filter('[data-sid="' + sid + '"]');
-        icon = aa.find('span.iconfont');
-        var liinfo = aa.parent().siblings('li.info');
-
+        var target = $(e.currentTarget),
+            sid = target.attr('data-sid'),
+            gid = target.attr('data-gid'),
+            icon = target.find('span.iconfont');
         var isSelect = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') === -1;
-        var inum = liinfo.find('ul.content li.right input.num').val();
         toggleSelect(icon, !isSelect);
-        fillSelectGoods(sid, gid, inum, liinfo, isSelect);
+
+        LocalShopCar.checkOne(sid, gid);
+        renderSumAmount();
+        renderCheckAll();
     });
 
     var selectAllEle = $('#selectAll');
@@ -87,31 +84,19 @@ var renderGrid = (data) => {
             iconAll.addClass('icon-fangxingxuanzhongfill');
             acheck.find('span.iconfont').removeClass('icon-fangxingweixuanzhong');
             acheck.find('span.iconfont').addClass('icon-fangxingxuanzhongfill');
-            numInputs.forEach((el) => {
-                var ele = $(el),
-                    sid = ele.attr('data-sid'),
-                    gid = ele.attr('data-gid'),
-                    inum = parseInt(ele.val()),
-                    pprice = parseInt(ele.attr('data-pprice')),
-                    sprice = parseInt(ele.attr('data-sprice')),
-                    dprice = parseInt(ele.attr('data-dprice')),
-                    p_am = inum * pprice,
-                    s_am = inum * sprice,
-                    d_am = inum * dprice;
-                selectedGoods.push({ ID: sid, GoodID: gid, Num: inum, PAmount: p_am, SAmount: s_am, DAmount: d_am });
-            });
+            LocalShopCar.checkAll(true);
         } else {
             iconAll.addClass('icon-fangxingweixuanzhong');
             iconAll.removeClass('icon-fangxingxuanzhongfill');
             acheck.find('span.iconfont').addClass('icon-fangxingweixuanzhong');
             acheck.find('span.iconfont').removeClass('icon-fangxingxuanzhongfill');
-            selectedGoods.splice(0, selectedGoods.length);
+            LocalShopCar.checkAll(false);
         }
         renderSumAmount();
     });
 }
 
-var numClick = (e) => {
+var onNumClick = (e) => {
     var target = $(e.currentTarget);
     var numEle = target.siblings('input.num');
     var inum = parseInt(numEle.val());
@@ -133,58 +118,25 @@ var numClick = (e) => {
         EditType: 2
     }
     postData('/OnShopCar', jsondata);
-    var liinfo = target.closest('li.info');
-    var icon = target.closest('.grid-item').find('li.checked span.iconfont');
-    var isSelected = icon.prop('class').indexOf('icon-fangxingxuanzhongfill') !== -1;
-    if (isSelected) {
-        fillSelectGoods(sid, gid, inum, liinfo, true);
-    }
 
-}
-
-var fillSelectGoods = (sid, gid, inum, liinfo, isSelect) => {
-    var s_sprice = liinfo.find('ul.content li.left span.price.price-score').text();
-    var s_dprice = liinfo.find('ul.content li.left span.price.price-diamond').text();
-    var s_pprice = liinfo.find('ul.content li.left span.price.price-point').text();
-    var ipprice = s_pprice ? s_pprice.replace('￥', '') : '0';
-    var isprice = s_sprice ? s_sprice.replace('￥', '') : '0';
-    var idprice = s_dprice ? s_dprice.replace('￥', '') : '0';
-
-    inum = parseInt(inum);
-    var p_am = inum * parseInt(ipprice);
-    var s_am = inum * parseInt(isprice);
-    var d_am = inum * parseInt(idprice);
-
-    var index = 0;
-    var el = selectedGoods.find((el, i) => {
-        index = i;
-        return el.ID === sid;
-    });
-    if (!isSelect) {
-        selectedGoods.splice(index, 1);
-    } else {
-        if (el) {
-            el.Num = inum;
-            el.PAmount = p_am;
-            el.SAmount = s_am;
-            el.DAmount = d_am;
-        } else {
-            selectedGoods.push({ ID: sid, GoodID: gid, Num: inum, PAmount: p_am, SAmount: s_am, DAmount: d_am });
-        }
-    }
+    LocalShopCar.updateOne(sid, "Num", inum);
     renderSumAmount();
 }
 
 var renderSumAmount = () => {
+    var lsc = LocalShopCar.get();
     var PAmount = 0,
         SAmount = 0,
         DAmount = 0,
         num_all = 0;
-    selectedGoods.forEach((el, i) => {
-        PAmount += el.PAmount;
-        SAmount += el.SAmount;
-        DAmount += el.DAmount;
-        num_all += el.Num;
+    var checkedGoods = lsc.filter(el => {
+        return el.checked
+    });
+    checkedGoods.forEach((el, i) => {
+        PAmount += parseInt(el.PointPrice) * parseInt(el.Num);
+        SAmount += parseInt(el.ScorePrice) * parseInt(el.Num);
+        DAmount += parseInt(el.DiamondPrice) * parseInt(el.Num);
+        num_all += parseInt(el.Num);
     });
 
     $('#p_amount').text('￥' + PAmount);
@@ -203,22 +155,40 @@ var toggleSelect = (icon, isSelect) => {
     }
 }
 
-var selectedGoods = [];
+var renderCheckAll = () => {
+    var checkAllBtn = $('#selectAll'),
+        icon = checkAllBtn.find('span.iconfont'),
+        isSelect = LocalShopCar.isAllChecked();
+    toggleSelect(icon, !isSelect);
+}
 
 var getMockData = () => {
     return Promise.resolve(mockData);
 }
 
+var fetchShopCar = () => {
+    if (!localStorage.Shopcar) {
+        var data = LocalShopCar.get();
+        renderGrid(data);
+        renderCheckAll();
+    } else {
+        fetchData('/ShopCarList')
+            // getMockData()
+            .then((res) => {
+                LocalShopCar.set(res.message);
+                var data = LocalShopCar.get();
+                renderGrid(data);
+                renderCheckAll();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+    }
+}
+
 var loadData = () => {
-    fetchData('/ShopCarList')
-        // getMockData()
-        .then((res) => {
-            localStorage.Shopcar = res.message;
-            renderGrid(res.message);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    fetchShopCar();
 }
 
 

@@ -7957,22 +7957,16 @@ var _ajax = __webpack_require__(6);
 
 var _page = __webpack_require__(7);
 
-var _pay = __webpack_require__(31);
-
-var _pay2 = _interopRequireDefault(_pay);
-
 __webpack_require__(10);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var addrs = _pay2.default.addrs,
-    goods = _pay2.default.goods;
-
+// var { addrs, goods } = mockData;
 
 var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
     var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
     $('#receiverinfo').append(html);
 };
+// import mockData from './pay.mock';
+
 
 var loadReceiverInfo = function loadReceiverInfo() {
     if (addrs.length === 0) {
@@ -7988,7 +7982,7 @@ var loadReceiverInfo = function loadReceiverInfo() {
 
 var renderGoodsInfo = function renderGoodsInfo() {
     var html = goods.map(function (el) {
-        return '\n    <li>\n        <p class="img-box"><img src="' + el.ImgUrl + '"></p>\n        <span class="goodname">' + el.GoodName + '</span>\n        <span class="num">x ' + el.Num + '</span>\n        <span class="price">\uFFE5' + el.Price + '</span>\n    </li>\n    ';
+        return '\n    <li class="gooditem">\n        <article class="img-box"><img src="/images/4003.png"></article>\n        <article class="info">\n            <p class="goodname">' + el.GoodName + '</p>\n            <p class="number">\n                <span class="price">\uFFE5' + el.Price + '</span>\n                <span class="num">x ' + el.Num + '</span>\n            </p>\n        </article>\n    </li>\n    ';
     }).join('');
     $('#goodsinfo').append(html);
 };
@@ -8002,12 +7996,12 @@ var renderGoodsSum = function renderGoodsSum() {
     $('#goodssum').append(tmpl);
 };
 
-var loadData = function loadData() {};
+var loadData = function loadData() {
+    loadReceiverInfo();
+};
 
 var initAction = function initAction() {
     (0, _page.backToLastPage)('#btn_back');
-    console.log(document.referrer);
-    loadReceiverInfo();
     renderGoodsInfo();
     renderGoodsSum();
 };
@@ -8065,23 +8059,6 @@ $(function (e) {
     (0, _pay.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var data = {
-    addrs: [{ AddrID: 1, ReceiverName: 'aaabbb', ReceiverMobile: '13712348974', Addr: '广州市天河区科韵路16号广州信息港C栋101' }, { AddrID: 2, ReceiverName: 'CCCCCC', ReceiverMobile: '13788748974', Addr: '广州市天河区东圃镇车陂永泰市大街9号', IsDefault: true }],
-    goods: [{ GoodID: 1, GoodName: '苹果电脑2017款256G SSD硬盘 8G内存', Num: 2, Price: '7188' }]
-};
-
-exports.default = data;
 
 /***/ })
 /******/ ]);

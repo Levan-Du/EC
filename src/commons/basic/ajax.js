@@ -5,8 +5,8 @@ const API_URL = 'http://localhost:55555/api/Exchange'
 
 export function fetchData(url, data) {
     url = API_URL + url;
-    var newdata = data ? data + "&from=ec" : "from=ec";
-    newdata += "&gameid=" + localStorage.GameID;
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new Promise((resolve, reject) => {
         $.ajax({
             url: url,
@@ -25,16 +25,15 @@ export function fetchData(url, data) {
     });
 }
 
-export function postData(url, jsonObj) {
+export function postData(url, data) {
     url = API_URL + url;
-    jsonObj["GameID"] = localStorage.GameID;
-    var parms = jsonToParams(jsonObj);
-    console.log(parms);
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new Promise((resolve, reject) => {
         $.ajax({
             url: url,
             method: 'GET',
-            data: parms,
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',

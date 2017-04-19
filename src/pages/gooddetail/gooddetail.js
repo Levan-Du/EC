@@ -1,6 +1,6 @@
 import '../../commons/vendor/swiper/swiper-3.4.2.jquery.min';
-import { backToLastPage } from '../../commons/basic/page';
 import '../../commons/vendor/swiper/swiper-3.4.2.min.css';
+import { backToLastPage } from '../../commons/basic/page';
 import mockData from './gooddetail.mock';
 
 var mySwiper;

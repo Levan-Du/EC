@@ -7950,10 +7950,6 @@ var _ajax = __webpack_require__(6);
 
 var _page = __webpack_require__(7);
 
-var _goods = __webpack_require__(26);
-
-var _goods2 = _interopRequireDefault(_goods);
-
 var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
@@ -7962,7 +7958,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var createGoods = function createGoods(data) {
     var tmpl = data.map(function (r) {
-        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.GoodID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>' + r.GoodName + '</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + parseInt(r.PayPrice) + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn btn_addtoshopcar" data-gid="' + r.ID + '" data-paytype="' + r.PayType + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.GoodID + '" href="pay.html?type=singlepay&goodno=' + r.GoodID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
+        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.ID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>' + r.GoodName + '</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + parseInt(r.PayPrice) + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn btn_addtoshopcar" data-gid="' + r.ID + '" data-paytype="' + r.PayType + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.ID + '" href="pay.html?type=singlepay&goodid=' + r.ID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
     }).join('');
     $('#grid-goods').append(tmpl);
 
@@ -7982,19 +7978,17 @@ var createGoods = function createGoods(data) {
     });
 };
 
-var getGoods = function getGoods() {
-    return new _bluebird2.default(function (resolve, reject) {
-        return setTimeout(resolve, 300, _goods2.default);
-    });
-};
+// const getGoods = () => {
+//     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
+// }
 
+// import mockData from './goods.mock';
 var saveGameID = function saveGameID() {
     var qsObj = (0, _page.getQueryString)();
     localStorage.GameID = qsObj["gameid"];
 };
 
 var fetchGoods = function fetchGoods() {
-    // getGoods()
     (0, _ajax.fetchData)('/GoodsList').then(function (res) {
         createGoods(res.message);
     }).catch(function (err) {
@@ -8006,6 +8000,8 @@ var loadData = function loadData() {
     saveGameID();
     fetchGoods();
 };
+
+var submit = function submit() {};
 
 var selectMunuItem = '#btn_home';
 
@@ -8024,8 +8020,6 @@ var initAction = function initAction() {
         addClick(el);
     });
 };
-
-var submit = function submit() {};
 
 var init = exports.init = function init() {
     loadData();
@@ -8052,23 +8046,7 @@ var init = exports.init = function init() {
 /* 23 */,
 /* 24 */,
 /* 25 */,
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var data = {
-    title: 'goods',
-    rows: [{ GoodID: 1, ImgUrl: './images/1002.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 2, ImgUrl: './images/1003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 3, ImgUrl: './images/1007.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 4, ImgUrl: './images/1002.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 5, ImgUrl: './images/1003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 6, ImgUrl: './images/4003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 7, ImgUrl: './images/1002.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 8, ImgUrl: './images/1003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 9, ImgUrl: './images/1007.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 10, ImgUrl: './images/1002.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 11, ImgUrl: './images/1003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 12, ImgUrl: './images/4003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 13, ImgUrl: './images/1002.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 14, ImgUrl: './images/1003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 15, ImgUrl: './images/1007.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 16, ImgUrl: './images/1002.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }, { GoodID: 17, ImgUrl: './images/1003.png', Price: 50, activitied: ['满1000减100', '手机端特价'] }]
-};
-
-exports.default = data;
-
-/***/ }),
+/* 26 */,
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 

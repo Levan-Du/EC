@@ -75,11 +75,11 @@
 }
 
 .grid .grid-item .good-info .action .btn {
-    padding: .2rem;
+    padding: .2rem .1rem;
     background: #e33;
     color: #fff;
 }
 
 .grid .grid-item .good-info .action .btn span {
-    font-size: .7rem;
+    font-size: .5rem;
 }

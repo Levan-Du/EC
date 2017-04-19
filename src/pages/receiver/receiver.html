@@ -9,48 +9,66 @@
 </head>
 
 <body>
-    <div class="container tab" id=tab-1>
-        <header class="topbar">
-            <div class="left">
-                <a id="btn_back" class="btn-back" href="gooddetail.html"><span class="iconfont icon-xiangzuo1"></span></a>
-            </div>
-            <div class="mid">
-                <span>收货人信息</span>
-            </div>
-            <div class="right"><a>登录</a></div>
-        </header>
-        <article class="main">
-            <form>
-                <section class="form-info">
-                    <label for="txt_receiver">收货人：</label>
-                    <input id="txt_receiver" type="text" name="receiver">
-                </section>
-                <section class="form-info">
-                    <label for="txt_mobile">手机号码：</label>
-                    <input id="txt_mobile" type="text" name="mobile">
-                </section>
-                <section class="form-info">
-                    <label for="txt_mobile">所在地区：</label>
-                    <input id="txt_mobile" type="text" name="mobile">
-                </section>
-                <section class="form-info">
-                    <label for="txt_mobile">详细地址：</label>
-                    <input id="txt_mobile" type="text" name="mobile">
-                </section>
-                <section class="form-detail">
-                    <ul>
-                        <li>
-                            <img src="./images/1007.png">
-                            <p>Macbook Air 2017款 8G内存256G SSD硬盘</p>
-                            <i><span>￥</span><span class="price">6888.00<span></i>
+    <form id="form1">
+        <div class="container tab" id=tab-1>
+            <header class="topbar">
+                <div class="left">
+                    <a id="btn_back" class="btn-back"><span class="iconfont icon-xiangzuo1"></span></a>
+                </div>
+                <div class="mid">
+                    <span>收货人信息</span>
+                </div>
+                <div class="right"></div>
+            </header>
+            <article class="main">
+                <article id="input_area">
+                    <p id="error_msg" class="error"></p>
+                    <section class="form-info">
+                        <label for="txt_receiver"><span class="isrequired">*</span>收货人：</label>
+                        <input id="txt_receiver" type="text" name="receiver">
+                    </section>
+                    <section class="form-info">
+                        <label for="txt_mobile"><span class="isrequired">*</span>手机号码：</label>
+                        <input id="txt_mobile" type="text" name="mobile">
+                    </section>
+                    <section class="form-info">
+                        <label for="txt_area"><span class="isrequired">*</span>所在地区：</label>
+                        <input id="txt_area" type="text" name="mobile">
+                    </section>
+                    <section class="form-info">
+                        <label for="txt_addr"><span class="isrequired">*</span>详细地址：</label>
+                        <input id="txt_addr" type="text" name="mobile">
+                    </section>
+                </article>
+                <article id="chooseAddr_area">
+                    <ul class="top">
+                        <li class="back">
+                            <a id="btn_back">
+                                <span class="iconfont icon-xiangzuo1"></span>
+                            </a>
                         </li>
+                        <li class="title">地址选择</li>
+                        <li class="back"></li>
                     </ul>
-                </section>
-            </form>
-        </article>
-        <footer class="menubar">
-            <input id="btn_sumbit" type="submit" name="submit" value="保存信息" class="btn-submit">
-        </footer>
+                    <div class="swiper">
+                        <ul class="swiper-tab">
+                            <li class="swiper-tab-label active">省</li>
+                            <li class="swiper-tab-label">市</li>
+                            <li class="swiper-tab-label">区</li>
+                        </ul>
+                        <ul class="swiper-container">
+                            <li class="swiper-slide">provinces</li>
+                            <li class="swiper-slide">cities</li>
+                            <li class="swiper-slide">districts</li>
+                        </ul>
+                    </div>
+                </article>
+            </article>
+            <footer class="menubar">
+                <input id="btn_sumbit" type="submit" name="submit" value="保存信息" class="btn-submit">
+            </footer>
+        </div>
+    </form>
 </body>
 
 </html>
