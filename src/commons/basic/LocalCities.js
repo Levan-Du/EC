@@ -51,4 +51,4 @@ var LocalCities = {
     Cities: createLocalObj(_Cities)
 }
 
-export default SessionGoods;
+export default LocalCities;

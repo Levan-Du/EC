@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,6 +1951,37 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7575,7 +7606,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7587,7 +7618,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(5);
+var _bluebird = __webpack_require__(6);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7597,8 +7628,8 @@ var API_URL = 'http://localhost:55555/api/Exchange';
 
 function fetchData(url, data) {
     url = API_URL + url;
-    var newdata = data ? data + "&from=ec" : "from=ec";
-    newdata += "&gameid=" + localStorage.GameID;
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
@@ -7617,16 +7648,15 @@ function fetchData(url, data) {
     });
 }
 
-function postData(url, jsonObj) {
+function postData(url, data) {
     url = API_URL + url;
-    jsonObj["GameID"] = localStorage.GameID;
-    var parms = jsonToParams(jsonObj);
-    console.log(parms);
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: parms,
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7646,37 +7676,6 @@ var jsonToParams = function jsonToParams(jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7935,7 +7934,9 @@ exports.clearImmediate = clearImmediate;
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7946,15 +7947,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(6);
-
-var _page = __webpack_require__(7);
-
-var _bluebird = __webpack_require__(5);
+var _bluebird = __webpack_require__(6);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
+var _co = __webpack_require__(37);
+
+var _co2 = _interopRequireDefault(_co);
+
+var _ajax = __webpack_require__(7);
+
+var _page = __webpack_require__(5);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _marked = [loadData].map(regeneratorRuntime.mark);
+
+// import mockData from './goods.mock';
 
 var createGoods = function createGoods(data) {
     var tmpl = data.map(function (r) {
@@ -7982,24 +7991,73 @@ var createGoods = function createGoods(data) {
 //     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
 // }
 
-// import mockData from './goods.mock';
 var saveGameID = function saveGameID() {
-    var qsObj = (0, _page.getQueryString)();
-    localStorage.GameID = qsObj["gameid"];
-};
-
-var fetchGoods = function fetchGoods() {
-    (0, _ajax.fetchData)('/GoodsList').then(function (res) {
-        createGoods(res.message);
-    }).catch(function (err) {
-        alert(err);
+    _bluebird2.default.resolve().then(function () {
+        var qsObj = (0, _page.getQueryString)();
+        localStorage.GameID = qsObj["gameid"];
     });
 };
 
-var loadData = function loadData() {
-    saveGameID();
-    fetchGoods();
+var fetchGoods = function fetchGoods() {
+    return new _bluebird2.default(function (resolve, reject) {
+        (0, _ajax.fetchData)('/GoodsList').then(function (res) {
+            createGoods(res.message);
+            setSessionGoods(res.message);
+            resolve('Get GoodsList finish');
+        }).catch(function (err) {
+            reject(err);
+        });
+    });
 };
+
+var setSessionGoods = function setSessionGoods(data) {
+    if (!sessionStorage.Goods) {
+        sessionStorage.Goods = data;
+    }
+};
+
+var fetchCities = function fetchCities() {
+    return new _bluebird2.default(function (resolve, reject) {
+        (0, _ajax.fetchData)('/CitiesArea', null).then(function (res) {
+            if (!localStorage.Countrys) {
+                localStorage.Countrys = JSON.stringify(res.message.Countrys);
+            }
+            if (!localStorage.Provinces) {
+                localStorage.Provinces = JSON.stringify(res.message.Provinces);
+            }
+            if (!localStorage.Cities) {
+                localStorage.Cities = JSON.stringify(res.message.Cities);
+            }
+            resolve('Get CitiesArea finish');
+        }).catch(function (err) {
+            reject(err);
+        });
+    });
+};
+
+function loadData() {
+    return regeneratorRuntime.wrap(function loadData$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    _context.next = 2;
+                    return saveGameID();
+
+                case 2:
+                    _context.next = 4;
+                    return fetchGoods();
+
+                case 4:
+                    _context.next = 6;
+                    return fetchCities();
+
+                case 6:
+                case 'end':
+                    return _context.stop();
+            }
+        }
+    }, _marked[0], this);
+}
 
 var submit = function submit() {};
 
@@ -8022,32 +8080,33 @@ var initAction = function initAction() {
 };
 
 var init = exports.init = function init() {
-    loadData();
+    (0, _co2.default)(loadData);
     initAction();
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */,
-/* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 19 */,
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
 /* 25 */,
 /* 26 */,
-/* 27 */
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8057,14 +8116,263 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(18);
+__webpack_require__(20);
 
-var _goods = __webpack_require__(12);
+var _goods = __webpack_require__(14);
 
 $(function (e) {
     (0, _goods.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
+/***/ (function(module, exports) {
+
+
+/**
+ * slice() reference.
+ */
+
+var slice = Array.prototype.slice;
+
+/**
+ * Expose `co`.
+ */
+
+module.exports = co['default'] = co.co = co;
+
+/**
+ * Wrap the given generator `fn` into a
+ * function that returns a promise.
+ * This is a separate function so that
+ * every `co()` call doesn't create a new,
+ * unnecessary closure.
+ *
+ * @param {GeneratorFunction} fn
+ * @return {Function}
+ * @api public
+ */
+
+co.wrap = function (fn) {
+  createPromise.__generatorFunction__ = fn;
+  return createPromise;
+  function createPromise() {
+    return co.call(this, fn.apply(this, arguments));
+  }
+};
+
+/**
+ * Execute the generator function or a generator
+ * and return a promise.
+ *
+ * @param {Function} fn
+ * @return {Promise}
+ * @api public
+ */
+
+function co(gen) {
+  var ctx = this;
+  var args = slice.call(arguments, 1)
+
+  // we wrap everything in a promise to avoid promise chaining,
+  // which leads to memory leak errors.
+  // see https://github.com/tj/co/issues/180
+  return new Promise(function(resolve, reject) {
+    if (typeof gen === 'function') gen = gen.apply(ctx, args);
+    if (!gen || typeof gen.next !== 'function') return resolve(gen);
+
+    onFulfilled();
+
+    /**
+     * @param {Mixed} res
+     * @return {Promise}
+     * @api private
+     */
+
+    function onFulfilled(res) {
+      var ret;
+      try {
+        ret = gen.next(res);
+      } catch (e) {
+        return reject(e);
+      }
+      next(ret);
+    }
+
+    /**
+     * @param {Error} err
+     * @return {Promise}
+     * @api private
+     */
+
+    function onRejected(err) {
+      var ret;
+      try {
+        ret = gen.throw(err);
+      } catch (e) {
+        return reject(e);
+      }
+      next(ret);
+    }
+
+    /**
+     * Get the next value in the generator,
+     * return a promise.
+     *
+     * @param {Object} ret
+     * @return {Promise}
+     * @api private
+     */
+
+    function next(ret) {
+      if (ret.done) return resolve(ret.value);
+      var value = toPromise.call(ctx, ret.value);
+      if (value && isPromise(value)) return value.then(onFulfilled, onRejected);
+      return onRejected(new TypeError('You may only yield a function, promise, generator, array, or object, '
+        + 'but the following object was passed: "' + String(ret.value) + '"'));
+    }
+  });
+}
+
+/**
+ * Convert a `yield`ed value into a promise.
+ *
+ * @param {Mixed} obj
+ * @return {Promise}
+ * @api private
+ */
+
+function toPromise(obj) {
+  if (!obj) return obj;
+  if (isPromise(obj)) return obj;
+  if (isGeneratorFunction(obj) || isGenerator(obj)) return co.call(this, obj);
+  if ('function' == typeof obj) return thunkToPromise.call(this, obj);
+  if (Array.isArray(obj)) return arrayToPromise.call(this, obj);
+  if (isObject(obj)) return objectToPromise.call(this, obj);
+  return obj;
+}
+
+/**
+ * Convert a thunk to a promise.
+ *
+ * @param {Function}
+ * @return {Promise}
+ * @api private
+ */
+
+function thunkToPromise(fn) {
+  var ctx = this;
+  return new Promise(function (resolve, reject) {
+    fn.call(ctx, function (err, res) {
+      if (err) return reject(err);
+      if (arguments.length > 2) res = slice.call(arguments, 1);
+      resolve(res);
+    });
+  });
+}
+
+/**
+ * Convert an array of "yieldables" to a promise.
+ * Uses `Promise.all()` internally.
+ *
+ * @param {Array} obj
+ * @return {Promise}
+ * @api private
+ */
+
+function arrayToPromise(obj) {
+  return Promise.all(obj.map(toPromise, this));
+}
+
+/**
+ * Convert an object of "yieldables" to a promise.
+ * Uses `Promise.all()` internally.
+ *
+ * @param {Object} obj
+ * @return {Promise}
+ * @api private
+ */
+
+function objectToPromise(obj){
+  var results = new obj.constructor();
+  var keys = Object.keys(obj);
+  var promises = [];
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var promise = toPromise.call(this, obj[key]);
+    if (promise && isPromise(promise)) defer(promise, key);
+    else results[key] = obj[key];
+  }
+  return Promise.all(promises).then(function () {
+    return results;
+  });
+
+  function defer(promise, key) {
+    // predefine the key in the result
+    results[key] = undefined;
+    promises.push(promise.then(function (res) {
+      results[key] = res;
+    }));
+  }
+}
+
+/**
+ * Check if `obj` is a promise.
+ *
+ * @param {Object} obj
+ * @return {Boolean}
+ * @api private
+ */
+
+function isPromise(obj) {
+  return 'function' == typeof obj.then;
+}
+
+/**
+ * Check if `obj` is a generator.
+ *
+ * @param {Mixed} obj
+ * @return {Boolean}
+ * @api private
+ */
+
+function isGenerator(obj) {
+  return 'function' == typeof obj.next && 'function' == typeof obj.throw;
+}
+
+/**
+ * Check if `obj` is a generator function.
+ *
+ * @param {Mixed} obj
+ * @return {Boolean}
+ * @api private
+ */
+function isGeneratorFunction(obj) {
+  var constructor = obj.constructor;
+  if (!constructor) return false;
+  if ('GeneratorFunction' === constructor.name || 'GeneratorFunction' === constructor.displayName) return true;
+  return isGenerator(constructor.prototype);
+}
+
+/**
+ * Check for plain object.
+ *
+ * @param {Mixed} val
+ * @return {Boolean}
+ * @api private
+ */
+
+function isObject(val) {
+  return Object == val.constructor;
+}
+
 
 /***/ })
 /******/ ]);

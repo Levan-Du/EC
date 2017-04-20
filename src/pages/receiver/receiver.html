@@ -23,43 +23,46 @@
             <article class="main">
                 <article id="input_area">
                     <p id="error_msg" class="error"></p>
+                    <section style="display: none;">
+                        <input type="txt_id" name="ID" value=0>
+                    </section>
                     <section class="form-info">
-                        <label for="txt_receiver"><span class="isrequired">*</span>收货人：</label>
-                        <input id="txt_receiver" type="text" name="receiver">
+                        <label for="txt_receiver"><span class="isrequired">*</span>收货人姓名：</label>
+                        <input id="txt_receiver" type="text" name="ReceiverName">
                     </section>
                     <section class="form-info">
                         <label for="txt_mobile"><span class="isrequired">*</span>手机号码：</label>
-                        <input id="txt_mobile" type="text" name="mobile">
+                        <input id="txt_mobile" type="text" name="ReceiverMobile">
                     </section>
                     <section class="form-info">
-                        <label for="txt_area"><span class="isrequired">*</span>所在地区：</label>
-                        <input id="txt_area" type="text" name="mobile">
+                        <label for="txt_addr"><span class="isrequired">*</span>所在地区：</label>
+                        <input id="txt_addr" type="text" name="Addr" data-areaid="" value="">
                     </section>
                     <section class="form-info">
-                        <label for="txt_addr"><span class="isrequired">*</span>详细地址：</label>
-                        <input id="txt_addr" type="text" name="mobile">
+                        <label for="txt_street"><span class="isrequired">*</span>详细地址：</label>
+                        <input id="txt_street" type="text" name="Street">
                     </section>
                 </article>
                 <article id="chooseAddr_area">
                     <ul class="top">
                         <li class="back">
-                            <a id="btn_back">
+                            <a id="btn_hide">
                                 <span class="iconfont icon-xiangzuo1"></span>
                             </a>
                         </li>
                         <li class="title">地址选择</li>
                         <li class="back"></li>
                     </ul>
-                    <div class="swiper">
-                        <ul class="swiper-tab">
-                            <li class="swiper-tab-label active">省</li>
-                            <li class="swiper-tab-label">市</li>
-                            <li class="swiper-tab-label">区</li>
-                        </ul>
-                        <ul class="swiper-container">
-                            <li class="swiper-slide">provinces</li>
-                            <li class="swiper-slide">cities</li>
-                            <li class="swiper-slide">districts</li>
+                    <ul class="swiper-tab">
+                        <li id="tab-province" class="swiper-tab-label active" data-for="province"><a>请选择</a></li>
+                        <li id="tab-city" class="swiper-tab-label" data-for="city"><a>请选择</a></li>
+                        <li id="tab-district" class="swiper-tab-label" data-for="district"><a>请选择</a></li>
+                    </ul>
+                    <div class="swiper-container">
+                        <ul class="swiper-wrapper">
+                            <li id="page-province" data-label="province" class="swiper-slide"></li>
+                            <li id="page-city" data-label="city" class="swiper-slide"></li>
+                            <li id="page-district" data-label="district" class="swiper-slide"></li>
                         </ul>
                     </div>
                 </article>

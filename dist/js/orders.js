@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,6 +1951,37 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7575,7 +7606,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7587,7 +7618,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(5);
+var _bluebird = __webpack_require__(6);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7597,8 +7628,8 @@ var API_URL = 'http://localhost:55555/api/Exchange';
 
 function fetchData(url, data) {
     url = API_URL + url;
-    var newdata = data ? data + "&from=ec" : "from=ec";
-    newdata += "&gameid=" + localStorage.GameID;
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
@@ -7617,16 +7648,15 @@ function fetchData(url, data) {
     });
 }
 
-function postData(url, jsonObj) {
+function postData(url, data) {
     url = API_URL + url;
-    jsonObj["GameID"] = localStorage.GameID;
-    var parms = jsonToParams(jsonObj);
-    console.log(parms);
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: parms,
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7646,37 +7676,6 @@ var jsonToParams = function jsonToParams(jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7936,7 +7935,9 @@ exports.clearImmediate = clearImmediate;
 /* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7947,15 +7948,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(6);
+var _ajax = __webpack_require__(7);
 
-var _page = __webpack_require__(7);
+var _page = __webpack_require__(5);
 
-var _orders = __webpack_require__(29);
+var _orders = __webpack_require__(32);
 
 var _orders2 = _interopRequireDefault(_orders);
 
-var _bluebird = __webpack_require__(5);
+var _bluebird = __webpack_require__(6);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -8013,26 +8014,27 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */,
-/* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 20 */,
-/* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8042,9 +8044,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(19);
+__webpack_require__(21);
 
-var _orders = __webpack_require__(13);
+var _orders = __webpack_require__(15);
 
 $(function (e) {
     (0, _orders.init)();
@@ -8052,7 +8054,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -1,7 +1,7 @@
+import Promise from 'bluebird';
 import { fetchData, postData } from '../../commons/basic/ajax';
 import { getQueryString } from '../../commons/basic/page';
 // import mockData from './goods.mock';
-import Promise from 'bluebird';
 
 const createGoods = (data) => {
     var tmpl = data.map(r => `
@@ -51,21 +51,55 @@ const saveGameID = () => {
 }
 
 const fetchGoods = () => {
-    fetchData('/GoodsList')
-        .then((res) => {
-            createGoods(res.message);
-            if (!sessionStorage.Goods) {
-                sessionStorage.Goods = res.message;
-            }
-        })
-        .catch((err) => {
-            alert(err);
-        });
+    return new Promise((resolve, reject) => {
+        fetchData('/GoodsList')
+            .then((res) => {
+                createGoods(res.message);
+                setSessionGoods(res.message);
+                resolve('Get GoodsList finish');
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
 }
 
-const loadData = () => {
-    saveGameID();
-    fetchGoods();
+var setSessionGoods = (data) => {
+    if (!sessionStorage.Goods) {
+        sessionStorage.Goods = data;
+    }
+}
+
+const fetchCities = () => {
+    return new Promise((resolve, reject) => {
+        fetchData('/CitiesArea', null)
+            .then((res) => {
+                if (!localStorage.Countrys || localStorage.Countrys == "undefined") {
+                    localStorage.Countrys = JSON.stringify(res.message.Countrys);
+                }
+                if (!localStorage.Provinces || localStorage.Provinces == "undefined") {
+                    localStorage.Provinces = JSON.stringify(res.message.Provinces);
+                }
+                if (!localStorage.Cities || localStorage.Cities == "undefined") {
+                    localStorage.Cities = JSON.stringify(res.message.Cities);
+                }
+                resolve('Get CitiesArea finish');
+            }).catch(err => {
+                reject(err);
+            });
+    });
+}
+
+var loadData = () => {
+    Promise.resolve().then((res) => {
+            saveGameID();
+        })
+        .then((res) => {
+            return fetchGoods();
+        })
+        .then((res) => {
+            return fetchCities();
+        });
 }
 
 const submit = () => {

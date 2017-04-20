@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,6 +1951,37 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7575,7 +7606,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7587,7 +7618,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(5);
+var _bluebird = __webpack_require__(6);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7597,8 +7628,8 @@ var API_URL = 'http://localhost:55555/api/Exchange';
 
 function fetchData(url, data) {
     url = API_URL + url;
-    var newdata = data ? data + "&from=ec" : "from=ec";
-    newdata += "&gameid=" + localStorage.GameID;
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
@@ -7617,16 +7648,15 @@ function fetchData(url, data) {
     });
 }
 
-function postData(url, jsonObj) {
+function postData(url, data) {
     url = API_URL + url;
-    jsonObj["GameID"] = localStorage.GameID;
-    var parms = jsonToParams(jsonObj);
-    console.log(parms);
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: parms,
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7646,37 +7676,6 @@ var jsonToParams = function jsonToParams(jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7933,16 +7932,18 @@ exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 11 */,
-/* 12 */,
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7953,11 +7954,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(6);
+var _ajax = __webpack_require__(7);
 
-var _page = __webpack_require__(7);
+var _SessionGoods = __webpack_require__(26);
 
-__webpack_require__(10);
+var _SessionGoods2 = _interopRequireDefault(_SessionGoods);
+
+var _page = __webpack_require__(5);
+
+__webpack_require__(12);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // var { addrs, goods } = mockData;
 
@@ -7969,15 +7976,19 @@ var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
 
 
 var loadReceiverInfo = function loadReceiverInfo() {
-    if (addrs.length === 0) {
-        window.location = "./receiver.html";
-        return;
-    }
+    (0, _ajax.fetchData)('/GetUserAddr', {}).then(function (res) {
+        var addrs = res.message;
+        console.log(addrs);
+        if (addrs.length === 0) {
+            window.location = "./receiver.html";
+            return;
+        }
 
-    var dfAddr = addrs.find(function (el) {
-        return el.IsDefault;
+        var dfAddr = addrs.find(function (el) {
+            return el.IsDefault;
+        });
+        renderReceiverInfo(dfAddr);
     });
-    renderReceiverInfo(dfAddr);
 };
 
 var renderGoodsInfo = function renderGoodsInfo() {
@@ -8002,8 +8013,8 @@ var loadData = function loadData() {
 
 var initAction = function initAction() {
     (0, _page.backToLastPage)('#btn_back');
-    renderGoodsInfo();
-    renderGoodsSum();
+    // renderGoodsInfo();
+    // renderGoodsSum();
 };
 
 var selectAddr = function selectAddr() {};
@@ -8026,8 +8037,6 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 15 */,
-/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
@@ -8037,11 +8046,57 @@ var init = exports.init = function init() {
 /* 23 */,
 /* 24 */,
 /* 25 */,
-/* 26 */,
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var findOne = function findOne(id) {
+    var goods = get();
+    var selectEl = goods.find(function (el) {
+        return el.ID == id;
+    });
+    return selectEl;
+};
+
+var updateOne = function updateOne(id, key, value) {
+    var goods = get();
+    var selectEl = goods.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl[key] = value;
+    sessionStorage.Goods = JSON.stringify(goods);
+};
+
+var get = function get() {
+    return JSON.parse(sessionStorage.Goods);
+};
+
+var set = function set(obj) {
+    sessionStorage.Goods = JSON.stringify(obj);
+};
+
+var SessionGoods = {
+    get: get,
+    set: set,
+    findOne: findOne,
+    updateOne: updateOne
+};
+
+exports.default = SessionGoods;
+
+/***/ }),
 /* 27 */,
 /* 28 */,
 /* 29 */,
-/* 30 */
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8051,9 +8106,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(10);
+__webpack_require__(12);
 
-var _pay = __webpack_require__(14);
+var _pay = __webpack_require__(16);
 
 $(function (e) {
     (0, _pay.init)();

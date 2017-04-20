@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1739,9 +1739,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 /***/ }),
 /* 3 */,
 /* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1772,109 +1770,11 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 6 */,
+/* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */,
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.init = undefined;
-
-__webpack_require__(24);
-
-var _page = __webpack_require__(7);
-
-__webpack_require__(34);
-
-var _gooddetail = __webpack_require__(25);
-
-var _gooddetail2 = _interopRequireDefault(_gooddetail);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mySwiper;
-var slide = function slide() {
-    mySwiper = new Swiper('.swiper-page', {
-        loop: false,
-        onSlideChangeStart: function onSlideChangeStart(e) {
-            selectTab(e);
-        }
-    });
-};
-var labels = $('.tab-swiper .tab-label');
-var clickToSlide = function clickToSlide() {
-    labels.find('a').click(function (e) {
-        var t = $(e.target).parent('.tab-label');
-        var index = labels.index(t[0]);
-        if (index === selectTabIndex) {
-            return;
-        }
-
-        mySwiper.slideTo(index, 600, false);
-
-        labels.eq(index).addClass('active');
-        labels.eq(selectTabIndex).removeClass('active');
-        selectTabIndex = index;
-    });
-};
-
-var selectTabIndex = 0;
-
-var selectTab = function selectTab(e) {
-    var tablabel = $('.swiper-slide.swiper-slide-active').attr('data-label');
-    var index = labels.index('[data-for="' + tablabel + '"]');
-    labels.eq(index).addClass('active');
-    labels.eq(selectTabIndex).removeClass('active');
-    selectTabIndex = index;
-};
-
-var renderImgBox = function renderImgBox() {
-    var html = _gooddetail2.default.images.map(function (el) {
-        return '\n        <li class="swiper-slide">\n            <img src="' + el + '"\n        <li>\n';
-    });
-    $('.main #good-img-box').append(html);
-};
-
-var loadData = function loadData() {};
-
-var initAction = function initAction() {
-    (0, _page.backToLastPage)('#btn_back');
-    slide();
-    clickToSlide();
-    renderImgBox();
-};
-
-var init = exports.init = function init() {
-    loadData();
-    initAction();
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2779,7 +2679,115 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //# sourceMappingURL=maps/swiper.jquery.min.js.map
 
 /***/ }),
-/* 25 */
+/* 11 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 12 */,
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.init = undefined;
+
+__webpack_require__(10);
+
+__webpack_require__(11);
+
+var _page = __webpack_require__(5);
+
+var _gooddetail = __webpack_require__(28);
+
+var _gooddetail2 = _interopRequireDefault(_gooddetail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mySwiper;
+var slide = function slide() {
+    mySwiper = new Swiper('.swiper-page', {
+        loop: false,
+        onSlideChangeStart: function onSlideChangeStart(e) {
+            selectTab(e);
+        }
+    });
+};
+var labels = $('.tab-swiper .tab-label');
+var clickToSlide = function clickToSlide() {
+    labels.find('a').click(function (e) {
+        var t = $(e.target).parent('.tab-label');
+        var index = labels.index(t[0]);
+        if (index === selectTabIndex) {
+            return;
+        }
+
+        mySwiper.slideTo(index, 600, false);
+
+        labels.eq(index).addClass('active');
+        labels.eq(selectTabIndex).removeClass('active');
+        selectTabIndex = index;
+    });
+};
+
+var selectTabIndex = 0;
+
+var selectTab = function selectTab(e) {
+    var tablabel = $('.swiper-slide.swiper-slide-active').attr('data-label');
+    var index = labels.index('[data-for="' + tablabel + '"]');
+    labels.eq(index).addClass('active');
+    labels.eq(selectTabIndex).removeClass('active');
+    selectTabIndex = index;
+};
+
+var renderImgBox = function renderImgBox() {
+    var html = _gooddetail2.default.images.map(function (el) {
+        return '\n        <li class="swiper-slide">\n            <img src="' + el + '"\n        <li>\n';
+    });
+    $('.main #good-img-box').append(html);
+};
+
+var loadData = function loadData() {};
+
+var initAction = function initAction() {
+    (0, _page.backToLastPage)('#btn_back');
+    slide();
+    clickToSlide();
+    renderImgBox();
+};
+
+var init = exports.init = function init() {
+    loadData();
+    initAction();
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2798,7 +2806,7 @@ var good = {
 exports.default = good;
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2808,27 +2816,14 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(17);
+__webpack_require__(19);
 
-var _gooddetail = __webpack_require__(11);
+var _gooddetail = __webpack_require__(13);
 
 $(function (e) {
     (0, _gooddetail.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

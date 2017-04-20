@@ -22,6 +22,7 @@ export function fetchData(url, data) {
                 reject(err);
             }
         });
+
     });
 }
 

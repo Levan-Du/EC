@@ -27,6 +27,7 @@ var loadReceiverInfo = () => {
     fetchData('/GetUserAddr', {})
         .then((res) => {
             var addrs = res.message;
+            console.log(addrs);
             if (addrs.length === 0) {
                 window.location = "./receiver.html";
                 return;

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,6 +1951,37 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7575,7 +7606,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7587,7 +7618,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(5);
+var _bluebird = __webpack_require__(6);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7597,8 +7628,8 @@ var API_URL = 'http://localhost:55555/api/Exchange';
 
 function fetchData(url, data) {
     url = API_URL + url;
-    var newdata = data ? data + "&from=ec" : "from=ec";
-    newdata += "&gameid=" + localStorage.GameID;
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
@@ -7617,16 +7648,15 @@ function fetchData(url, data) {
     });
 }
 
-function postData(url, jsonObj) {
+function postData(url, data) {
     url = API_URL + url;
-    jsonObj["GameID"] = localStorage.GameID;
-    var parms = jsonToParams(jsonObj);
-    console.log(parms);
+    var gameidParm = "gameid=" + localStorage.GameID,
+        newdata = data ? data + '&' + gameidParm : gameidParm;
     return new _bluebird2.default(function (resolve, reject) {
         $.ajax({
             url: url,
             method: 'GET',
-            data: parms,
+            data: newdata,
             dataType: 'jsonp',
             jsonp: 'jsonpcb',
             jsonpCallback: 'jsonp_success',
@@ -7646,37 +7676,6 @@ var jsonToParams = function jsonToParams(jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7939,7 +7938,9 @@ exports.clearImmediate = clearImmediate;
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7950,15 +7951,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(6);
+var _ajax = __webpack_require__(7);
 
-var _page = __webpack_require__(7);
+var _page = __webpack_require__(5);
 
-var _LocalShopCar = __webpack_require__(22);
+var _LocalShopCar = __webpack_require__(25);
 
 var _LocalShopCar2 = _interopRequireDefault(_LocalShopCar);
 
-var _shopcar = __webpack_require__(33);
+var _shopcar = __webpack_require__(36);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
 
@@ -8105,18 +8106,22 @@ var getMockData = function getMockData() {
 };
 
 var fetchShopCar = function fetchShopCar() {
-    (0, _ajax.fetchData)('/ShopCarList')
-    // getMockData()
-    .then(function (res) {
-        if (!localStorage.Shopcar) {
-            _LocalShopCar2.default.set(res.message);
-        }
+    if (!localStorage.Shopcar) {
         var data = _LocalShopCar2.default.get();
         renderGrid(data);
         renderCheckAll();
-    }).catch(function (err) {
-        console.log(err);
-    });
+    } else {
+        (0, _ajax.fetchData)('/ShopCarList')
+        // getMockData()
+        .then(function (res) {
+            _LocalShopCar2.default.set(res.message);
+            var data = _LocalShopCar2.default.get();
+            renderGrid(data);
+            renderCheckAll();
+        }).catch(function (err) {
+            console.log(err);
+        });
+    }
 };
 
 var loadData = function loadData() {
@@ -8134,17 +8139,18 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */,
-/* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 22 */
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8220,16 +8226,16 @@ var LocalShopCar = {
 exports.default = LocalShopCar;
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8239,9 +8245,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(21);
+__webpack_require__(23);
 
-var _shopcar = __webpack_require__(16);
+var _shopcar = __webpack_require__(18);
 
 $(function (e) {
     (0, _shopcar.init)();
@@ -8249,7 +8255,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
