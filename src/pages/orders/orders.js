@@ -1,10 +1,10 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
-import { backToLastPage } from '../../commons/basic/page';
+// import { backToLastPage } from '../../commons/basic/page';
+import { formatPayType } from '../../commons/basic/format';
 import mockData from './orders.mock';
 import Promise from 'bluebird';
 
-var createOrders = (data) => {
-        console.log(data);
+var renderOrders = (data) => {
         var tmpl = data.map(o => `
         <li class="grid-item">
             <dl>
@@ -20,7 +20,7 @@ var createOrders = (data) => {
                     `)}
                 </dd>
                 <dd class="order-item-sum">
-                    <p>共${o.Num}件商品,兑换${formatPayTypeToString(o.receiverType)}：${o.Amount}</p>
+                    <p>共${o.Num}件商品,兑换${formatPayType(o.receiverType)}：${o.Amount}</p>
                     <a class="btn" data-oid="${o.OrderID}">再次兑换</a>
                 </dd>
             </dl>
@@ -30,27 +30,21 @@ var createOrders = (data) => {
     $('#grid-orders').append(tmpl);
 }
 
-var formatPayTypeToString = (type) => {
-    var new_type = parseInt(type);
-    console.log(new_type)
-    switch(new_type){
-        case 1:return '积分';
-        case 2:return '金币';
-        case 3:return '钻石';
-    }
-}
-
 var getOrders = () => {
     // fetchData('/goods')
 
     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
 }
 
+var setHomePage = () => {
+    $('#btn_back').attr('href','index.html?gameid='+localStorage.GameID);
+}
+
 var loadData = () => {
     // getOrders()
     fetchData('/OrdersList')
         .then((res) => {
-            createOrders(res.message);
+            renderOrders(res.message);
         })
         .catch((err)=>{
             alert(err);
@@ -58,7 +52,8 @@ var loadData = () => {
 }
 
 var initAction = () => {
-    backToLastPage('#btn_back');
+    // backToLastPage('#btn_back');
+    setHomePage();
 }
 
 export var init = () => {

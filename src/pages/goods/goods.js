@@ -1,7 +1,12 @@
 import Promise from 'bluebird';
 import { fetchData, postData } from '../../commons/basic/ajax';
 import { getQueryString } from '../../commons/basic/page';
+import LocalCities from '../../commons/basic/LocalCities';
 // import mockData from './goods.mock';
+
+var localCountrys = LocalCities.Countrys,
+    localProvinces = LocalCities.Provinces,
+    localCities = LocalCities.Cities;
 
 const createGoods = (data) => {
     var tmpl = data.map(r => `
@@ -28,7 +33,7 @@ const createGoods = (data) => {
         var target = $(e.currentTarget);
         var gid = target.attr('data-gid'),
             paytype = target.attr('data-paytype');
-        console.log(target);
+
         var jsondata = {
             GameID: localStorage.GameID,
             GoodID: gid,
@@ -74,14 +79,23 @@ const fetchCities = () => {
     return new Promise((resolve, reject) => {
         fetchData('/CitiesArea', null)
             .then((res) => {
-                if (!localStorage.Countrys || localStorage.Countrys == "undefined") {
-                    localStorage.Countrys = JSON.stringify(res.message.Countrys);
+
+                var m = res.message,
+                    co = m.Countrys,
+                    p = m.Provinces,
+                    ct = m.Cities,
+                    oCountrys = localCountrys.get(),
+                    oProvinces = localProvinces.get(),
+                    oCities = localCities.get();
+                    
+                if (!oCountrys || oCountrys == "undefined") {
+                    localCountrys.set(co);
                 }
-                if (!localStorage.Provinces || localStorage.Provinces == "undefined") {
-                    localStorage.Provinces = JSON.stringify(res.message.Provinces);
+                if (!oProvinces || oProvinces == "undefined") {
+                    localProvinces.set(p);
                 }
-                if (!localStorage.Cities || localStorage.Cities == "undefined") {
-                    localStorage.Cities = JSON.stringify(res.message.Cities);
+                if (!oCities || oCities == "undefined") {
+                    localCities.set(ct);
                 }
                 resolve('Get CitiesArea finish');
             }).catch(err => {

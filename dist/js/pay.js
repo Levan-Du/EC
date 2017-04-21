@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7934,12 +7934,7 @@ exports.clearImmediate = clearImmediate;
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
@@ -7956,49 +7951,74 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(7);
 
-var _SessionGoods = __webpack_require__(26);
+var _SessionGoods = __webpack_require__(28);
 
 var _SessionGoods2 = _interopRequireDefault(_SessionGoods);
 
 var _page = __webpack_require__(5);
 
-__webpack_require__(12);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// var { addrs, goods } = mockData;
-
-var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
-    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
-    $('#receiverinfo').append(html);
-};
 // import mockData from './pay.mock';
 
+var QueryString = (0, _page.getQueryString)(),
+    AddrID = QueryString['addrid'],
+    GoodID = QueryString['goodid'];
 
 var loadReceiverInfo = function loadReceiverInfo() {
-    (0, _ajax.fetchData)('/GetUserAddr', {}).then(function (res) {
-        var addrs = res.message;
-        console.log(addrs);
-        if (addrs.length === 0) {
-            window.location = "./receiver.html";
-            return;
-        }
+    return new Promise(function (resolve, reject) {
+        (0, _ajax.fetchData)('/GetUserAddr', {}).then(function (res) {
+            var addrs = res.message;
+            if (addrs.length === 0) {
+                window.location = "./receiver.html";
+                resolve('GetUserAddr finish');
+                return;
+            }
 
-        var dfAddr = addrs.find(function (el) {
-            return el.IsDefault;
+            var dfAddr = addrs.find(function (el) {
+                if (!AddrID) return el.IsDefault;else return el.ID == AddrID;
+            });
+            renderReceiverInfo(dfAddr);
+            resolve('GetUserAddr finish');
+        }).catch(function (err) {
+            reject(err);
         });
-        renderReceiverInfo(dfAddr);
     });
 };
 
-var renderGoodsInfo = function renderGoodsInfo() {
+var loadGoodsInfo = function loadGoodsInfo() {
+    return new Promise(function (resolve, reject) {
+        (0, _ajax.fetchData)('/GoodsList', { GoodID: GoodID }).then(function (res) {
+            var goods = res.message;
+            console.log(goods);
+            renderGoodsInfo(goods);
+            renderGoodsSum(goods);
+            resolve('GoodsList finish');
+        }).catch(function (err) {
+            reject(err);
+        });
+    });
+};
+
+var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
+    console.log(dfAddr);
+    if (!dfAddr) return;
+    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
+    $('#receiverinfo').append(html);
+};
+
+var renderGoodsInfo = function renderGoodsInfo(goods) {
+    if (!goods || !goods.map) return;
+
     var html = goods.map(function (el) {
         return '\n    <li class="gooditem">\n        <article class="img-box"><img src="/images/4003.png"></article>\n        <article class="info">\n            <p class="goodname">' + el.GoodName + '</p>\n            <p class="number">\n                <span class="price">\uFFE5' + el.Price + '</span>\n                <span class="num">x ' + el.Num + '</span>\n            </p>\n        </article>\n    </li>\n    ';
     }).join('');
     $('#goodsinfo').append(html);
 };
 
-var renderGoodsSum = function renderGoodsSum() {
+var renderGoodsSum = function renderGoodsSum(goods) {
+    if (!goods || !goods.map) return;
+
     var sum = 0;
     goods.forEach(function (el) {
         sum += parseInt(el.Price) * parseInt(el.Num);
@@ -8008,13 +8028,17 @@ var renderGoodsSum = function renderGoodsSum() {
 };
 
 var loadData = function loadData() {
-    loadReceiverInfo();
+    Promise.resolve().then(function (res) {
+        return loadReceiverInfo();
+    }).then(function (res) {
+        return loadGoodsInfo();
+    }).catch(function (err) {
+        console.log(err);
+    });
 };
 
 var initAction = function initAction() {
     (0, _page.backToLastPage)('#btn_back');
-    // renderGoodsInfo();
-    // renderGoodsSum();
 };
 
 var selectAddr = function selectAddr() {};
@@ -8022,7 +8046,7 @@ var selectAddr = function selectAddr() {};
 var submit = function submit() {
     $('#btn_confirm').click(function (e) {
         if (goods.length === 1) {
-            var data = { Game: Game };
+            var data = {};
             PostData('/OnOrder');
         } else {
             PostData('/OnOrderCar');
@@ -8043,10 +8067,17 @@ var init = exports.init = function init() {
 /* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */,
+/* 23 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 24 */,
 /* 25 */,
-/* 26 */
+/* 26 */,
+/* 27 */,
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8090,13 +8121,14 @@ var SessionGoods = {
 exports.default = SessionGoods;
 
 /***/ }),
-/* 27 */,
-/* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8106,7 +8138,7 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(12);
+__webpack_require__(23);
 
 var _pay = __webpack_require__(16);
 

@@ -1,0 +1,336 @@
+
+@font-face {font-family: "iconfont";
+  src: url(/css/iconfont/iconfont.eot); /* IE9*/
+  src: url(/css/iconfont/iconfont.eot#iefix) format('embedded-opentype'), 
+  url(/css/iconfont/iconfont.woff) format('woff'), 
+  url(/css/iconfont/iconfont.ttf) format('truetype'), 
+  url(/css/iconfont/iconfont.svg#iconfont) format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-danxuanfill:before { content: "\E71E"; }
+
+.icon-danxuan:before { content: "\E71F"; }
+
+.icon-fangxingweixuanzhong:before { content: "\E720"; }
+
+.icon-fangxingxuanzhongfill:before { content: "\E721"; }
+
+.icon-fangxingxuanzhong:before { content: "\E722"; }
+
+.icon-guanbi1:before { content: "\E723"; }
+
+.icon-jiahao:before { content: "\E726"; }
+
+.icon-jiahao1:before { content: "\E727"; }
+
+.icon-jianhao:before { content: "\E729"; }
+
+.icon-tishifill:before { content: "\E72A"; }
+
+.icon-tishi:before { content: "\E72B"; }
+
+.icon-wenhaofill:before { content: "\E72C"; }
+
+.icon-wenhao:before { content: "\E72D"; }
+
+.icon-xuanze:before { content: "\E72E"; }
+
+.icon-yuanxingweixuanzhong:before { content: "\E72F"; }
+
+.icon-yuanxingxuanzhongfill:before { content: "\E730"; }
+
+.icon-yuanxingxuanzhong:before { content: "\E731"; }
+
+.icon-biaoxingfill:before { content: "\E732"; }
+
+.icon-biaoxing:before { content: "\E733"; }
+
+.icon-chexiao:before { content: "\E734"; }
+
+.icon-dingdan:before { content: "\E737"; }
+
+.icon-fenxiang:before { content: "\E739"; }
+
+.icon-gengduo:before { content: "\E73A"; }
+
+.icon-gouwuchefill:before { content: "\E73C"; }
+
+.icon-gouwuche:before { content: "\E73D"; }
+
+.icon-liebiaoxingshi:before { content: "\E742"; }
+
+.icon-liuyanfill:before { content: "\E743"; }
+
+.icon-liuyan:before { content: "\E744"; }
+
+.icon-qingchu:before { content: "\E747"; }
+
+.icon-saoma:before { content: "\E749"; }
+
+.icon-shaixuan:before { content: "\E74A"; }
+
+.icon-shanchu:before { content: "\E74B"; }
+
+.icon-shezhi:before { content: "\E74C"; }
+
+.icon-shizhongfill:before { content: "\E74E"; }
+
+.icon-shizhong:before { content: "\E74F"; }
+
+.icon-shouyefill:before { content: "\E750"; }
+
+.icon-shouye:before { content: "\E751"; }
+
+.icon-sousuo:before { content: "\E752"; }
+
+.icon-sousuoleimufill:before { content: "\E753"; }
+
+.icon-sousuoleimu:before { content: "\E754"; }
+
+.icon-tongzhifill:before { content: "\E758"; }
+
+.icon-tongzhi:before { content: "\E759"; }
+
+.icon-wodefill:before { content: "\E75D"; }
+
+.icon-wode:before { content: "\E75E"; }
+
+.icon-xihuanfill:before { content: "\E760"; }
+
+.icon-xihuan:before { content: "\E761"; }
+
+.icon-xinxifill:before { content: "\E762"; }
+
+.icon-xinxi:before { content: "\E763"; }
+
+.icon-zuobiaofill:before { content: "\E768"; }
+
+.icon-zuobiao:before { content: "\E769"; }
+
+.icon-xiangshang2:before { content: "\E76E"; }
+
+.icon-xiangxia2:before { content: "\E772"; }
+
+.icon-xiangyou1:before { content: "\E775"; }
+
+.icon-xiangzuo1:before { content: "\E779"; }
+
+.icon-jiazai:before { content: "\E781"; }
+
+.icon-shuaxin:before { content: "\E782"; }
+
+.icon-wifi:before { content: "\E783"; }
+
+.icon-hongbao:before { content: "\E784"; }
+
+.icon-yonghufill:before { content: "\E787"; }
+
+.icon-yonghu:before { content: "\E788"; }
+
+.icon-leimu:before { content: "\E78E"; }
+
+.icon-bangzhuzhongxin:before { content: "\E78F"; }
+
+.icon-caidan:before { content: "\E790"; }
+
+.icon-zantongfill:before { content: "\E793"; }
+
+.icon-zantong:before { content: "\E794"; }
+
+.icon-danpin:before { content: "\E7AB"; }
+
+.icon-erweima:before { content: "\E7AD"; }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    font-family: "\5FAE\8F6F\96C5\9ED1", "\534E\6587\7EC6\9ED1", "\9ED1\4F53", "Helvetica", sans-serif;
+    height: 100%;
+}
+
+ul li {
+    list-style: none;
+}
+
+input,
+button {
+    height: 2rem;
+    border-radius: .2rem;
+    border: solid 1px #eee;
+    background: #fff;
+    outline: none;
+}
+
+.btn {
+    border: solid 1px #ccc;
+    border-radius: .2rem;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    color: #000;
+    font-size: 1rem;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+}
+
+.container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.topbar,
+.menubar {
+    text-align: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.topbar {
+    height: 2.8rem;
+    line-height: 2.8rem;
+    border-bottom: solid 1px #e7e7e7;
+    text-align: center;
+    background: #f8f8f8;
+}
+
+.main {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 100%;
+    word-break: break-all;
+    overflow: auto;
+}
+
+.menubar {
+    height: 3.2rem;
+    line-height: 3.2rem;
+    border-top: solid 1px #eee;
+    text-align: center;
+    background: #f8f8f8;
+}
+
+.topbar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+}
+
+.topbar span.iconfont {
+    font-size: 1.3rem;
+}
+
+.topbar .left {
+    width: 3rem;
+}
+
+.topbar .mid {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.topbar .mid .title {}
+
+.topbar .right {
+    width: 3rem;
+}
+
+.menubar .action-wrap {
+    height: 3.2rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    font-size: .8rem;
+}
+
+.menubar .action-wrap .action {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.menubar .action-wrap .action-left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.menubar .action-wrap .action .action-item.active {
+    color: red;
+}
+
+.menubar .action-wrap .action .action-item {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    line-height: 1.4rem;
+    font-size: .7rem;
+}
+
+.menubar .action-wrap .action .action-item span {
+    display: block;
+    height: 1rem;
+}
+
+.menubar .action-wrap .action .action-item span.iconfont {
+    font-size: 1.4rem;
+}
+
+.menubar .action-wrap .action .action-item-noicon {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    color: #fff;
+    background: #e33;
+    font-size: 1rem;
+}

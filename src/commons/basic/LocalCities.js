@@ -16,7 +16,10 @@ var updateOne = (localKey, id, key, value) => {
 }
 
 var get = (localKey) => {
-    return JSON.parse(localStorage[localKey]);
+    var sg = localStorage[localKey];
+    if (!sg || sg == 'undefined')
+        return null;
+    return JSON.parse(sg);
 }
 
 var set = (localKey, obj) => {

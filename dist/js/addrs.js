@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7934,148 +7934,50 @@ exports.clearImmediate = clearImmediate;
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {
+
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.init = undefined;
 
-var _bluebird = __webpack_require__(6);
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
-
 var _ajax = __webpack_require__(7);
 
 var _page = __webpack_require__(5);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import mockData from './goods.mock';
-
-var createGoods = function createGoods(data) {
-    var tmpl = data.map(function (r) {
-        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.ID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>' + r.GoodName + '</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + parseInt(r.PayPrice) + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn btn_addtoshopcar" data-gid="' + r.ID + '" data-paytype="' + r.PayType + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.ID + '" href="pay.html?type=singlepay&goodid=' + r.ID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
-    }).join('');
-    $('#grid-goods').append(tmpl);
-
-    $('.main .grid .grid-item .btn.btn_addtoshopcar').click(function (e) {
-        var target = $(e.currentTarget);
-        var gid = target.attr('data-gid'),
-            paytype = target.attr('data-paytype');
-        console.log(target);
-        var jsondata = {
-            GameID: localStorage.GameID,
-            GoodID: gid,
-            Num: 1,
-            PayType: paytype,
-            EditType: 1
-        };
-        (0, _ajax.postData)('/OnShopCar', jsondata);
-    });
-};
-
-// const getGoods = () => {
-//     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
-// }
-
-var saveGameID = function saveGameID() {
-    var qsObj = (0, _page.getQueryString)();
-    localStorage.GameID = qsObj["gameid"];
-};
-
-var fetchGoods = function fetchGoods() {
-    return new _bluebird2.default(function (resolve, reject) {
-        (0, _ajax.fetchData)('/GoodsList').then(function (res) {
-            createGoods(res.message);
-            setSessionGoods(res.message);
-            resolve('Get GoodsList finish');
-        }).catch(function (err) {
-            reject(err);
-        });
-    });
-};
-
-var setSessionGoods = function setSessionGoods(data) {
-    if (!sessionStorage.Goods) {
-        sessionStorage.Goods = data;
-    }
-};
-
-var fetchCities = function fetchCities() {
-    return new _bluebird2.default(function (resolve, reject) {
-        (0, _ajax.fetchData)('/CitiesArea', null).then(function (res) {
-            if (!localStorage.Countrys || localStorage.Countrys == "undefined") {
-                localStorage.Countrys = JSON.stringify(res.message.Countrys);
-            }
-            if (!localStorage.Provinces || localStorage.Provinces == "undefined") {
-                localStorage.Provinces = JSON.stringify(res.message.Provinces);
-            }
-            if (!localStorage.Cities || localStorage.Cities == "undefined") {
-                localStorage.Cities = JSON.stringify(res.message.Cities);
-            }
-            resolve('Get CitiesArea finish');
-        }).catch(function (err) {
-            reject(err);
-        });
-    });
-};
-
-var loadData = function loadData() {
-    _bluebird2.default.resolve().then(function (res) {
-        saveGameID();
-    }).then(function (res) {
-        return fetchGoods();
-    }).then(function (res) {
-        return fetchCities();
-    });
-};
-
-var submit = function submit() {};
-
-var selectMunuItem = '#btn_home';
-
-var addClick = function addClick(item) {
-    var el = $(item);
-    el.click(function (e) {
-        if (selectMunuItem === item) return;
-        $(selectMunuItem).removeClass('active');
-        el.addClass('active');
-        selectMunuItem = item;
-    });
-};
+var loadData = function loadData() {};
 
 var initAction = function initAction() {
-    ['#btn_home', '#btn_history', '#btn_shopcar'].forEach(function (el) {
-        addClick(el);
-    });
+    (0, _page.backToLastPage)('#btn_back');
+    slide();
+    clickToSlide();
+    renderImgBox();
 };
 
 var init = exports.init = function init() {
     loadData();
     initAction();
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 13 */,
+/* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+/* 19 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
+/* 20 */,
+/* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
@@ -8084,10 +7986,7 @@ var init = exports.init = function init() {
 /* 27 */,
 /* 28 */,
 /* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8097,12 +7996,12 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(21);
+__webpack_require__(19);
 
-var _goods = __webpack_require__(14);
+var _addrs = __webpack_require__(12);
 
 $(function (e) {
-    (0, _goods.init)();
+    (0, _addrs.init)();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

@@ -16,7 +16,10 @@ var updateOne = (id, key, value) => {
 }
 
 var get = () => {
-    return JSON.parse(sessionStorage.Goods);
+    var sg = sessionStorage.Goods;
+    if (!sg || sg == 'undefined')
+        return null;
+    return JSON.parse(sg);
 }
 
 var set = (obj) => {

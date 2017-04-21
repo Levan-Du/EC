@@ -31,36 +31,47 @@
     color: #fff;
 }
 
-.menubar .action-wrap .action.left {
-    flex: 1;
-}
-
 .menubar .action-wrap .action.right {
     flex: none;
     width: 8rem;
 }
 
 .menubar #goodssum {
-    padding: .5rem;
-}
-
-.menubar #goodssum p {
     flex: 1;
-    text-align: center;
+    padding: .5rem;
+    line-height: 1rem;
 }
 
-.menubar #goodssum p span.amount {
+.menubar #goodssum .sum {
+    display: flex;
+    flex-direction: row;
+}
+
+.menubar #goodssum .sum .sum-title {
+    width: 4rem;
+}
+
+.menubar #goodssum .sum .sum-show {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.menubar #goodssum .sum .sum-show .amount {
     color: #e33;
+    padding-right: 1rem;
 }
 
-.main #goodsinfo {
-    padding: .5rem .3rem;
-}
+.main #goodsinfo {}
 
 .main #goodsinfo li.gooditem {
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    border-bottom: solid 1px #eee;
+    padding: .5rem .3rem;
+    font-size: .9rem;
 }
 
 .main #goodsinfo li.gooditem .img-box {
@@ -74,6 +85,7 @@
 
 .main #goodsinfo li.gooditem .info {
     flex: 1;
+    padding-left: .8rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -85,10 +97,11 @@
 
 .main #goodsinfo li.gooditem .info .number {
     display: flex;
+    flex-direction: row;
 }
 
 .main #goodsinfo li.gooditem .info .number .num {
-    width: 2rem;
+    width: 4rem;
 }
 
 .main #goodsinfo li.gooditem .info .number .price {

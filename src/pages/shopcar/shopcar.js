@@ -46,8 +46,8 @@ var renderGrid = (data) => {
 
     var reducBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce');
     var addBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-add');
-    var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
-    var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
+    // var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
+    // var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
 
     reducBtns.click((e) => {
         onNumClick(e);
@@ -102,7 +102,7 @@ var onNumClick = (e) => {
     var inum = parseInt(numEle.val());
     if (target.attr('class').indexOf('btn-reduce') !== -1) {
         inum = inum - 1;
-        if (inum <= 1) return;
+        if (inum < 1) return;
     } else {
         var inum = parseInt(numEle.val()) + 1;
     }
@@ -117,10 +117,30 @@ var onNumClick = (e) => {
         PayType: paytype,
         EditType: 2
     }
-    postData('/OnShopCar', jsondata);
 
     LocalShopCar.updateOne(sid, "Num", inum);
     renderSumAmount();
+    postData('/OnShopCar', jsondata)
+        .then((res) => {
+            console && console.log(res);
+        })
+        .catch((err) => {
+            console && console.log(err);
+        });
+}
+
+var getPayPrice = (g) => {
+    var t = parseInt(g.PayType);
+    switch (t) {
+        case 1:
+            return g.ScorePrice;
+        case 2:
+            return g.DiamondPrice;
+        case 3:
+            return g.PointPrice;
+        default:
+            return 0;
+    }
 }
 
 var renderSumAmount = () => {
@@ -132,16 +152,21 @@ var renderSumAmount = () => {
     var checkedGoods = lsc.filter(el => {
         return el.checked
     });
-    checkedGoods.forEach((el, i) => {
-        PAmount += parseInt(el.PointPrice) * parseInt(el.Num);
-        SAmount += parseInt(el.ScorePrice) * parseInt(el.Num);
-        DAmount += parseInt(el.DiamondPrice) * parseInt(el.Num);
+    var sumAmount = (el, type) => {
+        return (el.PayType == type ? parseInt(getPayPrice(el)) * parseInt(el.Num) : 0);
+    };
+    console.log(checkedGoods);
+    checkedGoods.forEach((el) => {
+        console.log(el);
+        SAmount += sumAmount(el, 1);
+        DAmount += sumAmount(el, 2);
+        PAmount += sumAmount(el, 3);
         num_all += parseInt(el.Num);
     });
 
-    $('#p_amount').text('￥' + PAmount);
     $('#s_amount').text('￥' + SAmount);
     $('#d_amount').text('￥' + DAmount);
+    $('#p_amount').text('￥' + PAmount);
     $('#allnum').text(num_all);
 }
 
@@ -167,23 +192,27 @@ var getMockData = () => {
 }
 
 var fetchShopCar = () => {
-    if (!localStorage.Shopcar) {
+    var lsc = LocalShopCar.get();
+
+    if (lsc) {
         var data = LocalShopCar.get();
         renderGrid(data);
         renderCheckAll();
+        renderSumAmount();
     } else {
         fetchData('/ShopCarList')
             // getMockData()
             .then((res) => {
+                console.log(res);
                 LocalShopCar.set(res.message);
                 var data = LocalShopCar.get();
                 renderGrid(data);
                 renderCheckAll();
+                renderSumAmount();
             })
             .catch((err) => {
-                console.log(err);
+                console && console.log(err);
             });
-
     }
 }
 

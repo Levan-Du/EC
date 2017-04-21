@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>收货人信息</title>
     <script type="text/javascript" src="/js/fit.js"></script>
-<link href="/css/receiver.css?c98543abf5d1088bf4b2c90a824d6dbd" rel="stylesheet"></head>
+<link href="/css/receiver.css?ee61e98093b9caaea9157ee836cb4581" rel="stylesheet"></head>
 
 <body>
     <form id="form1">
@@ -23,21 +23,24 @@
             <article class="main">
                 <article id="input_area">
                     <p id="error_msg" class="error"></p>
+                    <section style="display: none;">
+                        <input type="txt_id" name="ID" value=0>
+                    </section>
                     <section class="form-info">
-                        <label for="txt_receiver"><span class="isrequired">*</span>收货人：</label>
-                        <input id="txt_receiver" type="text" name="receiver">
+                        <label for="txt_receiver"><span class="isrequired">*</span>收货人姓名：</label>
+                        <input id="txt_receiver" type="text" name="ReceiverName">
                     </section>
                     <section class="form-info">
                         <label for="txt_mobile"><span class="isrequired">*</span>手机号码：</label>
-                        <input id="txt_mobile" type="text" name="mobile">
+                        <input id="txt_mobile" type="text" name="ReceiverMobile">
                     </section>
                     <section class="form-info">
-                        <label for="txt_area"><span class="isrequired">*</span>所在地区：</label>
-                        <input id="txt_area" type="text" name="mobile">
+                        <label for="txt_addr"><span class="isrequired">*</span>所在地区：</label>
+                        <input id="txt_addr" type="text" name="Addr" data-areaid="" value="">
                     </section>
                     <section class="form-info">
-                        <label for="txt_addr"><span class="isrequired">*</span>详细地址：</label>
-                        <input id="txt_addr" type="text" name="mobile">
+                        <label for="txt_street"><span class="isrequired">*</span>详细地址：</label>
+                        <input id="txt_street" type="text" name="Street">
                     </section>
                 </article>
                 <article id="chooseAddr_area">
@@ -50,12 +53,12 @@
                         <li class="title">地址选择</li>
                         <li class="back"></li>
                     </ul>
+                    <ul class="swiper-tab">
+                        <li id="tab-province" class="swiper-tab-label active" data-for="province"><a>请选择</a></li>
+                        <li id="tab-city" class="swiper-tab-label" data-for="city"><a>请选择</a></li>
+                        <li id="tab-district" class="swiper-tab-label" data-for="district"><a>请选择</a></li>
+                    </ul>
                     <div class="swiper-container">
-                        <ul class="swiper-tab">
-                            <li id="tab-province" class="swiper-tab-label active" data-for="province"><a>请选择</a></li>
-                            <li id="tab-city" class="swiper-tab-label" data-for="city"><a>请选择</a></li>
-                            <li id="tab-district" class="swiper-tab-label" data-for="district"><a>请选择</a></li>
-                        </ul>
                         <ul class="swiper-wrapper">
                             <li id="page-province" data-label="province" class="swiper-slide"></li>
                             <li id="page-city" data-label="city" class="swiper-slide"></li>

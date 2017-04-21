@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2703,7 +2703,7 @@ __webpack_require__(11);
 
 var _page = __webpack_require__(5);
 
-var _gooddetail = __webpack_require__(28);
+var _gooddetail = __webpack_require__(31);
 
 var _gooddetail2 = _interopRequireDefault(_gooddetail);
 
@@ -2773,13 +2773,13 @@ var init = exports.init = function init() {
 /* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
@@ -2787,7 +2787,10 @@ var init = exports.init = function init() {
 /* 25 */,
 /* 26 */,
 /* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2806,7 +2809,7 @@ var good = {
 exports.default = good;
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2816,7 +2819,7 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(19);
+__webpack_require__(20);
 
 var _gooddetail = __webpack_require__(13);
 

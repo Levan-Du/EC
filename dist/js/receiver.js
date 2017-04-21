@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 37);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -8867,26 +8867,74 @@ var _ajax = __webpack_require__(7);
 
 var _page = __webpack_require__(5);
 
-var _LocalCities = __webpack_require__(24);
+var _LocalCities = __webpack_require__(26);
 
 var _LocalCities2 = _interopRequireDefault(_LocalCities);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var validatd = function validatd() {
-    if ($('#txt_receiver').val() == "") return false;
-    if ($('#txt_mobile').val() == "") return false;
-    if ($('#txt_area').val() == "") return false;
-    if ($('#txt_addr').val() == "") return false;
-    return true;
+var validate = function validate() {
+    var validInputs = [{ id: 'txt_receiver', msg: '请输入收货人姓名！' }, { id: 'txt_mobile', msg: '请输入收货人手机！' }, { id: 'txt_addr', msg: '请选择收货人所在地区！' }, { id: 'txt_street', msg: '请输入收货人详细地址！' }];
+    var validateState = {};
+    validateState.states = validInputs.map(function (el) {
+        var Ele = $('#' + el.id);
+        if (Ele.val() == "") {
+            el.status = false;
+        } else {
+            el.status = true;
+        }
+        return el;
+    });
+
+    var coll = validateState.states;
+
+    var failvalid = coll.find(function (el) {
+        return el.status == false;
+    });
+
+    validateState.isAllvalidated = !failvalid;
+    validateState.showErrorMessage = function () {
+        var id = failvalid.id,
+            msg = failvalid.msg;
+
+        $('#' + id).focus();
+        showErrorMessage(msg);
+    };
+    return validateState;
 };
 
+var showErrorMessage = function showErrorMessage(msg) {
+    var errEle = $('#error_msg');
+    errEle.text(msg);
+    errEle.show();
+    setTimeout(function () {
+        errEle.hide();
+    }, 10000);
+};
+
+var formData = { CountryID: '', ProvinceID: '', CityID: '', DistrictsID: '', IsDefault: 0 };
 var submit = function submit() {
     var form = $('#form1');
     form.submit(function (e) {
         e.preventDefault();
+        var state = validate();
+        if (!state.isAllvalidated) {
+            state.showErrorMessage();
+            return false;
+        }
+
         var data = form.serialize();
-        (0, _ajax.postData)('/OnAddr', data);
+        for (var f in formData) {
+            data += '&' + f + '=' + formData[f];
+        }
+        (0, _ajax.postData)('/OnAddr', data).then(function (res) {
+            console.log('onaddr');
+            $('#chooseAddr_area').css('z-index', '-100');
+            (0, _page.backToLastPage)('#btn_back');
+        }).catch(function (err) {
+            showErrorMessage(err);
+        });
+        return true;
     });
 };
 
@@ -8901,7 +8949,7 @@ var slideTab = function slideTab() {
 };
 
 var chooseCities = function chooseCities() {
-    $('#txt_area').focus(function (e) {
+    $('#txt_addr').focus(function (e) {
         $('#chooseAddr_area').css('z-index', '100');
     });
     $('#btn_hide').on('click', function (e) {
@@ -8915,6 +8963,7 @@ var clickToSlide = function clickToSlide() {
     labels.find('a').click(function (e) {
         var t = $(e.target).parent('.swiper-tab-label');
         var index = labels.index(t[0]);
+        setTabLabelVisible(index + 1);
         if (index === selectTabIndex) {
             return;
         }
@@ -8930,9 +8979,79 @@ var clickToSlide = function clickToSlide() {
 var changeTab = function changeTab(e) {
     var tablabel = $('.swiper-slide.swiper-slide-active').attr('data-label');
     var index = labels.index('[data-for="' + tablabel + '"]');
+    changeTabByIndex(index);
+};
+
+var changeTabByIndex = function changeTabByIndex(index) {
     labels.eq(index).addClass('active');
     labels.eq(selectTabIndex).removeClass('active');
     selectTabIndex = index;
+};
+
+var changeTabAndSlideByIndex = function changeTabAndSlideByIndex(index) {
+    mySwiper.slideTo(index, 600, false);
+    changeTabByIndex(index);
+};
+
+var IconTarget = {
+    provTarget: null,
+    cityTarget: null,
+    distrTarget: null
+};
+
+var setIconVisible = function setIconVisible(prevTarget, target) {
+    if (IconTarget[prevTarget] == target) return;
+    target.addClass('visible');
+    if (IconTarget[prevTarget]) IconTarget[prevTarget].removeClass('visible');
+    IconTarget[prevTarget] = target;
+};
+
+var setAreaID = function setAreaID(p, c, d) {
+    formData.ProvinceID = p.id;
+    var areaName = p.name + ' ';
+    if (c) {
+        formData.CityID = c.id;
+        areaName += c.name + ' ';
+    }
+    if (d) {
+        formData.DistrictsID = d.id;
+        areaName += d.name + ' ';
+    }
+    $('#txt_addr').val(areaName);
+};
+
+var setTabLabelVisible = function setTabLabelVisible(type) {
+    switch (type) {
+        case 1:
+            {
+                $('#tab-city').hide();
+                $('#tab-district').hide();
+                $('#tab-city').find('a').text('请选择');
+                $('#tab-district').find('a').text('请选择');
+                break;
+            }
+        case 2:
+            {
+                $('#tab-district').hide();
+                $('#tab-district').find('a').text('请选择');
+                break;
+            }
+    }
+};
+
+var reverseTabLabelVisible = function reverseTabLabelVisible(type) {
+    switch (type) {
+        case 1:
+            {
+                $('#tab-city').show();
+                break;
+            }
+        case 2:
+            {
+                $('#tab-district').show();
+                break;
+            }
+    }
 };
 
 var loadCities = function loadCities() {
@@ -8940,24 +9059,71 @@ var loadCities = function loadCities() {
         Provinces = _LocalCities2.default.Provinces,
         Cities = _LocalCities2.default.Cities;
 
-    var provs = Provinces.get();
-    var cities = Cities.get();
+    var provs = Provinces.get(),
+        cities = Cities.get();
+
+    formData.CountryID = Countrys.get()[0].ID;
+
     var tmpl = '\n<ul class="area area-provice">\n\t' + provs.map(function (el) {
-        return '\n\t<li class="area-item"><a class="btn_area-item" data-id="' + el.ID + '" data-provinceid="' + el.ProvinceID + '" data-countryid="' + el.CountryID + '"><span>' + el.ProvinceName + '</span><span class="iconfont icon-xuanze"></span></a></li>\n\t';
+        return '\n\t<li class="area-item"><a class="btn_area-item" data-id="' + el.ID + '" data-provinceid="' + el.ProvinceID + '" data-countryid="' + el.CountryID + '">\n\t<span class="text">' + el.ProvinceName + '</span><span class="iconfont icon-xuanze"></span></a></li>\n\t';
     }).join('') + '\n</ul>\n    ';
     $('#page-province').append(tmpl);
+    setTabLabelVisible(1);
 
     $('#page-province .area-item a.btn_area-item').click(function (e) {
         var target = $(e.currentTarget),
+            provIcon = target.find('span.iconfont'),
+            pid = target.attr('data-id'),
             provid = target.attr('data-provinceid'),
+            provname = target.find('span.text').text(),
             citiesFilter = cities.filter(function (el) {
             return el.ProvinceID == provid;
         });
-        console.log(citiesFilter);
-        tmpl = '\n\t<ul class="area area-city">\n\t\t' + citiesFilter.map(function (el) {
-            return '\n\t\t<li class="area-item"><a data-id="' + el.ID + '" data-cityid="' + el.CityID + '" data-provinceid="' + el.ProvinceID + '"><span>' + el.CityName + '</span><span class="iconfont icon-xuanze"></span></a></li>\n\t\t';
-        }).join('') + '\n\t</ul>\n\t    ';
-        $('#page-city').append(tmpl);
+        setIconVisible('provTarget', target);
+        $('#tab-province').find('a').text(provname);
+        setAreaID({ id: pid, name: provname }, '', '');
+        reverseTabLabelVisible(1);
+        changeTabAndSlideByIndex(1);
+
+        var tmpl2 = '\n\t\t<ul class="area area-city">\n\t\t\t' + citiesFilter.map(function (el) {
+            return '\n\t\t\t<li class="area-item"><a class="btn_area-item" data-id="' + el.ID + '" data-cityid="' + el.CityID + '" data-provinceid="' + el.ProvinceID + '">\n\t\t\t<span class="text">' + el.CityName + '</span><span class="iconfont icon-xuanze"></span></a></li>\n\t\t\t';
+        }).join('') + '\n\t\t</ul>\n\t\t    ';
+        $('#page-city').html(tmpl2);
+
+        $('#page-city .area-item a.btn_area-item').click(function (e) {
+            var target = $(e.currentTarget),
+                cityIcon = target.find('span.iconfont'),
+                cid = target.attr('data-id'),
+                cityid = target.attr('data-cityid'),
+                cityname = target.find('span.text').text();
+            setIconVisible('cityTarget', target);
+            $('#tab-city').find('a').text(cityname);
+            setAreaID({ id: pid, name: provname }, { id: cid, name: cityname }, null);
+            reverseTabLabelVisible(2);
+            changeTabAndSlideByIndex(2);
+            (0, _ajax.fetchData)('/DistrictsArea', "CityID=" + cityid).then(function (res) {
+                var districts = res.message;
+                var tmpl3 = '\n\t\t\t\t\t\t<ul class="area area-city">\n\t\t\t\t\t\t\t' + districts.map(function (el) {
+                    return '\n\t\t\t\t\t\t\t<li class="area-item"><a class="btn_area-item" data-id="' + el.ID + '" data-districtid="' + el.DistrictsID + '" data-cityid="' + el.CityID + '">\n\t\t\t\t\t\t\t<span class="text">' + el.DistrictsName + '</span><span class="iconfont icon-xuanze"></span></a></li>\n\t\t\t\t\t\t\t';
+                }).join('') + '\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t    ';
+                $('#page-district').html(tmpl3);
+
+                $('#page-district .area-item a.btn_area-item').click(function (e) {
+                    var target = $(e.currentTarget),
+                        distrIcon = target.find('span.iconfont'),
+                        did = target.attr('data-id'),
+                        distrid = target.attr('data-districtid'),
+                        distrname = target.find('span.text').text();
+                    setIconVisible('distrTarget', target);
+                    setAreaID({ id: pid, name: provname }, { id: cid, name: cityname }, { id: did, name: distrname });
+
+                    $('#tab-district').find('a').text(distrname);
+                    $('#chooseAddr_area').css('z-index', '-100');
+                });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        });
     });
 };
 
@@ -8984,14 +9150,16 @@ var init = exports.init = function init() {
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 23 */,
-/* 24 */
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9055,8 +9223,6 @@ var LocalCities = {
 exports.default = LocalCities;
 
 /***/ }),
-/* 25 */,
-/* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
@@ -9064,7 +9230,10 @@ exports.default = LocalCities;
 /* 31 */,
 /* 32 */,
 /* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9074,7 +9243,7 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(22);
+__webpack_require__(24);
 
 var _receiver = __webpack_require__(17);
 

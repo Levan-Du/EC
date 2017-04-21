@@ -33,7 +33,10 @@ var updateOne = (id, key, value) => {
 }
 
 var get = () => {
-    return JSON.parse(localStorage.Shopcar);
+    var sc = localStorage.Shopcar;
+    if (!sc || sc == 'undefined')
+        return null;
+    return JSON.parse(sc);
 }
 
 var set = (obj) => {

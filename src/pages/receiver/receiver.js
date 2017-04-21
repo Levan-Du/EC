@@ -14,7 +14,6 @@ var validate = () => {
     var validateState = {};
     validateState.states = validInputs.map((el) => {
         var Ele = $('#' + el.id);
-        console.log(Ele.val());
         if (Ele.val() == "") {
             el.status = false;
         } else {
@@ -24,7 +23,7 @@ var validate = () => {
     });
 
     var coll = validateState.states;
-    console.log(coll);
+
     var failvalid = coll.find((el) => {
         return el.status == false;
     });
@@ -47,13 +46,12 @@ var showErrorMessage = (msg) => {
     }, 10000)
 }
 
-var formData = { CountryID: '', ProvinceID: '', CityID: '', DistractsID: '', IsDefault: 0 };
+var formData = { CountryID: '', ProvinceID: '', CityID: '', DistrictsID: '', IsDefault: 0 };
 var submit = () => {
     var form = $('#form1');
     form.submit((e) => {
         e.preventDefault();
         var state = validate();
-        console.log(state);
         if (!state.isAllvalidated) {
             state.showErrorMessage();
             return false;
@@ -65,7 +63,9 @@ var submit = () => {
         }
         postData('/OnAddr', data)
             .then((res) => {
-
+            	console.log('onaddr');
+                $('#chooseAddr_area').css('z-index', '-100');
+                backToLastPage('#btn_back');
             })
             .catch((err) => {
                 showErrorMessage(err);
@@ -152,7 +152,7 @@ var setAreaID = (p, c, d) => {
         areaName += c.name + ' ';
     }
     if (d) {
-        formData.DistractsID = d.id;
+        formData.DistrictsID = d.id;
         areaName += d.name + ' ';
     }
     $('#txt_addr').val(areaName);
@@ -246,7 +246,6 @@ var loadCities = () => {
 				setAreaID({id:pid,name:provname},{id:cid,name:cityname},null);
 				reverseTabLabelVisible(2);
 				changeTabAndSlideByIndex(2);
-				console.log(cityid);
 	    	fetchData('/DistrictsArea',"CityID="+cityid)
 	    		.then((res)=>{
 				 	var districts=res.message;
@@ -268,6 +267,7 @@ var loadCities = () => {
 							 	distrname=target.find('span.text').text();
 	 						 	setIconVisible('distrTarget',target);
 								setAreaID({id:pid,name:provname},{id:cid,name:cityname},{id:did,name:distrname});
+
 							 	$('#tab-district').find('a').text(distrname);
 				 		        $('#chooseAddr_area').css('z-index', '-100');
 						});

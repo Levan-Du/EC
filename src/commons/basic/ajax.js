@@ -22,7 +22,6 @@ export function fetchData(url, data) {
                 reject(err);
             }
         });
-
     });
 }
 
@@ -45,10 +44,11 @@ export function postData(url, data) {
                 reject(err);
             }
         });
+
     });
 }
 
-var jsonToParams = (jsonObj) => {
+export var jsonToParams = (jsonObj) => {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];

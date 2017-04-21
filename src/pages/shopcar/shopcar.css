@@ -13,25 +13,8 @@
 }
 
 .menubar .action-wrap .action.mid {
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.menubar .action-wrap .action.mid p {
-    line-height: 1rem;
-}
-
-.menubar .action-wrap .action.mid {
     flex: 1;
-}
-
-.menubar .action-wrap .action.mid p {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
+    line-height: 1rem;
 }
 
 .menubar .action-wrap .action.right {
@@ -151,9 +134,34 @@ span.iconfont.icon-fangxingxuanzhongfill {
     padding: 0 .5rem;
 }
 
-.menubar .action-wrap .action p span.amount {
-    padding-right: 1rem;
+.menubar .action-wrap .action.mid .sum span.amount {
     color: #e33;
+}
+
+.menubar .action-wrap .action.mid .sum {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.menubar .action-wrap .action.mid .sum .sum-title {
+    width: 3rem;
+}
+
+.menubar .action-wrap .action.mid .sum .sum-show {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.menubar .action-wrap .action.mid .sum .sum-show .amount {
+    padding-right: 1rem;
+}
+
+.menubar .action-wrap .action.mid .sum p {
+    font-size: .7rem;
 }
 
 

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7952,7 +7952,7 @@ var _ajax = __webpack_require__(7);
 
 var _page = __webpack_require__(5);
 
-var _orders = __webpack_require__(32);
+var _orders = __webpack_require__(35);
 
 var _orders2 = _interopRequireDefault(_orders);
 
@@ -8019,13 +8019,13 @@ var init = exports.init = function init() {
 /* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 22 */,
 /* 23 */,
 /* 24 */,
 /* 25 */,
@@ -8034,7 +8034,10 @@ var init = exports.init = function init() {
 /* 28 */,
 /* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8044,7 +8047,7 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(21);
+__webpack_require__(22);
 
 var _orders = __webpack_require__(15);
 
@@ -8054,7 +8057,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
