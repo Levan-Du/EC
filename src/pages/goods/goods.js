@@ -12,7 +12,7 @@ var localCountrys = LocalCities.Countrys,
     localProvinces = LocalCities.Provinces,
     localCities = LocalCities.Cities;
 
-const createGoods = (data) => {
+const renderGoods = (data) => {
     var tmpl = data.map(r => `
         <li class="grid-item">
             <a class="good-img-link" href="./gooddetail.html?id=${r.ID}">
@@ -79,7 +79,7 @@ const fetchGoods = () => {
     return new Promise((resolve, reject) => {
         fetchData('/GoodsList')
             .then((res) => {
-                createGoods(res.message);
+                renderGoods(res.message);
                 setSessionGoods(res.message);
                 resolve('Get GoodsList finish');
             })
