@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(10).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7592,9 +7592,14 @@ var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
+var _web = __webpack_require__(8);
+
+var _web2 = _interopRequireDefault(_web);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var API_URL = 'http://localhost:55555/api/Exchange';
+var API_URL = _web2.default.API_URL;
+console.log(API_URL);
 
 function fetchData(url, data) {
     url = API_URL + url;
@@ -7682,6 +7687,22 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var config = {
+    API_URL: "http://localhost:55555/api/Exchange"
+};
+
+exports.default = config;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7874,7 +7895,7 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7927,26 +7948,27 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(8);
+__webpack_require__(9);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
-				value: true
+    value: true
 });
 exports.init = undefined;
 
@@ -7955,45 +7977,70 @@ var _ajax = __webpack_require__(6);
 var _page = __webpack_require__(7);
 
 var renderAddrs = function renderAddrs() {
-				(0, _ajax.fetchData)('/GetUserAddr', null).then(function (res) {
-								var arr = res.message;
-								console.log(arr);
-								var tmpl = arr.map(function (el) {
-												return '\n\t\t\t\t<li class="grid-item">\n\t\t\t\t\t<span class="iconfont icon-xuanze"></span>\n\t\t\t\t\t<article class="grid-item-info">\n\t\t\t\t\t\t<section>\n\t\t\t\t\t\t\t<h1 class="r-name">' + el.ReceiverName + '</h1>\n\t\t\t\t\t\t\t<h1>' + el.ReceiverMobile + '</h1>\n\t\t\t\t\t\t</section>\n\t\t\t\t\t\t<section class="r-addr">' + el.Addr + '</section>\n\t\t\t\t\t</article>\n\t\t\t\t\t<span class="iconfont icon-fankui"></span>\n\t\t\t\t</li>\n\t\t\t';
-								}).join('');
-								$('#grid-addrs').append(tmpl);
-				});
+    (0, _ajax.fetchData)('/GetUserAddr', null).then(function (res) {
+        var arr = res.message;
+        var tmpl = arr.map(function (el) {
+            return '\n\t\t\t\t<li class="grid-item">\n\t\t\t\t\t<a class="grid-icon grid-icon-selected" data-addrid="' + el.AddrID + '"><span class="iconfont icon-xuanze"></span></a>\n\t\t\t\t\t<a class="grid-item-info" data-addrid="' + el.AddrID + '">\n\t\t\t\t\t\t<article>\n\t\t\t\t\t\t\t<section>\n\t\t\t\t\t\t\t\t<h1 class="r-name">' + el.ReceiverName + '</h1>\n\t\t\t\t\t\t\t\t<h1>' + el.ReceiverMobile + '</h1>\n\t\t\t\t\t\t\t</section>\t\n\t\t\t\t\t\t\t<section class="r-addr">' + el.Addr + '</section>\n\t\t\t\t\t\t</article>\n\t\t\t\t\t</a>\n\t\t\t\t\t<a class="grid-icon grid-icon-edit"><span class="iconfont icon-fankui"></span></a>\n\t\t\t\t</li>\n\t\t\t';
+        }).join('');
+        $('#grid-addrs').append(tmpl);
+        initSelectedItem();
+        selectItem();
+    });
+};
+
+var selectedItem = null;
+var select = function select(currItem) {
+    if (currItem == selectedItem) return;
+    if (selectedItem) selectedItem.css('display', 'none');
+    currItem.css('display', 'flex');
+    selectedItem = currItem;
+};
+
+var selectItem = function selectItem() {
+    $('#grid-addrs .grid-item-info').click(function (e) {
+        var target = $(e.currentTarget),
+            currItem = target.siblings('.grid-icon-selected');
+        localStorage.AddrID = target.attr('data-addrid');
+
+        select(currItem);
+    });
+};
+
+var initSelectedItem = function initSelectedItem() {
+    var filter = '[data-addrid="' + localStorage.AddrID + '"]',
+        currItem = $('#grid-addrs .grid-icon.grid-icon-selected').filter(filter);
+    console.log(currItem);
+    select(currItem);
 };
 
 var loadData = function loadData() {
-				renderAddrs();
+    renderAddrs();
 };
 
 var initAction = function initAction() {
-				(0, _page.backToLastPage)('#btn_back');
+    (0, _page.backToLastPage)('#btn_back');
+    (0, _page.backToLastPage)('#btn_ok');
 };
 
 var init = exports.init = function init() {
-				loadData();
-				initAction();
+    loadData();
+    initAction();
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */,
-/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */
+/* 23 */,
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 24 */,
-/* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
@@ -8001,7 +8048,8 @@ var init = exports.init = function init() {
 /* 30 */,
 /* 31 */,
 /* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8011,9 +8059,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(23);
+__webpack_require__(25);
 
-var _addrs = __webpack_require__(16);
+var _addrs = __webpack_require__(18);
 
 $(function (e) {
     (0, _addrs.init)();

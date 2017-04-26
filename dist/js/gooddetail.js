@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1734,7 +1734,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* Zepto v1.2.0 - zepto event ajax form ie - z
 
 /***/ }),
 
-/***/ 14:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2640,14 +2640,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 15:
+/***/ 17:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 17:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2658,13 +2658,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-__webpack_require__(14);
+__webpack_require__(16);
 
-__webpack_require__(15);
+__webpack_require__(17);
 
 var _page = __webpack_require__(7);
 
-var _gooddetail = __webpack_require__(34);
+var _gooddetail = __webpack_require__(35);
 
 var _gooddetail2 = _interopRequireDefault(_gooddetail);
 
@@ -2737,14 +2737,14 @@ var init = exports.init = function init() {
 
 /***/ }),
 
-/***/ 24:
+/***/ 26:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2764,7 +2764,7 @@ exports.default = good;
 
 /***/ }),
 
-/***/ 35:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2774,9 +2774,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(24);
+__webpack_require__(26);
 
-var _gooddetail = __webpack_require__(17);
+var _gooddetail = __webpack_require__(19);
 
 $(function (e) {
     (0, _gooddetail.init)();

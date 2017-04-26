@@ -1,3 +1,7 @@
+.topbar .right a {
+    color: #666;
+}
+
 .menubar .action-wrap .action-left.left {
     flex: none;
     width: 4.5rem;

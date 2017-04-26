@@ -3,7 +3,7 @@ import { fetchData, postData, jsonToParams } from '../../commons/basic/ajax';
 import { getQueryString } from '../../commons/basic/page';
 import LocalCities from '../../commons/basic/LocalCities';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
-import showTips from '../../commons/basic/showTips';
+import { showTips } from '../../commons/basic/modal';
 import { formatPayType } from '../../commons/basic/format';
 
 // import mockData from './goods.mock';
@@ -57,10 +57,9 @@ const renderGoods = (data) => {
                 if (c) {
                     LocalShopCar.increNum(c.ID, 'Num');
                 } else {
-                    console.log()
-                    LocalShopCar.insertOne(res.message, gid, gname, paytype, sprice, dprice, pprice, imgurl);
+                    LocalShopCar.insertOne(res.message, gid, gname, paytype, 1, sprice, dprice, pprice, imgurl);
                 }
-                sumShopcarNum();
+                countShopcar();
             });
     });
 }
@@ -135,13 +134,13 @@ var loadData = () => {
             return fetchCities();
         })
         .then((res) => {
-            sumShopcarNum();
+            countShopcar();
         });
 }
 
-var sumShopcarNum = () => {
-    var checkedSum = LocalShopCar.getCheckedSum();
-    $('#txtShopcarNum').text(`${checkedSum.NumSum}`);
+var countShopcar = () => {
+    var count = LocalShopCar.count();
+    $('#txtShopcarNum').text(`${count}`);
 }
 
 const submit = () => {

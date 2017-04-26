@@ -34,7 +34,7 @@ var checkAll = (checked) => {
 }
 
 
-var insertOne = (id, goodid, goodname, paytype, sprice, dprice, pprice, introImg) => {
+var insertOne = (id, goodid, goodname, paytype, num, sprice, dprice, pprice, introImg) => {
     var now = new Date().toString(),
         lsc = get();
     lsc.push({
@@ -45,6 +45,7 @@ var insertOne = (id, goodid, goodname, paytype, sprice, dprice, pprice, introImg
         Created: now,
         Modified: now,
         PayType: paytype,
+        Num: num,
         GoodName: goodname,
         PointPrice: pprice,
         ScorePrice: sprice,
@@ -124,8 +125,14 @@ var getCheckedSum = () => {
         SAmount: SAmount,
         DAmount: DAmount,
         PAmount: PAmount,
-        NumSum: NumSum
+        Num: NumSum
     }
+}
+
+var count = () => {
+    var lsc = get();
+    if (!lsc) return 0;
+    return lsc.length;
 }
 
 var LocalShopCar = {
@@ -139,7 +146,9 @@ var LocalShopCar = {
     increNum: increNum,
     isAllChecked: isAllChecked,
     getCheckedSum: getCheckedSum,
-    removeChecked: removeChecked
+    removeChecked: removeChecked,
+    insertOne: insertOne,
+    count: count
 }
 
 export default LocalShopCar;

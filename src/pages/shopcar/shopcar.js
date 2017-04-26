@@ -3,6 +3,7 @@ import { backToLastPage } from '../../commons/basic/page';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
 import mockData from './shopcar.mock';
 import { getPayPrice, sumAmount } from '../../commons/basic/goods';
+import { showMessage } from '../../commons/basic/modal';
 
 
 var renderPrice = (el) => {
@@ -118,7 +119,7 @@ var onNumClick = (e) => {
         PayType: paytype,
         EditType: 2
     }
-    
+
     LocalShopCar.updateOne(sid, "Num", inum);
     renderSumAmount();
     postData('/OnShopCar', jsonToParams(jsondata))
@@ -135,7 +136,7 @@ var renderSumAmount = () => {
     $('#s_amount').text('￥' + checkedSum.SAmount);
     $('#d_amount').text('￥' + checkedSum.DAmount);
     $('#p_amount').text('￥' + checkedSum.PAmount);
-    $('#allnum').text(checkedSum.NumSum);
+    $('#allnum').text(checkedSum.Num);
 }
 
 var toggleSelect = (icon, isSelect) => {
@@ -183,6 +184,16 @@ var fetchShopCar = () => {
     }
 }
 
+var gotoPay = () => {
+    $('#btn_toreceiver').click((e) => {
+        var checkedSum = LocalShopCar.getCheckedSum();
+        if (checkedSum.Num === 0) {
+            e.preventDefault();
+            showMessage('请选择商品！')
+        }
+    })
+}
+
 var loadData = () => {
     fetchShopCar();
 }
@@ -190,6 +201,7 @@ var loadData = () => {
 
 var initAction = () => {
     backToLastPage('#btn_back');
+    gotoPay();
 }
 
 export var init = () => {

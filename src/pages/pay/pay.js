@@ -35,7 +35,7 @@ var loadReceiverInfo = () => {
                         return el.AddrID == AddrID;
                 });
                 AddrID = dfAddr.AddrID;
-
+                localStorage.AddrID = AddrID;
                 renderReceiverInfo(dfAddr);
                 resolve('GetUserAddr finish');
             })

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(10).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7592,9 +7592,14 @@ var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
+var _web = __webpack_require__(8);
+
+var _web2 = _interopRequireDefault(_web);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var API_URL = 'http://localhost:55555/api/Exchange';
+var API_URL = _web2.default.API_URL;
+console.log(API_URL);
 
 function fetchData(url, data) {
     url = API_URL + url;
@@ -7682,6 +7687,22 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var config = {
+    API_URL: "http://localhost:55555/api/Exchange"
+};
+
+exports.default = config;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7874,7 +7895,7 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7927,13 +7948,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(8);
+__webpack_require__(9);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7961,7 +7982,7 @@ var sumAmount = exports.sumAmount = function sumAmount(el, type) {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7971,7 +7992,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _goods = __webpack_require__(10);
+var _goods = __webpack_require__(11);
 
 var findOne = function findOne(id) {
     var lsc = get();
@@ -8006,7 +8027,7 @@ var checkAll = function checkAll(checked) {
     localStorage.Shopcar = JSON.stringify(lsc);
 };
 
-var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice, pprice, introImg) {
+var insertOne = function insertOne(id, goodid, goodname, paytype, num, sprice, dprice, pprice, introImg) {
     var now = new Date().toString(),
         lsc = get();
     lsc.push({
@@ -8017,6 +8038,7 @@ var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice
         Created: now,
         Modified: now,
         PayType: paytype,
+        Num: num,
         GoodName: goodname,
         PointPrice: pprice,
         ScorePrice: sprice,
@@ -8043,6 +8065,14 @@ var increNum = function increNum(id, key) {
     var oldNum = selectEl[key];
     selectEl[key] = oldNum + 1;
     localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var removeChecked = function removeChecked() {
+    var lsc = get();
+    var unCheckedGoods = lsc.filter(function (el) {
+        return !el.checked;
+    });
+    localStorage.Shopcar = JSON.stringify(unCheckedGoods);
 };
 
 var get = function get() {
@@ -8087,8 +8117,14 @@ var getCheckedSum = function getCheckedSum() {
         SAmount: SAmount,
         DAmount: DAmount,
         PAmount: PAmount,
-        NumSum: NumSum
+        Num: NumSum
     };
+};
+
+var count = function count() {
+    var lsc = get();
+    if (!lsc) return 0;
+    return lsc.length;
 };
 
 var LocalShopCar = {
@@ -8101,23 +8137,85 @@ var LocalShopCar = {
     updateOne: updateOne,
     increNum: increNum,
     isAllChecked: isAllChecked,
-    getCheckedSum: getCheckedSum
+    getCheckedSum: getCheckedSum,
+    removeChecked: removeChecked,
+    insertOne: insertOne,
+    count: count
 };
 
 exports.default = LocalShopCar;
 
 /***/ }),
-/* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */,
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var styles = {
+    tipscontainer: 'position:absolute;width:100%;height:100%;left:0;top:0;',
+    tipsbox: 'position:absolute;width:12rem;left:50%;top:50%;background:#fff;transform:translate(-50%,-50%);background:#eee;',
+    tipsshow: 'line-height:2rem;padding:1rem;text-align:center;',
+    tipsicon: 'padding-right:.5rem;color:#3e3;vertical-align:center;',
+    tipstext: 'vertical-align:center;',
+
+    msgbox: function msgbox() {
+        return styles.tipsbox.replace('width:12rem', 'width:15rem').replace('height:3rem;', '');
+    },
+    msghead: 'padding:.5rem;border-bottom:solid 1px #ddd;',
+    msgfoot: 'height:2.5rem;border-top:solid 1px #ccc;display:flex;flex-direction:row;align-items:stretch;',
+    msgbtn: 'flex:1;background:transparent;height:100%;border:none;',
+    msgicon: 'padding-right:.5rem;'
+};
+
+var showTips = exports.showTips = function showTips(tips) {
+    var tipEle = $('.lev-tips-container');
+    if (tipEle.length === 0) {
+        var tmpl = '\n            <div style="' + styles.tipscontainer + '" class="lev-tips-container">\n                <article class="lev-tips" style="' + styles.tipsbox + '">\n                    <p style="' + styles.tipsshow + '"><span style=' + styles.tipsicon + ' class="iconfont icon-yuanxingxuanzhongfill"></span><span class="' + styles.tipstext + '">' + tips + '</span></p>\n                </article>\n            </div>\n            ';
+        $(document.body).append(tmpl);
+        tipEle = $('.lev-tips-container');
+    }
+
+    setTimeout(function () {
+        tipEle.remove();
+    }, 2000);
+
+    return {
+        close: function close() {
+            tipEle.remove();
+        }
+    };
+};
+
+var showMessage = exports.showMessage = function showMessage(msg) {
+    var tipEle = $('.lev-msg-container');
+    if (tipEle.length === 0) {
+        var tmpl = '\n            <div style="' + styles.tipscontainer + '" class="lev-msg-container">\n                <article class="lev-msg" style="' + styles.msgbox() + '">\n                    <header style="' + styles.msghead + '"><span>\u4FE1\u606F\u63D0\u793A</span></header>\n                    <p style="' + styles.tipsshow + '"><span style=' + styles.msgicon + ' class="iconfont icon-tishi"></span><span class="' + styles.tipstext + '">' + msg + '</span></p>\n                    <footer style="' + styles.msgfoot + '"><button class="btn btn-ok" style=' + styles.msgbtn + '>\u786E\u5B9A</button></footer>\n                </article>\n            </div>\n            ';
+        $(document.body).append(tmpl);
+        tipEle = $('.lev-msg-container');
+    }
+
+    tipEle.find('.btn.btn-ok').click(function (e) {
+        tipEle.remove();
+    });
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
 /* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8132,15 +8230,17 @@ var _ajax = __webpack_require__(6);
 
 var _page = __webpack_require__(7);
 
-var _LocalShopCar = __webpack_require__(11);
+var _LocalShopCar = __webpack_require__(12);
 
 var _LocalShopCar2 = _interopRequireDefault(_LocalShopCar);
 
-var _shopcar = __webpack_require__(42);
+var _shopcar = __webpack_require__(43);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
 
-var _goods = __webpack_require__(10);
+var _goods = __webpack_require__(11);
+
+var _modal = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8249,7 +8349,7 @@ var renderSumAmount = function renderSumAmount() {
     $('#s_amount').text('￥' + checkedSum.SAmount);
     $('#d_amount').text('￥' + checkedSum.DAmount);
     $('#p_amount').text('￥' + checkedSum.PAmount);
-    $('#allnum').text(checkedSum.NumSum);
+    $('#allnum').text(checkedSum.Num);
 };
 
 var toggleSelect = function toggleSelect(icon, isSelect) {
@@ -8296,12 +8396,23 @@ var fetchShopCar = function fetchShopCar() {
     }
 };
 
+var gotoPay = function gotoPay() {
+    $('#btn_toreceiver').click(function (e) {
+        var checkedSum = _LocalShopCar2.default.getCheckedSum();
+        if (checkedSum.Num === 0) {
+            e.preventDefault();
+            (0, _modal.showMessage)('请选择商品！');
+        }
+    });
+};
+
 var loadData = function loadData() {
     fetchShopCar();
 };
 
 var initAction = function initAction() {
     (0, _page.backToLastPage)('#btn_back');
+    gotoPay();
 };
 
 var init = exports.init = function init() {
@@ -8311,20 +8422,18 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */,
-/* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 30 */,
-/* 31 */,
 /* 32 */,
 /* 33 */,
 /* 34 */,
@@ -8334,7 +8443,8 @@ var init = exports.init = function init() {
 /* 38 */,
 /* 39 */,
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8344,9 +8454,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(29);
+__webpack_require__(31);
 
-var _shopcar = __webpack_require__(22);
+var _shopcar = __webpack_require__(24);
 
 $(function (e) {
     (0, _shopcar.init)();
@@ -8354,19 +8464,16 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-var data = {
-    "status": "success",
-    "message": [{ "checked": false, "selected": false, "ID": "14", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/13 15:46:18", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "1" }, { "checked": false, "selected": false, "ID": "12", "GameID": "10012", "GoodID": "9", "Num": "2", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/13 15:46:22", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "2" }, { "checked": false, "selected": false, "ID": "11", "GameID": "10020", "GoodID": "9", "Num": "7", "Created": "2017/4/13 9:59:37", "Modified": "2017/4/13 10:00:05", "GoodName": "苹果a", "PointPrice": "20.00", "ScorePrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "3" }, { "checked": false, "selected": false, "ID": "9", "GameID": "1001", "GoodID": "9", "Num": "1", "Created": "2017/4/13 9:26:54", "Modified": "2017/4/13 9:26:54", "GoodName": "苹果a", "PointPrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "4" }, { "checked": false, "selected": false, "ID": "8", "GameID": "10012", "GoodID": "12", "Num": "6", "Created": "2017/4/12 18:49:15", "Modified": "2017/4/12 18:54:00", "GoodName": "商品BBB", "PointPrice": "12.00", "ScorePrice": "12.00", "DiamondPrice": "12.00", "IntroImg": "/images/1003.png", "RowNo": "5" }, { "checked": false, "selected": false, "ID": "2", "GameID": "100104", "GoodID": "9", "Num": "14", "Created": "1990/1/1 0:00:00", "Modified": "1990/1/1 0:00:00", "GoodName": "苹果a", "PointPrice": "20.00", "DiamondPrice": "20.00", "IntroImg": "/images/1002.png", "RowNo": "6" }]
-};
+var data = [{ "checked": false, "selected": false, "ID": "36", "GameID": "121348", "GoodID": "13", "Num": "6", "Created": "2017/4/25 15:29:18", "Modified": "2017/4/25 16:23:43", "PayType": "1", "GoodName": "1", "PointPrice": "1.00", "ScorePrice": "1.00", "DiamondPrice": "1.00", "IntroImg": "/images/1007.png", "RowNo": "1" }, { "checked": false, "selected": false, "ID": "35", "GameID": "121348", "GoodID": "12", "Num": "5", "Created": "2017/4/18 20:52:56", "Modified": "2017/4/26 9:48:23", "PayType": "2", "GoodName": "商品BBB", "PointPrice": "12.00", "ScorePrice": "0.00", "DiamondPrice": "12.00", "IntroImg": "/images/1003.png", "RowNo": "2" }, { "checked": false, "selected": false, "ID": "25", "GameID": "121348", "GoodID": "9", "Num": "5", "Created": "2017/4/17 18:36:46", "Modified": "2017/4/26 9:49:16", "PayType": "2", "GoodName": "苹果MacBook 2017款256G SSD硬盘", "PointPrice": "1000000.00", "ScorePrice": "71800.00", "DiamondPrice": "72.00", "IntroImg": "/images/1002.png", "RowNo": "3" }, { "checked": false, "selected": false, "ID": "24", "GameID": "121348", "GoodID": "9", "Num": "5", "Created": "2017/4/17 18:36:20", "Modified": "2017/4/26 9:49:16", "PayType": "1", "GoodName": "苹果MacBook 2017款256G SSD硬盘", "PointPrice": "1000000.00", "ScorePrice": "71800.00", "DiamondPrice": "72.00", "IntroImg": "/images/1002.png", "RowNo": "4" }];
 
 exports.default = data;
 

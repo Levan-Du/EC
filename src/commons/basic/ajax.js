@@ -1,7 +1,9 @@
 import Promise from 'bluebird';
+import webConfig from '../../../web.config';
 
-const API_URL = 'http://localhost:55555/api/Exchange'
 
+const API_URL = webConfig.API_URL;
+console.log(API_URL);
 
 export function fetchData(url, data) {
     url = API_URL + url;

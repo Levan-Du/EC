@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(10).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7592,9 +7592,14 @@ var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
+var _web = __webpack_require__(8);
+
+var _web2 = _interopRequireDefault(_web);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var API_URL = 'http://localhost:55555/api/Exchange';
+var API_URL = _web2.default.API_URL;
+console.log(API_URL);
 
 function fetchData(url, data) {
     url = API_URL + url;
@@ -7682,6 +7687,22 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var config = {
+    API_URL: "http://localhost:55555/api/Exchange"
+};
+
+exports.default = config;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7874,7 +7895,7 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7927,16 +7948,16 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(8);
+__webpack_require__(9);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8002,7 +8023,8 @@ var LocalCities = {
 exports.default = LocalCities;
 
 /***/ }),
-/* 14 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8907,18 +8929,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //# sourceMappingURL=maps/swiper.jquery.min.js.map
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 16 */,
-/* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8929,15 +8951,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-__webpack_require__(14);
+__webpack_require__(16);
 
-__webpack_require__(15);
+__webpack_require__(17);
 
 var _ajax = __webpack_require__(6);
 
 var _page = __webpack_require__(7);
 
-var _LocalCities = __webpack_require__(13);
+var _LocalCities = __webpack_require__(14);
 
 var _LocalCities2 = _interopRequireDefault(_LocalCities);
 
@@ -9216,20 +9238,18 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */,
-/* 23 */,
 /* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 29 */,
-/* 30 */,
 /* 31 */,
 /* 32 */,
 /* 33 */,
@@ -9239,7 +9259,8 @@ var init = exports.init = function init() {
 /* 37 */,
 /* 38 */,
 /* 39 */,
-/* 40 */
+/* 40 */,
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9249,9 +9270,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(28);
+__webpack_require__(30);
 
-var _receiver = __webpack_require__(21);
+var _receiver = __webpack_require__(23);
 
 $(function (e) {
     (0, _receiver.init)();

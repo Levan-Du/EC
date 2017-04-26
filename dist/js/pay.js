@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -7572,7 +7572,7 @@ module.exports = ret;
 
 },{"./es5":13}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(10).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -7592,9 +7592,14 @@ var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
+var _web = __webpack_require__(8);
+
+var _web2 = _interopRequireDefault(_web);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var API_URL = 'http://localhost:55555/api/Exchange';
+var API_URL = _web2.default.API_URL;
+console.log(API_URL);
 
 function fetchData(url, data) {
     url = API_URL + url;
@@ -7682,6 +7687,22 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var config = {
+    API_URL: "http://localhost:55555/api/Exchange"
+};
+
+exports.default = config;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7874,7 +7895,7 @@ var getQueryString = exports.getQueryString = function getQueryString() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -7927,13 +7948,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(8);
+__webpack_require__(9);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7961,7 +7982,7 @@ var sumAmount = exports.sumAmount = function sumAmount(el, type) {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7971,7 +7992,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _goods = __webpack_require__(10);
+var _goods = __webpack_require__(11);
 
 var findOne = function findOne(id) {
     var lsc = get();
@@ -8006,7 +8027,7 @@ var checkAll = function checkAll(checked) {
     localStorage.Shopcar = JSON.stringify(lsc);
 };
 
-var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice, pprice, introImg) {
+var insertOne = function insertOne(id, goodid, goodname, paytype, num, sprice, dprice, pprice, introImg) {
     var now = new Date().toString(),
         lsc = get();
     lsc.push({
@@ -8017,6 +8038,7 @@ var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice
         Created: now,
         Modified: now,
         PayType: paytype,
+        Num: num,
         GoodName: goodname,
         PointPrice: pprice,
         ScorePrice: sprice,
@@ -8043,6 +8065,14 @@ var increNum = function increNum(id, key) {
     var oldNum = selectEl[key];
     selectEl[key] = oldNum + 1;
     localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var removeChecked = function removeChecked() {
+    var lsc = get();
+    var unCheckedGoods = lsc.filter(function (el) {
+        return !el.checked;
+    });
+    localStorage.Shopcar = JSON.stringify(unCheckedGoods);
 };
 
 var get = function get() {
@@ -8087,8 +8117,14 @@ var getCheckedSum = function getCheckedSum() {
         SAmount: SAmount,
         DAmount: DAmount,
         PAmount: PAmount,
-        NumSum: NumSum
+        Num: NumSum
     };
+};
+
+var count = function count() {
+    var lsc = get();
+    if (!lsc) return 0;
+    return lsc.length;
 };
 
 var LocalShopCar = {
@@ -8101,13 +8137,16 @@ var LocalShopCar = {
     updateOne: updateOne,
     increNum: increNum,
     isAllChecked: isAllChecked,
-    getCheckedSum: getCheckedSum
+    getCheckedSum: getCheckedSum,
+    removeChecked: removeChecked,
+    insertOne: insertOne,
+    count: count
 };
 
 exports.default = LocalShopCar;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8131,14 +8170,15 @@ var formatPayType = exports.formatPayType = function formatPayType(PayType) {
 };
 
 /***/ }),
-/* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8151,15 +8191,17 @@ exports.init = undefined;
 
 var _ajax = __webpack_require__(6);
 
-var _SessionGoods = __webpack_require__(30);
+var _SessionGoods = __webpack_require__(32);
 
 var _SessionGoods2 = _interopRequireDefault(_SessionGoods);
 
 var _page = __webpack_require__(7);
 
-var _format = __webpack_require__(12);
+var _format = __webpack_require__(13);
 
-var _LocalShopCar = __webpack_require__(11);
+var _goods = __webpack_require__(11);
+
+var _LocalShopCar = __webpack_require__(12);
 
 var _LocalShopCar2 = _interopRequireDefault(_LocalShopCar);
 
@@ -8173,14 +8215,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 */
 var QueryString = (0, _page.getQueryString)(),
     OnOrderType = QueryString['type'],
-    AddrID = QueryString['addrid'],
     GoodID = QueryString['goodid'],
+    AddrID = localStorage.AddrID,
     formData = {};
 
 var loadReceiverInfo = function loadReceiverInfo() {
     return new Promise(function (resolve, reject) {
         (0, _ajax.fetchData)('/GetUserAddr', {}).then(function (res) {
             var addrs = res.message;
+            console.log(addrs);
             if (addrs.length === 0) {
                 window.location = "./receiver.html";
                 resolve('GetUserAddr finish');
@@ -8190,10 +8233,10 @@ var loadReceiverInfo = function loadReceiverInfo() {
             var dfAddr = addrs.find(function (el) {
                 if (!AddrID) {
                     return el.IsDefault;
-                } else return el.ID == AddrID;
+                } else return el.AddrID == AddrID;
             });
             AddrID = dfAddr.AddrID;
-
+            localStorage.AddrID = AddrID;
             renderReceiverInfo(dfAddr);
             resolve('GetUserAddr finish');
         }).catch(function (err) {
@@ -8205,7 +8248,7 @@ var loadReceiverInfo = function loadReceiverInfo() {
 var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
     if (!dfAddr) return;
 
-    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p><span class="iconfont icon-zuobiao"></span>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
+    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            ' + (dfAddr ? '<span class="isdefault">默认<span>' : '') + '\n        </section>\n        <section class="info-addr">\n            <p><span class="iconfont icon-zuobiao"></span>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
     $('#receiverinfo').append(html);
 };
 
@@ -8216,7 +8259,7 @@ var loadGoodsInfo = function loadGoodsInfo() {
                 (0, _ajax.fetchData)('/GoodsList', 'GoodID=' + GoodID).then(function (res) {
                     var goods = res.message,
                         g = goods[0];
-                    g.PayPrice = getPayPrice(g);
+                    g.PayPrice = (0, _goods.getPayPrice)(g);
                     g.Num = 1;
                     formData = {
                         AddrID: AddrID,
@@ -8240,7 +8283,7 @@ var loadGoodsInfo = function loadGoodsInfo() {
 
                 var carArr = '';
                 goods.forEach(function (el) {
-                    el.PayPrice = getPayPrice(el);
+                    el.PayPrice = (0, _goods.getPayPrice)(el);
                     carArr += el.ID + ',';
                 });
                 formData = {
@@ -8253,20 +8296,6 @@ var loadGoodsInfo = function loadGoodsInfo() {
             });
         default:
             return Promise.resolve();
-    }
-};
-
-var getPayPrice = function getPayPrice(g) {
-    var t = parseInt(g.PayType);
-    switch (t) {
-        case 1:
-            return g.ScorePrice;
-        case 2:
-            return g.DiamondPrice;
-        case 3:
-            return g.PointPrice;
-        default:
-            return 0;
     }
 };
 
@@ -8317,6 +8346,9 @@ var submit = function submit() {
         submitPay().then(function (res) {
             if (res.status == 'success') {
                 window.location = "/orders.html";
+                if (OnOrderType == 'shopcar') {
+                    _LocalShopCar2.default.removeChecked();
+                }
             } else {
                 alert(res.message);
             }
@@ -8348,21 +8380,21 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */,
-/* 22 */,
 /* 23 */,
 /* 24 */,
 /* 25 */,
 /* 26 */,
-/* 27 */
+/* 27 */,
+/* 28 */,
+/* 29 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 28 */,
-/* 29 */,
-/* 30 */
+/* 30 */,
+/* 31 */,
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8408,15 +8440,14 @@ var SessionGoods = {
 exports.default = SessionGoods;
 
 /***/ }),
-/* 31 */,
-/* 32 */,
 /* 33 */,
 /* 34 */,
 /* 35 */,
 /* 36 */,
 /* 37 */,
 /* 38 */,
-/* 39 */
+/* 39 */,
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8426,9 +8457,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(27);
+__webpack_require__(29);
 
-var _pay = __webpack_require__(20);
+var _pay = __webpack_require__(22);
 
 $(function (e) {
     (0, _pay.init)();
