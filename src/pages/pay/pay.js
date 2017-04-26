@@ -2,6 +2,7 @@ import { fetchData, postData, jsonToParams } from '../../commons/basic/ajax';
 import SessionGoods from '../../commons/basic/SessionGoods';
 import { backToLastPage, getQueryString } from '../../commons/basic/page';
 import { formatPayType } from '../../commons/basic/format';
+import { getPayPrice } from '../../commons/basic/goods';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
 // import mockData from './pay.mock';
 
@@ -11,15 +12,16 @@ import LocalShopCar from '../../commons/basic/LocalShopCar';
 */
 var QueryString = getQueryString(),
     OnOrderType = QueryString['type'],
-    AddrID = QueryString['addrid'],
     GoodID = QueryString['goodid'],
-    formData = {}
+    AddrID = localStorage.AddrID,
+    formData = {};
 
 var loadReceiverInfo = () => {
     return new Promise((resolve, reject) => {
         fetchData('/GetUserAddr', {})
             .then((res) => {
                 var addrs = res.message;
+                console.log(addrs);
                 if (addrs.length === 0) {
                     window.location = "./receiver.html";
                     resolve('GetUserAddr finish');
@@ -30,10 +32,10 @@ var loadReceiverInfo = () => {
                     if (!AddrID) {
                         return el.IsDefault;
                     } else
-                        return el.ID == AddrID;
+                        return el.AddrID == AddrID;
                 });
                 AddrID = dfAddr.AddrID;
-                
+
                 renderReceiverInfo(dfAddr);
                 resolve('GetUserAddr finish');
             })
@@ -51,10 +53,10 @@ var renderReceiverInfo = (dfAddr) => {
         <section class="info-contact">
             <h1>${dfAddr.ReceiverName}</h1>
             <h1>${dfAddr.ReceiverMobile}</h1>
-            <span class="isdefault">默认<span>
+            ${dfAddr?'<span class="isdefault">默认<span>':''}
         </section>
         <section class="info-addr">
-            <p>${dfAddr.Addr}</p>
+            <p><span class="iconfont icon-zuobiao"></span>${dfAddr.Addr}</p>
         </section>
     </article>
     <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>
@@ -89,30 +91,26 @@ var loadGoodsInfo = () => {
             });
         case 'shopcar':
             return new Promise((resolve, reject) => {
-                var shopcar = LocalShopCar.get();
-                var goods = shopcar.filter((el) => {
-                    return el.checked == true;
+                var shopcar = LocalShopCar.get(),
+                    goods = shopcar.filter((el) => {
+                        return el.checked == true;
+                    });
+
+                var carArr = '';
+                goods.forEach((el) => {
+                    el.PayPrice = getPayPrice(el);
+                    carArr += el.ID + ',';
                 });
-                goods.forEach(el => { el.PayPrice = getPayPrice(el); });
+                formData = {
+                    AddrID: AddrID,
+                    CarArray: carArr.substring(0, carArr.length - 1)
+                };
+
                 renderGoods(goods);
                 resolve('LocalShopCar finish');
             });
         default:
             return Promise.resolve();
-    }
-}
-
-var getPayPrice = (g) => {
-    var t = parseInt(g.PayType);
-    switch (t) {
-        case 1:
-            return g.ScorePrice;
-        case 2:
-            return g.DiamondPrice;
-        case 3:
-            return g.PointPrice;
-        default:
-            return 0;
     }
 }
 
@@ -182,7 +180,15 @@ var submitPay=()=>{
 var submit = () => {
     $('#btn_confirm').click((e) => {
         submitPay().then((res)=>{
-            window.location="/orders.html";
+            if(res.status=='success'){
+                window.location="/orders.html";
+                if(OnOrderType=='shopcar'){                    
+                    LocalShopCar.removeChecked();
+                }
+            }
+            else{
+                alert(res.message);
+            }
         })
         .catch((err)=>{
             console.log(err);

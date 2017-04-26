@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 37);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,37 +1951,6 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7606,7 +7575,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7615,10 +7584,11 @@ module.exports = ret;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.jsonToParams = undefined;
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7670,12 +7640,43 @@ function postData(url, data) {
     });
 }
 
-var jsonToParams = function jsonToParams(jsonObj) {
+var jsonToParams = exports.jsonToParams = function jsonToParams(jsonObj) {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7932,7 +7933,76 @@ exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var _findOne = function _findOne(localKey, id) {
+    var goods = _get();
+    var selectEl = goods.find(function (el) {
+        return el.ID == id;
+    });
+    return selectEl;
+};
+
+var _updateOne = function _updateOne(localKey, id, key, value) {
+    var goods = _get();
+    var selectEl = goods.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl[key] = value;
+    localStorage.Goods = JSON.stringify(goods);
+};
+
+var _get = function _get(localKey) {
+    var sg = localStorage[localKey];
+    if (!sg || sg == 'undefined') return null;
+    return JSON.parse(sg);
+};
+
+var _set = function _set(localKey, obj) {
+    localStorage[localKey] = JSON.stringify(obj);
+};
+
+var _Countrys = 'Countrys';
+var _Provinces = 'Provinces';
+var _Cities = 'Cities';
+
+var createLocalObj = function createLocalObj(localKey) {
+    return {
+        get: function get() {
+            return _get(localKey);
+        },
+        set: function set(value) {
+            _set(localKey, value);
+        },
+        findOne: function findOne(id) {
+            return _findOne(localKey, id);
+        },
+        updateOne: function updateOne(id, key, value) {
+            _updateOne(localKey, id, key, value);
+        }
+    };
+};
+
+var LocalCities = {
+    Countrys: createLocalObj(_Countrys),
+    Provinces: createLocalObj(_Provinces),
+    Cities: createLocalObj(_Cities)
+};
+
+exports.default = LocalCities;
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8837,18 +8907,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //# sourceMappingURL=maps/swiper.jquery.min.js.map
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8859,15 +8929,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-__webpack_require__(10);
+__webpack_require__(14);
 
-__webpack_require__(11);
+__webpack_require__(15);
 
-var _ajax = __webpack_require__(7);
+var _ajax = __webpack_require__(6);
 
-var _page = __webpack_require__(5);
+var _page = __webpack_require__(7);
 
-var _LocalCities = __webpack_require__(26);
+var _LocalCities = __webpack_require__(13);
 
 var _LocalCities2 = _interopRequireDefault(_LocalCities);
 
@@ -9146,85 +9216,18 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 25 */,
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var _findOne = function _findOne(localKey, id) {
-    var goods = _get();
-    var selectEl = goods.find(function (el) {
-        return el.ID == id;
-    });
-    return selectEl;
-};
-
-var _updateOne = function _updateOne(localKey, id, key, value) {
-    var goods = _get();
-    var selectEl = goods.find(function (el) {
-        return el.ID == id;
-    });
-    selectEl[key] = value;
-    localStorage.Goods = JSON.stringify(goods);
-};
-
-var _get = function _get(localKey) {
-    return JSON.parse(localStorage[localKey]);
-};
-
-var _set = function _set(localKey, obj) {
-    localStorage[localKey] = JSON.stringify(obj);
-};
-
-var _Countrys = 'Countrys';
-var _Provinces = 'Provinces';
-var _Cities = 'Cities';
-
-var createLocalObj = function createLocalObj(localKey) {
-    return {
-        get: function get() {
-            return _get(localKey);
-        },
-        set: function set(value) {
-            _set(localKey, value);
-        },
-        findOne: function findOne(id) {
-            return _findOne(localKey, id);
-        },
-        updateOne: function updateOne(id, key, value) {
-            _updateOne(localKey, id, key, value);
-        }
-    };
-};
-
-var LocalCities = {
-    Countrys: createLocalObj(_Countrys),
-    Provinces: createLocalObj(_Provinces),
-    Cities: createLocalObj(_Cities)
-};
-
-exports.default = LocalCities;
-
-/***/ }),
-/* 27 */,
-/* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
@@ -9233,7 +9236,10 @@ exports.default = LocalCities;
 /* 34 */,
 /* 35 */,
 /* 36 */,
-/* 37 */
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9243,9 +9249,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(24);
+__webpack_require__(28);
 
-var _receiver = __webpack_require__(17);
+var _receiver = __webpack_require__(21);
 
 $(function (e) {
     (0, _receiver.init)();

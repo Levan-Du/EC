@@ -64,8 +64,9 @@
 }
 
 .grid .grid-item .good-info .price {
-    font-size: .9rem;
+    font-size: .8rem;
     color: #e33;
+    padding: .2rem 0;
 }
 
 .grid .grid-item .good-info .action {
@@ -82,4 +83,8 @@
 
 .grid .grid-item .good-info .action .btn span {
     font-size: .5rem;
+}
+
+#txtShopcarNum {
+    color: #e33;
 }

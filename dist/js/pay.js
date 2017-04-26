@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 36);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,37 +1951,6 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7606,7 +7575,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7615,10 +7584,11 @@ module.exports = ret;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.jsonToParams = undefined;
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7670,12 +7640,43 @@ function postData(url, data) {
     });
 }
 
-var jsonToParams = function jsonToParams(jsonObj) {
+var jsonToParams = exports.jsonToParams = function jsonToParams(jsonObj) {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7932,13 +7933,212 @@ exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getPayPrice = exports.getPayPrice = function getPayPrice(g) {
+    var t = parseInt(g.PayType);
+    switch (t) {
+        case 1:
+            return g.ScorePrice;
+        case 2:
+            return g.DiamondPrice;
+        case 3:
+            return g.PointPrice;
+        default:
+            return 0;
+    }
+};
+
+var sumAmount = exports.sumAmount = function sumAmount(el, type) {
+    return el.PayType == type ? parseInt(getPayPrice(el)) * parseInt(el.Num) : 0;
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _goods = __webpack_require__(10);
+
+var findOne = function findOne(id) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    return selectEl;
+};
+
+var findOneBy = function findOneBy(goodid, paytype) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.GoodID == goodid && el.PayType == paytype;
+    });
+    return selectEl;
+};
+
+var checkOne = function checkOne(id) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl.checked = !selectEl.checked;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var checkAll = function checkAll(checked) {
+    var lsc = get();
+    lsc.forEach(function (el) {
+        el.checked = checked;
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice, pprice, introImg) {
+    var now = new Date().toString(),
+        lsc = get();
+    lsc.push({
+        checked: true,
+        selected: false,
+        ID: id,
+        GoodID: goodid,
+        Created: now,
+        Modified: now,
+        PayType: paytype,
+        GoodName: goodname,
+        PointPrice: pprice,
+        ScorePrice: sprice,
+        DiamondPrice: dprice,
+        IntroImg: introImg
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var updateOne = function updateOne(id, key, value) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl[key] = value;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var increNum = function increNum(id, key) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    var oldNum = selectEl[key];
+    selectEl[key] = oldNum + 1;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var get = function get() {
+    var sc = localStorage.Shopcar;
+    if (!sc || sc == 'undefined') return null;
+    return JSON.parse(sc);
+};
+
+var set = function set(obj) {
+    localStorage.Shopcar = JSON.stringify(obj);
+};
+
+var isAllChecked = function isAllChecked() {
+    var lsc = get();
+    var el;
+    for (var i = lsc.length; i--;) {
+        el = lsc[i];
+        if (!el.checked) {
+            return false;
+        }
+    };
+    return true;
+};
+
+var getCheckedSum = function getCheckedSum() {
+    var lsc = get();
+    var PAmount = 0,
+        SAmount = 0,
+        DAmount = 0,
+        NumSum = 0;
+    var checkedGoods = lsc.filter(function (el) {
+        return el.checked;
+    });
+
+    checkedGoods.forEach(function (el) {
+        SAmount += (0, _goods.sumAmount)(el, 1);
+        DAmount += (0, _goods.sumAmount)(el, 2);
+        PAmount += (0, _goods.sumAmount)(el, 3);
+        NumSum += parseInt(el.Num);
+    });
+    return {
+        SAmount: SAmount,
+        DAmount: DAmount,
+        PAmount: PAmount,
+        NumSum: NumSum
+    };
+};
+
+var LocalShopCar = {
+    get: get,
+    set: set,
+    findOne: findOne,
+    findOneBy: findOneBy,
+    checkOne: checkOne,
+    checkAll: checkAll,
+    updateOne: updateOne,
+    increNum: increNum,
+    isAllChecked: isAllChecked,
+    getCheckedSum: getCheckedSum
+};
+
+exports.default = LocalShopCar;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var formatPayType = exports.formatPayType = function formatPayType(PayType) {
+    var t = parseInt(PayType);
+    switch (t) {
+        case 1:
+            return '金币';
+        case 2:
+            return '钻石';
+        case 3:
+            return '积分';
+        default:
+            return '金币';
+    }
+};
+
+/***/ }),
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7949,21 +8149,33 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(7);
+var _ajax = __webpack_require__(6);
 
-var _SessionGoods = __webpack_require__(28);
+var _SessionGoods = __webpack_require__(30);
 
 var _SessionGoods2 = _interopRequireDefault(_SessionGoods);
 
-var _page = __webpack_require__(5);
+var _page = __webpack_require__(7);
+
+var _format = __webpack_require__(12);
+
+var _LocalShopCar = __webpack_require__(11);
+
+var _LocalShopCar2 = _interopRequireDefault(_LocalShopCar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import mockData from './pay.mock';
 
+/*
+    地址参数
+    type: 1.singlepay:单个商品直接兑换，2.shopcar:购物车商品兑换
+*/
 var QueryString = (0, _page.getQueryString)(),
+    OnOrderType = QueryString['type'],
     AddrID = QueryString['addrid'],
-    GoodID = QueryString['goodid'];
+    GoodID = QueryString['goodid'],
+    formData = {};
 
 var loadReceiverInfo = function loadReceiverInfo() {
     return new Promise(function (resolve, reject) {
@@ -7976,8 +8188,12 @@ var loadReceiverInfo = function loadReceiverInfo() {
             }
 
             var dfAddr = addrs.find(function (el) {
-                if (!AddrID) return el.IsDefault;else return el.ID == AddrID;
+                if (!AddrID) {
+                    return el.IsDefault;
+                } else return el.ID == AddrID;
             });
+            AddrID = dfAddr.AddrID;
+
             renderReceiverInfo(dfAddr);
             resolve('GetUserAddr finish');
         }).catch(function (err) {
@@ -7986,32 +8202,84 @@ var loadReceiverInfo = function loadReceiverInfo() {
     });
 };
 
-var loadGoodsInfo = function loadGoodsInfo() {
-    return new Promise(function (resolve, reject) {
-        (0, _ajax.fetchData)('/GoodsList', { GoodID: GoodID }).then(function (res) {
-            var goods = res.message;
-            console.log(goods);
-            renderGoodsInfo(goods);
-            renderGoodsSum(goods);
-            resolve('GoodsList finish');
-        }).catch(function (err) {
-            reject(err);
-        });
-    });
+var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
+    if (!dfAddr) return;
+
+    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p><span class="iconfont icon-zuobiao"></span>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
+    $('#receiverinfo').append(html);
 };
 
-var renderReceiverInfo = function renderReceiverInfo(dfAddr) {
-    console.log(dfAddr);
-    if (!dfAddr) return;
-    var html = '\n    <article class="info">\n        <section class="info-contact">\n            <h1>' + dfAddr.ReceiverName + '</h1>\n            <h1>' + dfAddr.ReceiverMobile + '</h1>\n            <span class="isdefault">\u9ED8\u8BA4<span>\n        </section>\n        <section class="info-addr">\n            <p>' + dfAddr.Addr + '</p>\n        </section>\n    </article>\n    <p class="direction"><span class="iconfont icon-xiangyou1"><span></p>\n    ';
-    $('#receiverinfo').append(html);
+var loadGoodsInfo = function loadGoodsInfo() {
+    switch (OnOrderType) {
+        case 'singlepay':
+            return new Promise(function (resolve, reject) {
+                (0, _ajax.fetchData)('/GoodsList', 'GoodID=' + GoodID).then(function (res) {
+                    var goods = res.message,
+                        g = goods[0];
+                    g.PayPrice = getPayPrice(g);
+                    g.Num = 1;
+                    formData = {
+                        AddrID: AddrID,
+                        GoodID: GoodID,
+                        Num: g.Num,
+                        PayType: g.PayType
+                    };
+
+                    renderGoods(goods);
+                    resolve('GoodsList finish');
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        case 'shopcar':
+            return new Promise(function (resolve, reject) {
+                var shopcar = _LocalShopCar2.default.get(),
+                    goods = shopcar.filter(function (el) {
+                    return el.checked == true;
+                });
+
+                var carArr = '';
+                goods.forEach(function (el) {
+                    el.PayPrice = getPayPrice(el);
+                    carArr += el.ID + ',';
+                });
+                formData = {
+                    AddrID: AddrID,
+                    CarArray: carArr.substring(0, carArr.length - 1)
+                };
+
+                renderGoods(goods);
+                resolve('LocalShopCar finish');
+            });
+        default:
+            return Promise.resolve();
+    }
+};
+
+var getPayPrice = function getPayPrice(g) {
+    var t = parseInt(g.PayType);
+    switch (t) {
+        case 1:
+            return g.ScorePrice;
+        case 2:
+            return g.DiamondPrice;
+        case 3:
+            return g.PointPrice;
+        default:
+            return 0;
+    }
+};
+
+var renderGoods = function renderGoods(goods) {
+    renderGoodsInfo(goods);
+    renderGoodsSum(goods);
 };
 
 var renderGoodsInfo = function renderGoodsInfo(goods) {
     if (!goods || !goods.map) return;
 
     var html = goods.map(function (el) {
-        return '\n    <li class="gooditem">\n        <article class="img-box"><img src="/images/4003.png"></article>\n        <article class="info">\n            <p class="goodname">' + el.GoodName + '</p>\n            <p class="number">\n                <span class="price">\uFFE5' + el.Price + '</span>\n                <span class="num">x ' + el.Num + '</span>\n            </p>\n        </article>\n    </li>\n    ';
+        return '\n    <li class="gooditem">\n        <article class="img-box"><img src="' + el.IntroImg + '"></article>\n        <article class="info">\n            <p class="goodname">' + el.GoodName + '</p>\n            <p class="number">\n                <span class="price">' + (0, _format.formatPayType)(el.PayType) + '\uFFE5' + parseInt(el.PayPrice) + '</span>\n                <span class="num">x ' + el.Num + '</span>\n            </p>\n        </article>\n    </li>\n    ';
     }).join('');
     $('#goodsinfo').append(html);
 };
@@ -8019,12 +8287,43 @@ var renderGoodsInfo = function renderGoodsInfo(goods) {
 var renderGoodsSum = function renderGoodsSum(goods) {
     if (!goods || !goods.map) return;
 
-    var sum = 0;
+    var sAmount = 0,
+        dAmount = 0,
+        pAmount = 0;
+
+    var sumAmount = function sumAmount(el, type) {
+        return el.PayType == type ? parseInt(el.PayPrice) * parseInt(el.Num) : 0;
+    };
     goods.forEach(function (el) {
-        sum += parseInt(el.Price) * parseInt(el.Num);
+        sAmount += sumAmount(el, 1);
+        dAmount += sumAmount(el, 2);
+        pAmount += sumAmount(el, 3);
     });
-    var tmpl = '\n        <p>\u5408\u8BA1\uFF1A<span class="amount">\uFFE5' + sum + '</span><p>\n    ';
-    $('#goodssum').append(tmpl);
+    var tmpl = '\n        <article class="sum">\n            <section class="sum-title">\u5408\u8BA1\uFF1A</section>\n            <section class="sum-show">\n                ' + (sAmount === 0 ? '' : '<p>' + (0, _format.formatPayType)(1) + '<span class="amount">\uFFE5' + sAmount + '</span></p>') + '\n                ' + (dAmount === 0 ? '' : '<p>' + (0, _format.formatPayType)(2) + '<span class="amount">\uFFE5' + dAmount + '</span></p>') + '\n                ' + (pAmount === 0 ? '' : '<p>' + (0, _format.formatPayType)(3) + '<span class="amount">\uFFE5' + pAmount + '</span></p>') + '\n            </section>\n        </article>\n    ';
+    $('#goodssum').html(tmpl);
+};
+
+var selectAddr = function selectAddr() {};
+
+var submitPay = function submitPay() {
+    if (OnOrderType == 'singlepay') {
+        return (0, _ajax.postData)('/OnOrderGood', (0, _ajax.jsonToParams)(formData));
+    } else {
+        return (0, _ajax.postData)('/OnOrderCar', (0, _ajax.jsonToParams)(formData));
+    }
+};
+var submit = function submit() {
+    $('#btn_confirm').click(function (e) {
+        submitPay().then(function (res) {
+            if (res.status == 'success') {
+                window.location = "/orders.html";
+            } else {
+                alert(res.message);
+            }
+        }).catch(function (err) {
+            console.log(err);
+        });
+    });
 };
 
 var loadData = function loadData() {
@@ -8039,19 +8338,7 @@ var loadData = function loadData() {
 
 var initAction = function initAction() {
     (0, _page.backToLastPage)('#btn_back');
-};
-
-var selectAddr = function selectAddr() {};
-
-var submit = function submit() {
-    $('#btn_confirm').click(function (e) {
-        if (goods.length === 1) {
-            var data = {};
-            PostData('/OnOrder');
-        } else {
-            PostData('/OnOrderCar');
-        }
-    });
+    submit();
 };
 
 var init = exports.init = function init() {
@@ -8061,23 +8348,21 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8104,7 +8389,9 @@ var updateOne = function updateOne(id, key, value) {
 };
 
 var get = function get() {
-    return JSON.parse(sessionStorage.Goods);
+    var sg = sessionStorage.Goods;
+    if (!sg || sg == 'undefined') return null;
+    return JSON.parse(sg);
 };
 
 var set = function set(obj) {
@@ -8121,14 +8408,15 @@ var SessionGoods = {
 exports.default = SessionGoods;
 
 /***/ }),
-/* 29 */,
-/* 30 */,
 /* 31 */,
 /* 32 */,
 /* 33 */,
 /* 34 */,
 /* 35 */,
-/* 36 */
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8138,9 +8426,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(23);
+__webpack_require__(27);
 
-var _pay = __webpack_require__(16);
+var _pay = __webpack_require__(20);
 
 $(function (e) {
     (0, _pay.init)();

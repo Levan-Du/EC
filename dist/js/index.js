@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,37 +1951,6 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7606,7 +7575,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7615,10 +7584,11 @@ module.exports = ret;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.jsonToParams = undefined;
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7670,12 +7640,43 @@ function postData(url, data) {
     });
 }
 
-var jsonToParams = function jsonToParams(jsonObj) {
+var jsonToParams = exports.jsonToParams = function jsonToParams(jsonObj) {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7932,11 +7933,275 @@ exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getPayPrice = exports.getPayPrice = function getPayPrice(g) {
+    var t = parseInt(g.PayType);
+    switch (t) {
+        case 1:
+            return g.ScorePrice;
+        case 2:
+            return g.DiamondPrice;
+        case 3:
+            return g.PointPrice;
+        default:
+            return 0;
+    }
+};
+
+var sumAmount = exports.sumAmount = function sumAmount(el, type) {
+    return el.PayType == type ? parseInt(getPayPrice(el)) * parseInt(el.Num) : 0;
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _goods = __webpack_require__(10);
+
+var findOne = function findOne(id) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    return selectEl;
+};
+
+var findOneBy = function findOneBy(goodid, paytype) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.GoodID == goodid && el.PayType == paytype;
+    });
+    return selectEl;
+};
+
+var checkOne = function checkOne(id) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl.checked = !selectEl.checked;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var checkAll = function checkAll(checked) {
+    var lsc = get();
+    lsc.forEach(function (el) {
+        el.checked = checked;
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice, pprice, introImg) {
+    var now = new Date().toString(),
+        lsc = get();
+    lsc.push({
+        checked: true,
+        selected: false,
+        ID: id,
+        GoodID: goodid,
+        Created: now,
+        Modified: now,
+        PayType: paytype,
+        GoodName: goodname,
+        PointPrice: pprice,
+        ScorePrice: sprice,
+        DiamondPrice: dprice,
+        IntroImg: introImg
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var updateOne = function updateOne(id, key, value) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl[key] = value;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var increNum = function increNum(id, key) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    var oldNum = selectEl[key];
+    selectEl[key] = oldNum + 1;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var get = function get() {
+    var sc = localStorage.Shopcar;
+    if (!sc || sc == 'undefined') return null;
+    return JSON.parse(sc);
+};
+
+var set = function set(obj) {
+    localStorage.Shopcar = JSON.stringify(obj);
+};
+
+var isAllChecked = function isAllChecked() {
+    var lsc = get();
+    var el;
+    for (var i = lsc.length; i--;) {
+        el = lsc[i];
+        if (!el.checked) {
+            return false;
+        }
+    };
+    return true;
+};
+
+var getCheckedSum = function getCheckedSum() {
+    var lsc = get();
+    var PAmount = 0,
+        SAmount = 0,
+        DAmount = 0,
+        NumSum = 0;
+    var checkedGoods = lsc.filter(function (el) {
+        return el.checked;
+    });
+
+    checkedGoods.forEach(function (el) {
+        SAmount += (0, _goods.sumAmount)(el, 1);
+        DAmount += (0, _goods.sumAmount)(el, 2);
+        PAmount += (0, _goods.sumAmount)(el, 3);
+        NumSum += parseInt(el.Num);
+    });
+    return {
+        SAmount: SAmount,
+        DAmount: DAmount,
+        PAmount: PAmount,
+        NumSum: NumSum
+    };
+};
+
+var LocalShopCar = {
+    get: get,
+    set: set,
+    findOne: findOne,
+    findOneBy: findOneBy,
+    checkOne: checkOne,
+    checkAll: checkAll,
+    updateOne: updateOne,
+    increNum: increNum,
+    isAllChecked: isAllChecked,
+    getCheckedSum: getCheckedSum
+};
+
+exports.default = LocalShopCar;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var formatPayType = exports.formatPayType = function formatPayType(PayType) {
+    var t = parseInt(PayType);
+    switch (t) {
+        case 1:
+            return '金币';
+        case 2:
+            return '钻石';
+        case 3:
+            return '积分';
+        default:
+            return '金币';
+    }
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var _findOne = function _findOne(localKey, id) {
+    var goods = _get();
+    var selectEl = goods.find(function (el) {
+        return el.ID == id;
+    });
+    return selectEl;
+};
+
+var _updateOne = function _updateOne(localKey, id, key, value) {
+    var goods = _get();
+    var selectEl = goods.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl[key] = value;
+    localStorage.Goods = JSON.stringify(goods);
+};
+
+var _get = function _get(localKey) {
+    var sg = localStorage[localKey];
+    if (!sg || sg == 'undefined') return null;
+    return JSON.parse(sg);
+};
+
+var _set = function _set(localKey, obj) {
+    localStorage[localKey] = JSON.stringify(obj);
+};
+
+var _Countrys = 'Countrys';
+var _Provinces = 'Provinces';
+var _Cities = 'Cities';
+
+var createLocalObj = function createLocalObj(localKey) {
+    return {
+        get: function get() {
+            return _get(localKey);
+        },
+        set: function set(value) {
+            _set(localKey, value);
+        },
+        findOne: function findOne(id) {
+            return _findOne(localKey, id);
+        },
+        updateOne: function updateOne(id, key, value) {
+            _updateOne(localKey, id, key, value);
+        }
+    };
+};
+
+var LocalCities = {
+    Countrys: createLocalObj(_Countrys),
+    Provinces: createLocalObj(_Provinces),
+    Cities: createLocalObj(_Cities)
+};
+
+exports.default = LocalCities;
+
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7947,37 +8212,70 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _ajax = __webpack_require__(7);
+var _ajax = __webpack_require__(6);
 
-var _page = __webpack_require__(5);
+var _page = __webpack_require__(7);
+
+var _LocalCities = __webpack_require__(13);
+
+var _LocalCities2 = _interopRequireDefault(_LocalCities);
+
+var _LocalShopCar = __webpack_require__(11);
+
+var _LocalShopCar2 = _interopRequireDefault(_LocalShopCar);
+
+var _showTips = __webpack_require__(32);
+
+var _showTips2 = _interopRequireDefault(_showTips);
+
+var _format = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import mockData from './goods.mock';
 
+var localCountrys = _LocalCities2.default.Countrys,
+    localProvinces = _LocalCities2.default.Provinces,
+    localCities = _LocalCities2.default.Cities;
+
 var createGoods = function createGoods(data) {
     var tmpl = data.map(function (r) {
-        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.ID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>' + r.GoodName + '</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <i>\uFFE5' + parseInt(r.PayPrice) + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn btn_addtoshopcar" data-gid="' + r.ID + '" data-paytype="' + r.PayType + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.ID + '" href="pay.html?type=singlepay&goodid=' + r.ID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
+        return '\n        <li class="grid-item">\n            <a class="good-img-link" href="./gooddetail.html?id=' + r.ID + '">\n                <img src="' + r.IntroImg + '"></img>\n            </a>\n            <dl class="good-info">\n                <dt class="good-info-item title">\n                    <p>' + r.GoodName + '</p>\n                </dt>\n                <dt class="good-info-item price">\n                    <span>' + (0, _format.formatPayType)(r.PayType) + '</span><i>\uFFE5' + parseInt(r.PayPrice) + '</i>\n                </dt>\n                <dt class="good-info-item action">\n                    <a class="btn btn_addtoshopcar" data-gid="' + r.ID + '" data-paytype="' + r.PayType + '" data-gname="' + r.GoodName + '" data-imgurl="' + r.IntroImg + '" data-sprice="' + r.ScorePrice + '" data-dprice="' + r.DiamondPrice + '" data-pprice="' + r.PointPrice + '"><span class="iconfont icon-gouwuche"></span><span>\u52A0\u5165\u8D2D\u7269\u8F66</span></a>\n                    <a class="btn" data-gid="' + r.ID + '" href="pay.html?type=singlepay&goodid=' + r.ID + '"><span class="iconfont icon-danpin"></span><span>\u7ACB\u5373\u5151\u6362</span></a>                        \n                </dt>\n            </dl>\n        </li>';
     }).join('');
     $('#grid-goods').append(tmpl);
 
     $('.main .grid .grid-item .btn.btn_addtoshopcar').click(function (e) {
         var target = $(e.currentTarget);
         var gid = target.attr('data-gid'),
+            gname = target.attr('data-gname'),
+            imgurl = target.attr('data-imgurl'),
+            sprice = target.attr('data-sprice'),
+            dprice = target.attr('data-dprice'),
+            pprice = target.attr('data-pprice'),
             paytype = target.attr('data-paytype');
-        console.log(target);
+
         var jsondata = {
-            GameID: localStorage.GameID,
             GoodID: gid,
             Num: 1,
             PayType: paytype,
             EditType: 1
         };
-        (0, _ajax.postData)('/OnShopCar', jsondata);
+
+        (0, _ajax.postData)('/OnShopCar', (0, _ajax.jsonToParams)(jsondata)).then(function (res) {
+            (0, _showTips2.default)('成功添加到购物车');
+            var c = _LocalShopCar2.default.findOneBy(gid, paytype);
+            if (c) {
+                _LocalShopCar2.default.increNum(c.ID, 'Num');
+            } else {
+                console.log();
+                _LocalShopCar2.default.insertOne(res.message, gid, gname, paytype, sprice, dprice, pprice, imgurl);
+            }
+            sumShopcarNum();
+        });
     });
 };
 
@@ -8011,14 +8309,23 @@ var setSessionGoods = function setSessionGoods(data) {
 var fetchCities = function fetchCities() {
     return new _bluebird2.default(function (resolve, reject) {
         (0, _ajax.fetchData)('/CitiesArea', null).then(function (res) {
-            if (!localStorage.Countrys || localStorage.Countrys == "undefined") {
-                localStorage.Countrys = JSON.stringify(res.message.Countrys);
+
+            var m = res.message,
+                co = m.Countrys,
+                p = m.Provinces,
+                ct = m.Cities,
+                oCountrys = localCountrys.get(),
+                oProvinces = localProvinces.get(),
+                oCities = localCities.get();
+
+            if (!oCountrys || oCountrys == "undefined") {
+                localCountrys.set(co);
             }
-            if (!localStorage.Provinces || localStorage.Provinces == "undefined") {
-                localStorage.Provinces = JSON.stringify(res.message.Provinces);
+            if (!oProvinces || oProvinces == "undefined") {
+                localProvinces.set(p);
             }
-            if (!localStorage.Cities || localStorage.Cities == "undefined") {
-                localStorage.Cities = JSON.stringify(res.message.Cities);
+            if (!oCities || oCities == "undefined") {
+                localCities.set(ct);
             }
             resolve('Get CitiesArea finish');
         }).catch(function (err) {
@@ -8034,7 +8341,14 @@ var loadData = function loadData() {
         return fetchGoods();
     }).then(function (res) {
         return fetchCities();
+    }).then(function (res) {
+        sumShopcarNum();
     });
+};
+
+var sumShopcarNum = function sumShopcarNum() {
+    var checkedSum = _LocalShopCar2.default.getCheckedSum();
+    $('#txtShopcarNum').text('' + checkedSum.NumSum);
 };
 
 var submit = function submit() {};
@@ -8064,30 +8378,67 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */,
-/* 33 */
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var styles = {
+    tipscontainer: 'position:absolute;width:100%;height:100%;left:0;top:0;',
+    tipsbox: 'position:absolute;width:10rem;height:3rem;left:50%;top:50%;background:#fff;transform:translate(-50%,-50%);background:#eee;',
+    tipsshow: 'line-height:2rem;padding:.5rem;',
+    tipsicon: 'padding-right:.5rem;color:#3e3;'
+};
+
+var showTips = function showTips(tips) {
+    var tipEle = $('.lev-tips-container');
+    if (tipEle.length === 0) {
+        var tmpl = '\n<div style="' + styles.tipscontainer + '" class="lev-tips-container">\n\t<article class="lev-tips" style="' + styles.tipsbox + '">\n\t\t<p style="' + styles.tipsshow + '"><span style=' + styles.tipsicon + ' class="iconfont icon-yuanxingxuanzhongfill"></span><span>' + tips + '</span></p>\n\t</article>\n</div>\n    \t\t';
+        $(document.body).append(tmpl);
+        tipEle = $('.lev-tips-container');
+    }
+
+    setTimeout(function () {
+        tipEle.remove();
+    }, 3000);
+
+    return {
+        close: function close() {
+            tipEle.remove();
+        }
+    };
+};
+
+exports.default = showTips;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8097,9 +8448,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(21);
+__webpack_require__(25);
 
-var _goods = __webpack_require__(14);
+var _goods = __webpack_require__(18);
 
 $(function (e) {
     (0, _goods.init)();

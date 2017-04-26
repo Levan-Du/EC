@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,37 +1951,6 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7606,7 +7575,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7615,10 +7584,11 @@ module.exports = ret;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.jsonToParams = undefined;
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7670,12 +7640,43 @@ function postData(url, data) {
     });
 }
 
-var jsonToParams = function jsonToParams(jsonObj) {
+var jsonToParams = exports.jsonToParams = function jsonToParams(jsonObj) {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7932,15 +7933,191 @@ exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 10 */,
-/* 11 */,
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getPayPrice = exports.getPayPrice = function getPayPrice(g) {
+    var t = parseInt(g.PayType);
+    switch (t) {
+        case 1:
+            return g.ScorePrice;
+        case 2:
+            return g.DiamondPrice;
+        case 3:
+            return g.PointPrice;
+        default:
+            return 0;
+    }
+};
+
+var sumAmount = exports.sumAmount = function sumAmount(el, type) {
+    return el.PayType == type ? parseInt(getPayPrice(el)) * parseInt(el.Num) : 0;
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _goods = __webpack_require__(10);
+
+var findOne = function findOne(id) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    return selectEl;
+};
+
+var findOneBy = function findOneBy(goodid, paytype) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.GoodID == goodid && el.PayType == paytype;
+    });
+    return selectEl;
+};
+
+var checkOne = function checkOne(id) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl.checked = !selectEl.checked;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var checkAll = function checkAll(checked) {
+    var lsc = get();
+    lsc.forEach(function (el) {
+        el.checked = checked;
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var insertOne = function insertOne(id, goodid, goodname, paytype, sprice, dprice, pprice, introImg) {
+    var now = new Date().toString(),
+        lsc = get();
+    lsc.push({
+        checked: true,
+        selected: false,
+        ID: id,
+        GoodID: goodid,
+        Created: now,
+        Modified: now,
+        PayType: paytype,
+        GoodName: goodname,
+        PointPrice: pprice,
+        ScorePrice: sprice,
+        DiamondPrice: dprice,
+        IntroImg: introImg
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var updateOne = function updateOne(id, key, value) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    selectEl[key] = value;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var increNum = function increNum(id, key) {
+    var lsc = get();
+    var selectEl = lsc.find(function (el) {
+        return el.ID == id;
+    });
+    var oldNum = selectEl[key];
+    selectEl[key] = oldNum + 1;
+    localStorage.Shopcar = JSON.stringify(lsc);
+};
+
+var get = function get() {
+    var sc = localStorage.Shopcar;
+    if (!sc || sc == 'undefined') return null;
+    return JSON.parse(sc);
+};
+
+var set = function set(obj) {
+    localStorage.Shopcar = JSON.stringify(obj);
+};
+
+var isAllChecked = function isAllChecked() {
+    var lsc = get();
+    var el;
+    for (var i = lsc.length; i--;) {
+        el = lsc[i];
+        if (!el.checked) {
+            return false;
+        }
+    };
+    return true;
+};
+
+var getCheckedSum = function getCheckedSum() {
+    var lsc = get();
+    var PAmount = 0,
+        SAmount = 0,
+        DAmount = 0,
+        NumSum = 0;
+    var checkedGoods = lsc.filter(function (el) {
+        return el.checked;
+    });
+
+    checkedGoods.forEach(function (el) {
+        SAmount += (0, _goods.sumAmount)(el, 1);
+        DAmount += (0, _goods.sumAmount)(el, 2);
+        PAmount += (0, _goods.sumAmount)(el, 3);
+        NumSum += parseInt(el.Num);
+    });
+    return {
+        SAmount: SAmount,
+        DAmount: DAmount,
+        PAmount: PAmount,
+        NumSum: NumSum
+    };
+};
+
+var LocalShopCar = {
+    get: get,
+    set: set,
+    findOne: findOne,
+    findOneBy: findOneBy,
+    checkOne: checkOne,
+    checkAll: checkAll,
+    updateOne: updateOne,
+    increNum: increNum,
+    isAllChecked: isAllChecked,
+    getCheckedSum: getCheckedSum
+};
+
+exports.default = LocalShopCar;
+
+/***/ }),
 /* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7951,17 +8128,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(7);
+var _ajax = __webpack_require__(6);
 
-var _page = __webpack_require__(5);
+var _page = __webpack_require__(7);
 
-var _LocalShopCar = __webpack_require__(27);
+var _LocalShopCar = __webpack_require__(11);
 
 var _LocalShopCar2 = _interopRequireDefault(_LocalShopCar);
 
-var _shopcar = __webpack_require__(39);
+var _shopcar = __webpack_require__(42);
 
 var _shopcar2 = _interopRequireDefault(_shopcar);
+
+var _goods = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7985,8 +8164,8 @@ var renderGrid = function renderGrid(data) {
 
     var reducBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-reduce');
     var addBtns = $('.main .grid .grid-item ul li.info ul li.right .btn.btn-add');
-    var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
-    var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
+    // var numInputs = $('.main .grid .grid-item ul li.info ul li.right input.num');
+    // var priSpans = $('.main .grid .grid-item ul li.info ul li.left span.price');
 
     reducBtns.click(function (e) {
         onNumClick(e);
@@ -8041,7 +8220,7 @@ var onNumClick = function onNumClick(e) {
     var inum = parseInt(numEle.val());
     if (target.attr('class').indexOf('btn-reduce') !== -1) {
         inum = inum - 1;
-        if (inum <= 1) return;
+        if (inum < 1) return;
     } else {
         var inum = parseInt(numEle.val()) + 1;
     }
@@ -8050,38 +8229,27 @@ var onNumClick = function onNumClick(e) {
     var gid = target.attr('data-gid');
     var paytype = numEle.attr('data-paytype');
     var jsondata = {
-        GameID: localStorage.GameID,
         GoodID: gid,
         Num: inum,
         PayType: paytype,
         EditType: 2
     };
-    (0, _ajax.postData)('/OnShopCar', jsondata);
 
     _LocalShopCar2.default.updateOne(sid, "Num", inum);
     renderSumAmount();
+    (0, _ajax.postData)('/OnShopCar', (0, _ajax.jsonToParams)(jsondata)).then(function (res) {
+        console && console.log(res);
+    }).catch(function (err) {
+        console && console.log(err);
+    });
 };
 
 var renderSumAmount = function renderSumAmount() {
-    var lsc = _LocalShopCar2.default.get();
-    var PAmount = 0,
-        SAmount = 0,
-        DAmount = 0,
-        num_all = 0;
-    var checkedGoods = lsc.filter(function (el) {
-        return el.checked;
-    });
-    checkedGoods.forEach(function (el, i) {
-        PAmount += parseInt(el.PointPrice) * parseInt(el.Num);
-        SAmount += parseInt(el.ScorePrice) * parseInt(el.Num);
-        DAmount += parseInt(el.DiamondPrice) * parseInt(el.Num);
-        num_all += parseInt(el.Num);
-    });
-
-    $('#p_amount').text('￥' + PAmount);
-    $('#s_amount').text('￥' + SAmount);
-    $('#d_amount').text('￥' + DAmount);
-    $('#allnum').text(num_all);
+    var checkedSum = _LocalShopCar2.default.getCheckedSum();
+    $('#s_amount').text('￥' + checkedSum.SAmount);
+    $('#d_amount').text('￥' + checkedSum.DAmount);
+    $('#p_amount').text('￥' + checkedSum.PAmount);
+    $('#allnum').text(checkedSum.NumSum);
 };
 
 var toggleSelect = function toggleSelect(icon, isSelect) {
@@ -8106,10 +8274,13 @@ var getMockData = function getMockData() {
 };
 
 var fetchShopCar = function fetchShopCar() {
-    if (!localStorage.Shopcar) {
+    var lsc = _LocalShopCar2.default.get();
+
+    if (lsc) {
         var data = _LocalShopCar2.default.get();
         renderGrid(data);
         renderCheckAll();
+        renderSumAmount();
     } else {
         (0, _ajax.fetchData)('/ShopCarList')
         // getMockData()
@@ -8118,8 +8289,9 @@ var fetchShopCar = function fetchShopCar() {
             var data = _LocalShopCar2.default.get();
             renderGrid(data);
             renderCheckAll();
+            renderSumAmount();
         }).catch(function (err) {
-            console.log(err);
+            console && console.log(err);
         });
     }
 };
@@ -8139,97 +8311,18 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 26 */,
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var findOne = function findOne(id) {
-    var lsc = get();
-    var selectEl = lsc.find(function (el) {
-        return el.ID == id;
-    });
-    return selectEl;
-};
-
-var checkOne = function checkOne(id) {
-    var lsc = get();
-    var selectEl = lsc.find(function (el) {
-        return el.ID == id;
-    });
-    selectEl.checked = !selectEl.checked;
-    localStorage.Shopcar = JSON.stringify(lsc);
-};
-
-var checkAll = function checkAll(checked) {
-    var lsc = get();
-    lsc.forEach(function (el) {
-        el.checked = checked;
-    });
-    localStorage.Shopcar = JSON.stringify(lsc);
-};
-
-var updateOne = function updateOne(id, key, value) {
-    var lsc = get();
-    var selectEl = lsc.find(function (el) {
-        return el.ID == id;
-    });
-    selectEl[key] = value;
-    localStorage.Shopcar = JSON.stringify(lsc);
-};
-
-var get = function get() {
-    return JSON.parse(localStorage.Shopcar);
-};
-
-var set = function set(obj) {
-    localStorage.Shopcar = JSON.stringify(obj);
-};
-
-var isAllChecked = function isAllChecked() {
-    var lsc = get();
-    var el;
-    for (var i = lsc.length; i--;) {
-        el = lsc[i];
-        if (!el.checked) {
-            return false;
-        }
-    };
-    return true;
-};
-
-var LocalShopCar = {
-    get: get,
-    set: set,
-    findOne: findOne,
-    checkOne: checkOne,
-    checkAll: checkAll,
-    updateOne: updateOne,
-    isAllChecked: isAllChecked
-};
-
-exports.default = LocalShopCar;
-
-/***/ }),
-/* 28 */,
-/* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */,
@@ -8238,7 +8331,10 @@ exports.default = LocalShopCar;
 /* 35 */,
 /* 36 */,
 /* 37 */,
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8248,9 +8344,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(25);
+__webpack_require__(29);
 
-var _shopcar = __webpack_require__(18);
+var _shopcar = __webpack_require__(22);
 
 $(function (e) {
     (0, _shopcar.init)();
@@ -8258,7 +8354,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

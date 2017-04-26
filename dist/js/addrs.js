@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,37 +1951,6 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7606,7 +7575,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7615,10 +7584,11 @@ module.exports = ret;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.jsonToParams = undefined;
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7670,12 +7640,43 @@ function postData(url, data) {
     });
 }
 
-var jsonToParams = function jsonToParams(jsonObj) {
+var jsonToParams = exports.jsonToParams = function jsonToParams(jsonObj) {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
     }
     return parms.substring(1, parms.length);
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
+    $(ele).click(function (e) {
+        window.history.go(-1);
+    });
+};
+
+var getQueryString = exports.getQueryString = function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (!result) return {};
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+    }
+    var oo = {};
+    for (var i in result) {
+        var ss = result[i].split('=');
+        oo[ss[0]] = ss[1];
+    }
+    return oo;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -7934,59 +7935,73 @@ exports.clearImmediate = clearImmediate;
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.init = undefined;
-
-var _ajax = __webpack_require__(7);
-
-var _page = __webpack_require__(5);
-
-var loadData = function loadData() {};
-
-var initAction = function initAction() {
-    (0, _page.backToLastPage)('#btn_back');
-    slide();
-    clickToSlide();
-    renderImgBox();
-};
-
-var init = exports.init = function init() {
-    loadData();
-    initAction();
-};
-
-/***/ }),
+/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */,
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+				value: true
+});
+exports.init = undefined;
+
+var _ajax = __webpack_require__(6);
+
+var _page = __webpack_require__(7);
+
+var renderAddrs = function renderAddrs() {
+				(0, _ajax.fetchData)('/GetUserAddr', null).then(function (res) {
+								var arr = res.message;
+								console.log(arr);
+								var tmpl = arr.map(function (el) {
+												return '\n\t\t\t\t<li class="grid-item">\n\t\t\t\t\t<span class="iconfont icon-xuanze"></span>\n\t\t\t\t\t<article class="grid-item-info">\n\t\t\t\t\t\t<section>\n\t\t\t\t\t\t\t<h1 class="r-name">' + el.ReceiverName + '</h1>\n\t\t\t\t\t\t\t<h1>' + el.ReceiverMobile + '</h1>\n\t\t\t\t\t\t</section>\n\t\t\t\t\t\t<section class="r-addr">' + el.Addr + '</section>\n\t\t\t\t\t</article>\n\t\t\t\t\t<span class="iconfont icon-fankui"></span>\n\t\t\t\t</li>\n\t\t\t';
+								}).join('');
+								$('#grid-addrs').append(tmpl);
+				});
+};
+
+var loadData = function loadData() {
+				renderAddrs();
+};
+
+var initAction = function initAction() {
+				(0, _page.backToLastPage)('#btn_back');
+};
+
+var init = exports.init = function init() {
+				loadData();
+				initAction();
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
 /* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
-/* 30 */
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7996,9 +8011,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(19);
+__webpack_require__(23);
 
-var _addrs = __webpack_require__(12);
+var _addrs = __webpack_require__(16);
 
 $(function (e) {
     (0, _addrs.init)();

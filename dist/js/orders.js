@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 37);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1951,37 +1951,6 @@ module.exports = g;
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var backToLastPage = exports.backToLastPage = function backToLastPage(ele) {
-    $(ele).click(function (e) {
-        window.history.go(-1);
-    });
-};
-
-var getQueryString = exports.getQueryString = function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (!result) return {};
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-    }
-    var oo = {};
-    for (var i in result) {
-        var ss = result[i].split('=');
-        oo[ss[0]] = ss[1];
-    }
-    return oo;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -7606,7 +7575,7 @@ module.exports = ret;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4), __webpack_require__(9).setImmediate))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7615,10 +7584,11 @@ module.exports = ret;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.jsonToParams = undefined;
 exports.fetchData = fetchData;
 exports.postData = postData;
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
@@ -7670,7 +7640,7 @@ function postData(url, data) {
     });
 }
 
-var jsonToParams = function jsonToParams(jsonObj) {
+var jsonToParams = exports.jsonToParams = function jsonToParams(jsonObj) {
     var parms = '';
     for (var i in jsonObj) {
         parms += '&' + i + '=' + jsonObj[i];
@@ -7680,6 +7650,7 @@ var jsonToParams = function jsonToParams(jsonObj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 7 */,
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7934,10 +7905,37 @@ exports.clearImmediate = clearImmediate;
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */,
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var formatPayType = exports.formatPayType = function formatPayType(PayType) {
+    var t = parseInt(PayType);
+    switch (t) {
+        case 1:
+            return '金币';
+        case 2:
+            return '钻石';
+        case 3:
+            return '积分';
+        default:
+            return '金币';
+    }
+};
+
+/***/ }),
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7948,43 +7946,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.init = undefined;
 
-var _ajax = __webpack_require__(7);
+var _ajax = __webpack_require__(6);
 
-var _page = __webpack_require__(5);
+var _format = __webpack_require__(12);
 
-var _orders = __webpack_require__(35);
+var _orders = __webpack_require__(38);
 
 var _orders2 = _interopRequireDefault(_orders);
 
-var _bluebird = __webpack_require__(6);
+var _bluebird = __webpack_require__(5);
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var createOrders = function createOrders(data) {
-    console.log(data);
+var renderOrders = function renderOrders(data) {
     var tmpl = data.map(function (o) {
         return '\n        <li class="grid-item">\n            <dl>\n                <dt class="order-item-title">\n                    <a><span class="iconfont icon-dingdan"><span>\u5151\u6362\u5355\u53F7\uFF1A<span class="ordercode">' + o.OrderNo + '</span></a>\n                    <span>\u72B6\u6001\uFF1A\u5B8C\u6210</span>\n                </dt>\n                <dd class="order-item-goods">\n                    ' + o.OrderDetails.map(function (g) {
             return '\n                    <a data-oid="' + o.OrderID + '" data-gid="' + g.GoodID + '">\n                        <img src="' + g.IntroImg + '">\n                    </a>\n                    ';
-        }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + formatPayTypeToString(o.receiverType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
+        }) + '\n                </dd>\n                <dd class="order-item-sum">\n                    <p>\u5171' + o.Num + '\u4EF6\u5546\u54C1,\u5151\u6362' + (0, _format.formatPayType)(o.receiverType) + '\uFF1A' + o.Amount + '</p>\n                    <a class="btn" data-oid="' + o.OrderID + '">\u518D\u6B21\u5151\u6362</a>\n                </dd>\n            </dl>\n        </li>';
     }).join('');
 
     $('#grid-orders').append(tmpl);
 };
+// import { backToLastPage } from '../../commons/basic/page';
 
-var formatPayTypeToString = function formatPayTypeToString(type) {
-    var new_type = parseInt(type);
-    console.log(new_type);
-    switch (new_type) {
-        case 1:
-            return '积分';
-        case 2:
-            return '金币';
-        case 3:
-            return '钻石';
-    }
-};
 
 var getOrders = function getOrders() {
     // fetchData('/goods')
@@ -7994,17 +7980,22 @@ var getOrders = function getOrders() {
     });
 };
 
+var setHomePage = function setHomePage() {
+    $('#btn_back').attr('href', 'index.html?gameid=' + localStorage.GameID);
+};
+
 var loadData = function loadData() {
     // getOrders()
     (0, _ajax.fetchData)('/OrdersList').then(function (res) {
-        createOrders(res.message);
+        renderOrders(res.message);
     }).catch(function (err) {
         alert(err);
     });
 };
 
 var initAction = function initAction() {
-    (0, _page.backToLastPage)('#btn_back');
+    // backToLastPage('#btn_back');
+    setHomePage();
 };
 
 var init = exports.init = function init() {
@@ -8014,22 +8005,18 @@ var init = exports.init = function init() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
@@ -8037,7 +8024,10 @@ var init = exports.init = function init() {
 /* 31 */,
 /* 32 */,
 /* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8047,9 +8037,9 @@ __webpack_require__(1);
 
 __webpack_require__(2);
 
-__webpack_require__(22);
+__webpack_require__(26);
 
-var _orders = __webpack_require__(15);
+var _orders = __webpack_require__(19);
 
 $(function (e) {
     (0, _orders.init)();
@@ -8057,7 +8047,7 @@ $(function (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

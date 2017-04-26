@@ -57,6 +57,8 @@
 
 .icon-dingdan:before { content: "\E737"; }
 
+.icon-fankui:before { content: "\E738"; }
+
 .icon-fenxiang:before { content: "\E739"; }
 
 .icon-gengduo:before { content: "\E73A"; }
@@ -103,6 +105,8 @@
 
 .icon-wode:before { content: "\E75E"; }
 
+.icon-wuliu:before { content: "\E75F"; }
+
 .icon-xihuanfill:before { content: "\E760"; }
 
 .icon-xihuan:before { content: "\E761"; }
@@ -111,9 +115,17 @@
 
 .icon-xinxi:before { content: "\E763"; }
 
+.icon-yuyan:before { content: "\E765"; }
+
 .icon-zuobiaofill:before { content: "\E768"; }
 
 .icon-zuobiao:before { content: "\E769"; }
+
+.icon-dibu:before { content: "\E76A"; }
+
+.icon-dingbujinzhi:before { content: "\E76B"; }
+
+.icon-dingbu:before { content: "\E76C"; }
 
 .icon-xiangshang2:before { content: "\E76E"; }
 
@@ -351,44 +363,10 @@ a {
 }
 
 .menubar .action-wrap .action.mid {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-}
-
-.menubar .action-wrap .action.mid p {
-    line-height: 1rem;
-}
-
-.menubar .action-wrap .action.mid {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-}
-
-.menubar .action-wrap .action.mid p {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    line-height: 1rem;
 }
 
 .menubar .action-wrap .action.right {
@@ -529,9 +507,51 @@ span.iconfont.icon-fangxingxuanzhongfill {
     padding: 0 .5rem;
 }
 
-.menubar .action-wrap .action p span.amount {
-    padding-right: 1rem;
+.menubar .action-wrap .action.mid .sum span.amount {
     color: #e33;
+}
+
+.menubar .action-wrap .action.mid .sum {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+}
+
+.menubar .action-wrap .action.mid .sum .sum-title {
+    width: 3rem;
+}
+
+.menubar .action-wrap .action.mid .sum .sum-show {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.menubar .action-wrap .action.mid .sum .sum-show .amount {
+    padding-right: 1rem;
+}
+
+.menubar .action-wrap .action.mid .sum p {
+    font-size: .7rem;
 }
 
 

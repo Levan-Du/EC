@@ -1,0 +1,56 @@
+.menubar {
+    padding: 0 .5rem;
+}
+
+.menubar .btn {
+    width: 100%;
+    font-size: 1.1rem;
+    color: #fff;
+    background: #e33;
+    height: 2.5rem;
+}
+
+.main .grid .grid-item {
+    margin: .3rem .5rem;
+    padding: .2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-bottom: solid 1px #eee;
+}
+
+.main .grid .grid-item .grid-icon {
+    width: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.main .grid .grid-item .grid-icon.grid-icon-selected {
+    display: none;
+}
+
+.main .grid .grid-item span.iconfont {
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.main .grid .grid-item span.icon-xuanze {
+    color: #e33;
+}
+
+.main .grid .grid-item .grid-item-info {
+    flex: 1;
+    padding: .2rem;
+}
+
+.main .grid .grid-item .grid-item-info section {
+    margin: .3rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.main .grid .grid-item .grid-item-info section .r-name {
+    padding-right: 2rem;
+}

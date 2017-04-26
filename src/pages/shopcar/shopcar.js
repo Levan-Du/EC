@@ -1,7 +1,9 @@
-import { fetchData, postData } from '../../commons/basic/ajax';
+import { fetchData, postData, jsonToParams } from '../../commons/basic/ajax';
 import { backToLastPage } from '../../commons/basic/page';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
 import mockData from './shopcar.mock';
+import { getPayPrice, sumAmount } from '../../commons/basic/goods';
+
 
 var renderPrice = (el) => {
     var tmpl = '';
@@ -111,16 +113,15 @@ var onNumClick = (e) => {
     var gid = target.attr('data-gid');
     var paytype = numEle.attr('data-paytype');
     var jsondata = {
-        GameID: localStorage.GameID,
         GoodID: gid,
         Num: inum,
         PayType: paytype,
         EditType: 2
     }
-
+    
     LocalShopCar.updateOne(sid, "Num", inum);
     renderSumAmount();
-    postData('/OnShopCar', jsondata)
+    postData('/OnShopCar', jsonToParams(jsondata))
         .then((res) => {
             console && console.log(res);
         })
@@ -129,45 +130,12 @@ var onNumClick = (e) => {
         });
 }
 
-var getPayPrice = (g) => {
-    var t = parseInt(g.PayType);
-    switch (t) {
-        case 1:
-            return g.ScorePrice;
-        case 2:
-            return g.DiamondPrice;
-        case 3:
-            return g.PointPrice;
-        default:
-            return 0;
-    }
-}
-
 var renderSumAmount = () => {
-    var lsc = LocalShopCar.get();
-    var PAmount = 0,
-        SAmount = 0,
-        DAmount = 0,
-        num_all = 0;
-    var checkedGoods = lsc.filter(el => {
-        return el.checked
-    });
-    var sumAmount = (el, type) => {
-        return (el.PayType == type ? parseInt(getPayPrice(el)) * parseInt(el.Num) : 0);
-    };
-    console.log(checkedGoods);
-    checkedGoods.forEach((el) => {
-        console.log(el);
-        SAmount += sumAmount(el, 1);
-        DAmount += sumAmount(el, 2);
-        PAmount += sumAmount(el, 3);
-        num_all += parseInt(el.Num);
-    });
-
-    $('#s_amount').text('￥' + SAmount);
-    $('#d_amount').text('￥' + DAmount);
-    $('#p_amount').text('￥' + PAmount);
-    $('#allnum').text(num_all);
+    var checkedSum = LocalShopCar.getCheckedSum();
+    $('#s_amount').text('￥' + checkedSum.SAmount);
+    $('#d_amount').text('￥' + checkedSum.DAmount);
+    $('#p_amount').text('￥' + checkedSum.PAmount);
+    $('#allnum').text(checkedSum.NumSum);
 }
 
 var toggleSelect = (icon, isSelect) => {
@@ -203,7 +171,6 @@ var fetchShopCar = () => {
         fetchData('/ShopCarList')
             // getMockData()
             .then((res) => {
-                console.log(res);
                 LocalShopCar.set(res.message);
                 var data = LocalShopCar.get();
                 renderGrid(data);

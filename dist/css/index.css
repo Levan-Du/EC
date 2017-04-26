@@ -57,6 +57,8 @@
 
 .icon-dingdan:before { content: "\E737"; }
 
+.icon-fankui:before { content: "\E738"; }
+
 .icon-fenxiang:before { content: "\E739"; }
 
 .icon-gengduo:before { content: "\E73A"; }
@@ -103,6 +105,8 @@
 
 .icon-wode:before { content: "\E75E"; }
 
+.icon-wuliu:before { content: "\E75F"; }
+
 .icon-xihuanfill:before { content: "\E760"; }
 
 .icon-xihuan:before { content: "\E761"; }
@@ -111,9 +115,17 @@
 
 .icon-xinxi:before { content: "\E763"; }
 
+.icon-yuyan:before { content: "\E765"; }
+
 .icon-zuobiaofill:before { content: "\E768"; }
 
 .icon-zuobiao:before { content: "\E769"; }
+
+.icon-dibu:before { content: "\E76A"; }
+
+.icon-dingbujinzhi:before { content: "\E76B"; }
+
+.icon-dingbu:before { content: "\E76C"; }
 
 .icon-xiangshang2:before { content: "\E76E"; }
 
@@ -423,8 +435,9 @@ a {
 }
 
 .grid .grid-item .good-info .price {
-    font-size: .9rem;
+    font-size: .8rem;
     color: #e33;
+    padding: .2rem 0;
 }
 
 .grid .grid-item .good-info .action {
@@ -446,4 +459,8 @@ a {
 
 .grid .grid-item .good-info .action .btn span {
     font-size: .5rem;
+}
+
+#txtShopcarNum {
+    color: #e33;
 }

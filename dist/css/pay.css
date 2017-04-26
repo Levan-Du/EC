@@ -57,6 +57,8 @@
 
 .icon-dingdan:before { content: "\E737"; }
 
+.icon-fankui:before { content: "\E738"; }
+
 .icon-fenxiang:before { content: "\E739"; }
 
 .icon-gengduo:before { content: "\E73A"; }
@@ -103,6 +105,8 @@
 
 .icon-wode:before { content: "\E75E"; }
 
+.icon-wuliu:before { content: "\E75F"; }
+
 .icon-xihuanfill:before { content: "\E760"; }
 
 .icon-xihuan:before { content: "\E761"; }
@@ -111,9 +115,17 @@
 
 .icon-xinxi:before { content: "\E763"; }
 
+.icon-yuyan:before { content: "\E765"; }
+
 .icon-zuobiaofill:before { content: "\E768"; }
 
 .icon-zuobiao:before { content: "\E769"; }
+
+.icon-dibu:before { content: "\E76A"; }
+
+.icon-dingbujinzhi:before { content: "\E76B"; }
+
+.icon-dingbu:before { content: "\E76C"; }
 
 .icon-xiangshang2:before { content: "\E76E"; }
 
@@ -385,12 +397,6 @@ a {
     color: #fff;
 }
 
-.menubar .action-wrap .action.left {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-}
-
 .menubar .action-wrap .action.right {
     -webkit-box-flex: 0;
         -ms-flex: none;
@@ -399,23 +405,48 @@ a {
 }
 
 .menubar #goodssum {
-    padding: .5rem;
-}
-
-.menubar #goodssum p {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    text-align: center;
+    padding: .5rem;
+    line-height: 1rem;
 }
 
-.menubar #goodssum p span.amount {
+.menubar #goodssum .sum {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+}
+
+.menubar #goodssum .sum .sum-title {
+    width: 4rem;
+}
+
+.menubar #goodssum .sum .sum-show {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.menubar #goodssum .sum .sum-show .amount {
     color: #e33;
+    padding-right: 1rem;
 }
 
-.main #goodsinfo {
-    padding: .5rem .3rem;
-}
+.main #goodsinfo {}
 
 .main #goodsinfo li.gooditem {
     display: -webkit-box;
@@ -428,6 +459,9 @@ a {
     -webkit-box-align: stretch;
         -ms-flex-align: stretch;
             align-items: stretch;
+    border-bottom: solid 1px #eee;
+    padding: .5rem .3rem;
+    font-size: .9rem;
 }
 
 .main #goodsinfo li.gooditem .img-box {
@@ -443,6 +477,7 @@ a {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
+    padding-left: .8rem;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -463,10 +498,14 @@ a {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
 }
 
 .main #goodsinfo li.gooditem .info .number .num {
-    width: 2rem;
+    width: 4rem;
 }
 
 .main #goodsinfo li.gooditem .info .number .price {
