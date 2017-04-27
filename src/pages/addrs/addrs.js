@@ -50,7 +50,6 @@ var selectItem = () => {
 var initSelectedItem = () => {
     var filter = '[data-addrid="' + localStorage.AddrID + '"]',
         currItem = $('#grid-addrs .grid-icon.grid-icon-selected').filter(filter);
-    console.log(currItem);
     select(currItem);
 }
 

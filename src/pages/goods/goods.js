@@ -3,10 +3,12 @@ import { fetchData, postData, jsonToParams } from '../../commons/basic/ajax';
 import { getQueryString } from '../../commons/basic/page';
 import LocalCities from '../../commons/basic/LocalCities';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
+import SessionGoods from '../../commons/basic/SessionGoods';
 import { showTips } from '../../commons/basic/modal';
 import { formatPayType } from '../../commons/basic/format';
 
 // import mockData from './goods.mock';
+sessionStorage.clear();
 
 var localCountrys = LocalCities.Countrys,
     localProvinces = LocalCities.Provinces,
@@ -89,8 +91,8 @@ const fetchGoods = () => {
 }
 
 var setSessionGoods = (data) => {
-    if (!sessionStorage.Goods) {
-        sessionStorage.Goods = data;
+    if (!SessionGoods.get()) {
+        SessionGoods.set(data);
     }
 }
 

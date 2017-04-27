@@ -63,7 +63,6 @@ var submit = () => {
         }
         postData('/OnAddr', data)
             .then((res) => {
-            	console.log('onaddr');
                 $('#chooseAddr_area').css('z-index', '-100');
                 backToLastPage('#btn_back');
             })

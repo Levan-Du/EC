@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>商品详情 - </title>
     <script type="text/javascript" src="/js/fit.js"></script>
-<link href="/css/gooddetail.css?3425670beab7dae4b6ab5c61440bedd1" rel="stylesheet"></head>
+<link href="/css/gooddetail.css?ba6c3772d8f376c49a589c139ae33a2b" rel="stylesheet"></head>
 
 <body>
     <div class="container" id=tab-1>
@@ -26,16 +26,11 @@
             </div>
             <div class="right"></div>
         </header>
-        <article class="main swiper-container">
-            <ul class="swiper-wrapper" id="tab-1">
-                <li class="swiper-slide" data-label="info">
-                    <div class="swiper-container">
-                        <ul id="good-img-box" class="swiper-wrapper"></ul>
-                    </div>
+        <article class="main swiper-container" id="swiper1">
+            <ul class="swiper-wrapper">
+                <li id="pageInfo" class="swiper-slide" data-label="info">
                 </li>
-                <li class="swiper-slide" data-label="detail">tab-page-2
-                </li>
-                <li class="swiper-slide" data-label="crit">tab-page-3
+                <li id="pageIntro" class="swiper-slide" data-label="detail">
                 </li>
             </ul>
         </article>
@@ -47,8 +42,6 @@
                         <span>首页</span>
                     </a>
                     <a class="action-item" id="btn_shopcar" href="shopcar.html">
-                        <span class="iconfont icon-gouwuche"></span>
-                        <span>购物车</span>
                     </a>
                 </li>
                 <li class="action right">
@@ -57,6 +50,12 @@
                 </li>
             </ul>
         </footer>
+        <div class="shopcar-box">
+            <a href="shopcar.html">
+                <span class="iconfont icon-gouwuche"></span>
+                <span class="num" id="txtShopcarNum"></span>
+            </a>
+        </div>
     </div>
 <script type="text/javascript" src="/js/gooddetail.js"></script></body>
 

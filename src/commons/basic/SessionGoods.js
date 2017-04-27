@@ -34,4 +34,5 @@ var SessionGoods = {
     updateOne: updateOne
 }
 
+
 export default SessionGoods;

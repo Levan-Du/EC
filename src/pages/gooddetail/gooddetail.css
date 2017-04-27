@@ -36,3 +36,56 @@
 .menubar .action-wrap .action.right .action-item-noicon#btn_buynow {
     background: #e33;
 }
+
+#swiper1 .goods-info {
+    padding: .5rem;
+}
+
+#swiper1 .goods-info p {
+    padding: .2rem 0;
+}
+
+#swiper1 .goods-info p.price {
+    color: #e33;
+}
+
+#swiper2 .swiper-wrapper {}
+
+#swiper2 .swiper-wrapper .swiper-slide {
+    display: flex;
+    flex-direction: row;
+}
+
+#swiper2 .swiper-wrapper .swiper-slide img {
+    margin: 1rem;
+    flex: 1;
+}
+
+.shopcar-box {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    bottom: 5rem;
+    right: 1rem;
+    background: #d33;
+    border-radius: 50%;
+    z-index: 1000000;
+}
+
+.shopcar-box a {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopcar-box a span {
+    padding: 0 .1rem;
+}
+
+.shopcar-box a .iconfont {
+    font-size: 1.3rem;
+}

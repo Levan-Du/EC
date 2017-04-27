@@ -82,6 +82,17 @@ var removeChecked = () => {
     localStorage.Shopcar = JSON.stringify(unCheckedGoods);
 }
 
+var removeBy = (id) => {
+    var lsc = get();
+    
+    lsc.forEach((el, i) => {
+        if (el.ID == id) {
+            lsc.splice(i, 1);
+        }
+    });
+    localStorage.Shopcar = JSON.stringify(lsc);
+}
+
 var get = () => {
     var sc = localStorage.Shopcar;
     if (!sc || sc == 'undefined')
@@ -95,6 +106,8 @@ var set = (obj) => {
 
 var isAllChecked = () => {
     var lsc = get();
+    if (lsc.length == 0)
+        return false;
     var el;
     for (var i = lsc.length; i--;) {
         el = lsc[i];
@@ -147,6 +160,7 @@ var LocalShopCar = {
     isAllChecked: isAllChecked,
     getCheckedSum: getCheckedSum,
     removeChecked: removeChecked,
+    removeBy: removeBy,
     insertOne: insertOne,
     count: count
 }

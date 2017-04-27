@@ -4,6 +4,7 @@ import { backToLastPage, getQueryString } from '../../commons/basic/page';
 import { formatPayType } from '../../commons/basic/format';
 import { getPayPrice } from '../../commons/basic/goods';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
+import { showTips, showMessage } from '../../commons/basic/modal';
 // import mockData from './pay.mock';
 
 /*
@@ -21,7 +22,7 @@ var loadReceiverInfo = () => {
         fetchData('/GetUserAddr', {})
             .then((res) => {
                 var addrs = res.message;
-                console.log(addrs);
+                
                 if (addrs.length === 0) {
                     window.location = "./receiver.html";
                     resolve('GetUserAddr finish');
@@ -187,7 +188,7 @@ var submit = () => {
                 }
             }
             else{
-                alert(res.message);
+                showMessage(res.message);
             }
         })
         .catch((err)=>{
