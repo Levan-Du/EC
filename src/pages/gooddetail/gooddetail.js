@@ -52,6 +52,7 @@ var selectTab = (e) => {
 
 var renderGoodsInfo = () => {
         var d = GoodDetail;
+        console.log(d);
         var tmpl = `
         <div id="swiper2" class="swiper-container">
             <ul id="good-img-box" class="swiper-wrapper">

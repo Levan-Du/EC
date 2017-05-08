@@ -191,6 +191,11 @@ var reverseTabLabelVisible = (type) => {
     }
 }
 
+
+var getMockData = () => {
+    return Promise.resolve(mockData);
+}
+
 var loadCities = () => {
         var { Countrys, Provinces, Cities } = LocalCities;
         var provs = Provinces.get(),
@@ -245,7 +250,8 @@ var loadCities = () => {
 				setAreaID({id:pid,name:provname},{id:cid,name:cityname},null);
 				reverseTabLabelVisible(2);
 				changeTabAndSlideByIndex(2);
-	    	fetchData('/DistrictsArea',"CityID="+cityid)
+	    	// fetchData('/DistrictsArea',"CityID="+cityid)
+            getMockData()
 	    		.then((res)=>{
 				 	var districts=res.message;
 					var tmpl3 = `

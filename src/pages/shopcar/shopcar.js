@@ -166,8 +166,8 @@ var fetchShopCar = () => {
         return Promise.resolve(data);
     } else {
         return new Promise((resolve, reject) => {
-            fetchData('/ShopCarList')
-                // getMockData()
+            // fetchData('/ShopCarList')
+                getMockData()
                 .then((res) => {
                     LocalShopCar.set(res.message);
                     var data = LocalShopCar.get();

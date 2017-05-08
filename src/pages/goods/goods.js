@@ -7,7 +7,8 @@ import SessionGoods from '../../commons/basic/SessionGoods';
 import { showTips } from '../../commons/basic/modal';
 import { formatPayType } from '../../commons/basic/format';
 
-// import mockData from './goods.mock';
+import { goods, cities } from './goods.mock';
+
 sessionStorage.clear();
 
 var localCountrys = LocalCities.Countrys,
@@ -67,9 +68,13 @@ const renderGoods = (data) => {
 }
 
 
-// const getGoods = () => {
-//     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
-// }
+const getGoods = () => {
+    return new Promise((resolve, reject) => setTimeout(resolve, 200, goods));
+}
+
+const getCities = () => {
+    return new Promise((resolve, reject) => setTimeout(resolve, 200, cities));
+}
 
 const saveGameID = () => {
     var qsObj = getQueryString();
@@ -78,8 +83,10 @@ const saveGameID = () => {
 
 const fetchGoods = () => {
     return new Promise((resolve, reject) => {
-        fetchData('/GoodsList')
+        // fetchData('/GoodsList')
+        getGoods()
             .then((res) => {
+                console.log(res);
                 renderGoods(res.message);
                 setSessionGoods(res.message);
                 resolve('Get GoodsList finish');
@@ -98,7 +105,8 @@ var setSessionGoods = (data) => {
 
 const fetchCities = () => {
     return new Promise((resolve, reject) => {
-        fetchData('/CitiesArea', null)
+        // fetchData('/CitiesArea', null)
+        getCities()
             .then((res) => {
 
                 var m = res.message,

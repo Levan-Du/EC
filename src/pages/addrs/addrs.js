@@ -1,9 +1,16 @@
 import { fetchData, postData, jsonToParams } from '../../commons/basic/ajax';
 import { backToLastPage, getQueryString } from '../../commons/basic/page';
 
+import mockData from './addrs.mock';
+
+
+var getMockData = () => {
+    return Promise.resolve(mockData);
+}
 
 var renderAddrs = () => {
-    fetchData('/GetUserAddr', null)
+    // fetchData('/GetUserAddr', null)
+    getMockData()
         .then((res) => {
             var arr = res.message;
             var tmpl = arr.map(el => `

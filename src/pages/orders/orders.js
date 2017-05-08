@@ -1,5 +1,4 @@
 import { fetchData, postData } from '../../commons/basic/ajax';
-// import { backToLastPage } from '../../commons/basic/page';
 import { formatPayType } from '../../commons/basic/format';
 import mockData from './orders.mock';
 import Promise from 'bluebird';
@@ -31,8 +30,6 @@ var renderOrders = (data) => {
 }
 
 var getOrders = () => {
-    // fetchData('/goods')
-
     return new Promise((resolve, reject) => setTimeout(resolve, 300, mockData));
 }
 
@@ -41,8 +38,8 @@ var setHomePage = () => {
 }
 
 var loadData = () => {
-    // getOrders()
-    fetchData('/OrdersList')
+    getOrders()
+    // fetchData('/OrdersList')
         .then((res) => {
             renderOrders(res.message);
         })

@@ -5,7 +5,7 @@ import { formatPayType } from '../../commons/basic/format';
 import { getPayPrice } from '../../commons/basic/goods';
 import LocalShopCar from '../../commons/basic/LocalShopCar';
 import { showTips, showMessage } from '../../commons/basic/modal';
-// import mockData from './pay.mock';
+import mockData from './pay.mock';
 
 /*
     地址参数
@@ -19,10 +19,11 @@ var QueryString = getQueryString(),
 
 var loadReceiverInfo = () => {
     return new Promise((resolve, reject) => {
-        fetchData('/GetUserAddr', {})
+        // fetchData('/GetUserAddr', {})
+        getMockData()
             .then((res) => {
                 var addrs = res.message;
-                
+
                 if (addrs.length === 0) {
                     window.location = "./receiver.html";
                     resolve('GetUserAddr finish');
@@ -65,6 +66,10 @@ var renderReceiverInfo = (dfAddr) => {
     $('#receiverinfo').append(html);
 }
 
+
+var getMockData = () => {
+    return Promise.resolve(mockData);
+}
 
 var loadGoodsInfo = () => {
     switch (OnOrderType) {
